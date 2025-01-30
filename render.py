@@ -95,11 +95,19 @@ def main():
         total_tests = test_report["total_count"]
         failed_tests = test_report["failed_count"]
         skipped_tests = test_report["skipped_count"]
+        passed_tests = total_tests - failed_tests - skipped_tests
         failed_job_percentage = (
             (failed_tests / total_tests * 100) if total_tests else 0.0
         )
         run_chart.append(
-            (pid, total_tests, failed_job_percentage, failed_tests, skipped_tests)
+            (
+                pid,
+                total_tests,
+                failed_job_percentage,
+                failed_tests,
+                skipped_tests,
+                passed_tests,
+            )
         )
 
     run_chart.reverse()
@@ -128,6 +136,7 @@ def main():
     number_of_tests = [i[1] for i in run_chart]
     failing_test = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
+    passing_tests = [i[5] for i in run_chart]
 
     content = template.render(
         gitlab_tests=all_jobs,
@@ -139,6 +148,7 @@ def main():
         pipeline_run_ids=pipeline_run_ids,
         skipped_tests=skipped_tests,
         number_of_tests=number_of_tests,
+        passing_tests=passing_tests,
         pipeline_id=pipeline_id,
         skipped_test_suites=skipped_test_suites,
     )
