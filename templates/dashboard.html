@@ -23,7 +23,7 @@
     <main class="flex-1 p-8 sm:flex ">
         <!-- Left Column -->
         <div class="sm:w-1/6 p-4 bg-gray-200">
-            <div class="w-full p-4 bg-red-600 text-white text-center rounded">
+            <div class="w-full p-4 bg-{{ 'green' if failed_job_percentage == '0.00%' else 'red' }}-600 text-white text-center rounded">
                 Failed jobs: {{ failed_job_percentage }}
             </div>
             <br>
