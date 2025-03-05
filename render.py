@@ -102,6 +102,8 @@ def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tes
 </div>
 <div style="width: 100%; display: flex;">
     <div style="flex:1;">
+    <br>
+    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped<br><br>
     <table style="width: 100%; border-collapse: collapse;">
         <tr>
             <th style="border: 1px solid black;">Test Name</th>
