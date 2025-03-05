@@ -43,7 +43,7 @@ class Job:
 # API Functions
 def get_pipelines(project_id):
     # TODO: Add pagination or control number of pipelines to fetch
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&per_page=50"
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page=5"
     logging.info(f"Fetching pipelines from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
@@ -51,7 +51,7 @@ def get_pipelines(project_id):
     pipelines = response.json()
     latest_pipeline = pipelines[0]
     # Get the last 50 pipeline ids
-    last_50_pipelines = [pipeline["id"] for pipeline in pipelines[:50]]
+    last_50_pipelines = [(pipeline["id"], pipeline["updated_at"]) for pipeline in pipelines[:50]]
     return latest_pipeline, last_50_pipelines
 
 
@@ -76,7 +76,7 @@ def get_test_report(project_id, pipeline_id):
 char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"}
 
 
-def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests):
+def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests, dates):
     html = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,9 +86,19 @@ def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tes
     <title>DMSC Integration Testing</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
-<body>
-<div style="width: 100%; text-align: center; color: white; background-color: #0094ca;">
-    <h1>DMSC Integration Testing</h1>
+<body style="font-family: Tahoma, sans-serif;">
+<div style="width: 100%; display: flex; background-color: #0094ca;">
+<div style="flex:1;">
+    <img src="ess.png" alt="Logo">
+</div>
+<div style="flex:1; text-align: center; color: white;">
+    <h1><b>DMSC Integration Testing</b></h1>
+</div>
+<div style="flex:1; text-align:right; color: white;">
+    <h3>Last updated: """
+    html += datetime.now().strftime("%B %d, %Y %I:%M %p")
+    html += """</h3>
+</div>
 </div>
 <div style="width: 100%; display: flex;">
     <div style="flex:1;">
@@ -117,6 +127,7 @@ def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tes
                         html += f'            <td style="border: 1px solid black;"><a href="{url}" style="text-decoration:none;">{char_map[status]}</a></td>\n'
 
             html += "        </tr>\n"
+        html += f'        <tr>\n            <td colspan=\"{len(INSTRUMENTS)}\" ">&nbsp;</td>\n        </tr>\n'
     html += """    </table>
 </div>
 """
@@ -128,7 +139,7 @@ def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tes
 </div>
 <script>
 """
-    chart += f"var pipeline_run_ids = {pipeline_run_ids};\n"
+    chart += f"var pipeline_run_ids = {dates};\n"
     chart += f"var failing_test = {failing_test};\n"
     chart += f"var skipped_tests = {skipped_tests};\n"
     chart += f"var passing_tests = {passing_tests};\n"
@@ -179,6 +190,7 @@ Plotly.newPlot('chart', data, layout);
 def main():
     pipeline, last_50 = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
     pipeline_id = pipeline["id"]
+    # pipeline_id = datetime.fromisoformat(pipeline["updated_at"].replace("Z", "+00:00"))
     jobs = get_jobs(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
 
     success, failed, others = [], [], []
@@ -204,7 +216,7 @@ def main():
         )
 
     run_chart = []
-    for pid in last_50:
+    for pid, updated_at in last_50:
         test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pid)
         total_tests = test_report["total_count"]
         failed_tests = test_report["failed_count"]
@@ -221,6 +233,7 @@ def main():
                 failed_tests,
                 skipped_tests,
                 passed_tests,
+                updated_at,
             )
         )
 
@@ -251,13 +264,8 @@ def main():
     failing_test = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
+    dates = [i[6] for i in run_chart]
 
-    # print("skipped_tests", skipped_tests)
-    # print("skipped_test_suites", skipped_test_suites)
-    print("\n\n\n")
-    print("TEST SUITES", test_suites)
-    print("\n\n\n")
-    # test_map = {instr: {group: {} for group in GROUPS} for instr in INSTRUMENTS}
     test_map = {group: {instr: {} for instr in INSTRUMENTS} for group in GROUPS}
     for test in test_suites:
         job_name = test["name"]
@@ -267,9 +275,6 @@ def main():
             if ins in test["name"]:
                 instr = ins
                 break
-        # if instr is None:
-        #     continue
-
         for test_cases in test["test_cases"]:
             for group in GROUPS:
                 if f".{group}." in test_cases["classname"]:
@@ -279,7 +284,6 @@ def main():
                         job_name_url,
                     )
 
-    print(test_map)
 
     # Make an inventory of all tests
     global_map = {group: {} for group in GROUPS}
@@ -291,10 +295,6 @@ def main():
                     global_map[group][raw_name] = {}
                 global_map[group][raw_name][instr] = (status, url)
 
-    for group in GROUPS:
-        print(group)
-        print(global_map[group])
-        print("\n\n\n")
 
     content = to_html(
         global_map,
@@ -302,6 +302,7 @@ def main():
         failing_test=failing_test,
         skipped_tests=skipped_tests,
         passing_tests=passing_tests,
+        dates=dates,
     )
 
     # content = template.render(
