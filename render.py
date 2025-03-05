@@ -18,6 +18,16 @@ GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
 TEAMS = ["ECDC", "SCIPP", "SWAT", "DST", "DONKI", "IDS"]
+INSTRUMENTS = ["bifrost", "dream", "estia", "loki", "nmx", "odin", "tbl", "none"]
+GROUPS = [
+    "chexus",
+    "nexusfiles-scipp",
+    "ingestor",
+    "mcstas-scipp",
+    "nexusjsontemplate-beamlime",
+    "scipp-analysis",
+    "scitacean",
+]
 
 
 # Data class for Job
@@ -60,6 +70,110 @@ def get_test_report(project_id, pipeline_id):
     response.raise_for_status()
     # logging.info(f"Fetching test report from URL: {url}")
     return response.json()
+
+
+# char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "🚧"}
+char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"}
+
+
+def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests):
+    html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="3600">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMSC Integration Testing</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<div style="width: 100%; text-align: center; color: white; background-color: #0094ca;">
+    <h1>DMSC Integration Testing</h1>
+</div>
+<div style="width: 100%; display: flex;">
+    <div style="flex:1;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th style="border: 1px solid black;">Test Name</th>
+"""
+    instruments = sorted(set(INSTRUMENTS) - {"none"})
+    for instr in instruments:
+        html += f'            <th style="border: 1px solid black;">{instr}</th>\n'
+    html += "        </tr>\n"
+    for group in GROUPS:
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"><b>{group}</b></td>\n'
+        html += "        </tr>\n"
+        for test_name, instr_map in test_map[group].items():
+            html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name}</td>\n'
+            if "none" in instr_map:
+                status, url = instr_map["none"]
+                html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"><a href="{url}" style="text-decoration:none;">{char_map[status]}</a></td>\n'
+            else:
+                for ins in instruments:
+                    if ins not in instr_map:
+                        html += f'            <td style="border: 1px solid black;">{char_map["error"]}</td>\n'
+                    else:
+                        status, url = instr_map[ins]
+                        html += f'            <td style="border: 1px solid black;"><a href="{url}" style="text-decoration:none;">{char_map[status]}</a></td>\n'
+
+            html += "        </tr>\n"
+    html += """    </table>
+</div>
+"""
+
+    # Add plotly chart with test history
+    chart = """
+<div style="flex: 1;">
+    <div id="chart"></div>
+</div>
+<script>
+"""
+    chart += f"var pipeline_run_ids = {pipeline_run_ids};\n"
+    chart += f"var failing_test = {failing_test};\n"
+    chart += f"var skipped_tests = {skipped_tests};\n"
+    chart += f"var passing_tests = {passing_tests};\n"
+    chart += """
+var data = [
+    {
+        x: pipeline_run_ids,
+        y: failing_test,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Failed Tests',
+        marker: {color: 'red'}
+    },
+    {
+        x: pipeline_run_ids,
+        y: skipped_tests,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Skipped Tests',
+        marker: {color: 'orange'}
+    },
+    {
+        x: pipeline_run_ids,
+        y: passing_tests,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Passed Tests',
+        marker: {color: 'green'}
+    }
+];
+var layout = {
+    title: 'Test History',
+    xaxis: {title: 'Pipeline Run ID'},
+    yaxis: {title: 'Number of Tests'}
+};
+Plotly.newPlot('chart', data, layout);
+</script>
+"""
+    html += chart
+
+    html += """
+</div>
+</body>
+</html>"""
+    return html
 
 
 def main():
@@ -138,20 +252,72 @@ def main():
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
 
-    content = template.render(
-        gitlab_tests=all_jobs,
-        failed_tests=failed,
-        failed_job_percentage=failed_job_percentage,
-        pipeline_end_time=formatted_date,
-        teams=TEAMS,
-        failing_test=failing_test,
+    # print("skipped_tests", skipped_tests)
+    # print("skipped_test_suites", skipped_test_suites)
+    print("\n\n\n")
+    print("TEST SUITES", test_suites)
+    print("\n\n\n")
+    # test_map = {instr: {group: {} for group in GROUPS} for instr in INSTRUMENTS}
+    test_map = {group: {instr: {} for instr in INSTRUMENTS} for group in GROUPS}
+    for test in test_suites:
+        job_name = test["name"]
+        job_name_url = f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pipeline_id}/test_report?job_name={quote(job_name)}"
+        instr = "none"
+        for ins in INSTRUMENTS:
+            if ins in test["name"]:
+                instr = ins
+                break
+        # if instr is None:
+        #     continue
+
+        for test_cases in test["test_cases"]:
+            for group in GROUPS:
+                if f".{group}." in test_cases["classname"]:
+                    name = test_cases["name"].replace("test_", "")
+                    test_map[group][instr][name] = (
+                        test_cases["status"],
+                        job_name_url,
+                    )
+
+    print(test_map)
+
+    # Make an inventory of all tests
+    global_map = {group: {} for group in GROUPS}
+    for group in GROUPS:
+        for instr in INSTRUMENTS:
+            for test_name, (status, url) in test_map[group][instr].items():
+                raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
+                if raw_name not in global_map[group]:
+                    global_map[group][raw_name] = {}
+                global_map[group][raw_name][instr] = (status, url)
+
+    for group in GROUPS:
+        print(group)
+        print(global_map[group])
+        print("\n\n\n")
+
+    content = to_html(
+        global_map,
         pipeline_run_ids=pipeline_run_ids,
+        failing_test=failing_test,
         skipped_tests=skipped_tests,
-        number_of_tests=number_of_tests,
         passing_tests=passing_tests,
-        pipeline_id=pipeline_id,
-        skipped_test_suites=skipped_test_suites,
     )
+
+    # content = template.render(
+    #     gitlab_tests=all_jobs,
+    #     failed_tests=failed,
+    #     failed_job_percentage=failed_job_percentage,
+    #     pipeline_end_time=formatted_date,
+    #     teams=TEAMS,
+    #     failing_test=failing_test,
+    #     pipeline_run_ids=pipeline_run_ids,
+    #     skipped_tests=skipped_tests,
+    #     number_of_tests=number_of_tests,
+    #     passing_tests=passing_tests,
+    #     pipeline_id=pipeline_id,
+    #     skipped_test_suites=skipped_test_suites,
+    # )
 
     filename = "render/rendered.html"
     with open(filename, mode="w", encoding="utf-8") as message:
