@@ -1,7 +1,7 @@
 import os
 import random
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from dataclasses import dataclass
 from urllib.parse import quote
 
@@ -51,7 +51,16 @@ def get_pipelines(project_id):
     pipelines = response.json()
     latest_pipeline = pipelines[0]
     # Get the last 50 pipeline ids
-    last_50_pipelines = [(pipeline["id"], pipeline["updated_at"]) for pipeline in pipelines[:50]]
+    last_50_pipelines = [
+        (
+            pipeline["id"],
+            str(
+                datetime.fromisoformat(pipeline["updated_at"].replace("Z", ""))
+                + timedelta(hours=1)
+            ),
+        )
+        for pipeline in pipelines[:50]
+    ]
     return latest_pipeline, last_50_pipelines
 
 
@@ -76,7 +85,9 @@ def get_test_report(project_id, pipeline_id):
 char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"}
 
 
-def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests, dates):
+def to_html(
+    test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests, dates
+):
     html = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,18 +129,27 @@ def to_html(test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tes
         for test_name, instr_map in test_map[group].items():
             html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name}</td>\n'
             if "none" in instr_map:
-                status, url = instr_map["none"]
-                html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"><a href="{url}" style="text-decoration:none;">{char_map[status]}</a></td>\n'
+                html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;">'
+                for test in instr_map["none"]:
+                    text, status, url = test
+                    prefix = f"{text}: " if text else ""
+                    html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
+                html += "</td>\n"
             else:
                 for ins in instruments:
                     if ins not in instr_map:
                         html += f'            <td style="border: 1px solid black;">{char_map["error"]}</td>\n'
                     else:
-                        status, url = instr_map[ins]
-                        html += f'            <td style="border: 1px solid black;"><a href="{url}" style="text-decoration:none;">{char_map[status]}</a></td>\n'
+                        html += '            <td style="border: 1px solid black;">'
+                        for test in instr_map[ins]:
+                            text, status, url = test
+                            # status, url = instr_map[ins]
+                            prefix = f"{text}: " if text else ""
+                            html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
+                        html += "</td>\n"
 
             html += "        </tr>\n"
-        html += f'        <tr>\n            <td colspan=\"{len(INSTRUMENTS)}\" ">&nbsp;</td>\n        </tr>\n'
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     html += """    </table>
 </div>
 """
@@ -286,17 +306,25 @@ def main():
                         job_name_url,
                     )
 
-
     # Make an inventory of all tests
     global_map = {group: {} for group in GROUPS}
     for group in GROUPS:
         for instr in INSTRUMENTS:
             for test_name, (status, url) in test_map[group][instr].items():
                 raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
-                if raw_name not in global_map[group]:
-                    global_map[group][raw_name] = {}
-                global_map[group][raw_name][instr] = (status, url)
+                parts = raw_name.split("[")
+                name_root = parts[0]
+                if len(parts) > 1:
+                    subtest = parts[1].replace("]", "")
+                else:
+                    subtest = ""
+                if name_root not in global_map[group]:
+                    global_map[group][name_root] = {}
+                if instr not in global_map[group][name_root]:
+                    global_map[group][name_root][instr] = []
+                global_map[group][name_root][instr].append((subtest, status, url))
 
+    print("MAAAAAAAAAAAAAAP:", global_map)
 
     content = to_html(
         global_map,
