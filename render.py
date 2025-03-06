@@ -28,6 +28,18 @@ GROUPS = [
     "scipp-analysis",
     "scitacean",
 ]
+PLOTLY_COLORS = [
+    "rgba(31, 119, 180, 0.3)",
+    "rgba(255, 127, 14, 0.3)",
+    "rgba(44, 160, 44, 0.3)",
+    "rgba(214, 39, 40, 0.3)",
+    "rgba(148, 103, 189, 0.3)",
+    "rgba(140, 86, 75, 0.3)",
+    "rgba(227, 119, 194, 0.3)",
+    "rgba(127, 127, 127, 0.3)",
+    "rgba(188, 189, 34, 0.3)",
+    "rgba(23, 190, 207, 0.3)",
+]
 
 
 # Data class for Job
@@ -86,7 +98,13 @@ char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"
 
 
 def to_html(
-    test_map, pipeline_run_ids, failing_test, skipped_tests, passing_tests, dates
+    test_map,
+    pipeline_run_ids,
+    failing_test,
+    skipped_tests,
+    passing_tests,
+    dates,
+    groups_chart,
 ):
     html = """<!DOCTYPE html>
 <html lang="en">
@@ -124,9 +142,9 @@ def to_html(
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
         html += f'            <th colspan="2" style="border: 1px solid black;">{instr}</th>\n'
-    html += "        </tr>\n"
-    for group in GROUPS:
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;"><b>{group}</b></td>\n'
+    html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" ">&nbsp;</td>\n        </tr>\n'
+    for i, group in enumerate(GROUPS):
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;background-color: {PLOTLY_COLORS[i]};"><b>{group}</b></td>\n'
         html += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
             html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
@@ -169,6 +187,7 @@ def to_html(
     # Add plotly chart with test history
     chart = f"""
     <div id="chart"></div>
+    <div id="groups_chart"></div>
 </td>
 </tr>
 </table>
@@ -204,18 +223,60 @@ var data = [
     }}
 ];
 var layout = {{
-    title: 'Test History',
-    yaxis: {{title: 'Number of Tests'}},
+    title: {{
+        text: 'Test History',
+    }},
+    yaxis: {{
+        title: {{
+            text: 'Number of Tests'
+        }}
+    }},
     showlegend: true,
     legend: {{
         x: 1,
-        y: 1.1,
+        y: 1,
         xanchor: 'right',
         yanchor: 'bottom',
         orientation: 'h',
     }}
 }};
 Plotly.newPlot('chart', data, layout);
+"""
+    for group in GROUPS:
+        chart += f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
+    chart += "var data_groups = [\n"
+    for group in GROUPS:
+        chart += f"""
+    {{
+        x: dates,
+        y: group_{group.replace("-", "_")},
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: '{group}',
+    }},
+"""
+    chart += "];\n"
+    chart += """
+var layout_groups = {
+    title: {
+        text: 'Success Rate by Group',
+    },
+    yaxis: {
+        title: {
+            text: 'Success Rate',
+        },
+        range: [0, 105],
+    },
+    showlegend: true,
+    legend: {
+        x: 1,
+        y: -0.2,
+        xanchor: 'right',
+        yanchor: 'top',
+        orientation: 'h',
+    },
+};
+Plotly.newPlot('groups_chart', data_groups, layout_groups);
 </script>
 """
     html += chart
@@ -256,8 +317,11 @@ def main():
         )
 
     run_chart = []
-    for pid, updated_at in last_50:
+    groups_chart = {group: [(0, 0) for _ in range(len(last_50))] for group in GROUPS}
+    for i, (pid, updated_at) in enumerate(last_50):
         test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pid)
+        # print(test_report)
+        # assert False
         total_tests = test_report["total_count"]
         failed_tests = test_report["failed_count"]
         skipped_tests = test_report["skipped_count"]
@@ -276,6 +340,32 @@ def main():
                 updated_at,
             )
         )
+
+        # group_char should gather the percentage of success tests for each group
+        for test_suite in test_report["test_suites"]:
+            # test_suites = test_report["test_suites"]
+            for test in test_suite["test_cases"]:
+                # print(test["classname"])
+                for group in GROUPS:
+                    if f".{group}." in test["classname"]:
+                        ntot = groups_chart[group][i][0] + (test["status"] != "skipped")
+                        nsuccess = groups_chart[group][i][1] + (
+                            test["status"] == "success"
+                        )
+                        groups_chart[group][i] = (ntot, nsuccess)
+                        # groups_chart[group][0] += 1
+                        # if test["status"] == "success":
+                        #     groups_chart[group][1] += 1
+                # assert False
+
+    # print(groups_chart)
+    # assert False
+
+    for group in GROUPS:
+        groups_chart[group] = [
+            (i[0], i[1] / i[0] * 100 if i[0] > 0 else 0.0) for i in groups_chart[group]
+        ]
+        groups_chart[group].reverse()
 
     run_chart.reverse()
     # last_run_skipped_test
@@ -342,7 +432,7 @@ def main():
                     global_map[group][name_root][instr] = []
                 global_map[group][name_root][instr].append((subtest, status, url))
 
-    print("MAAAAAAAAAAAAAAP:", global_map)
+    # print("MAAAAAAAAAAAAAAP:", global_map)
 
     content = to_html(
         global_map,
@@ -351,6 +441,7 @@ def main():
         skipped_tests=skipped_tests,
         passing_tests=passing_tests,
         dates=dates,
+        groups_chart=groups_chart,
     )
 
     # content = template.render(
