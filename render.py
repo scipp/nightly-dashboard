@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from urllib.parse import quote
 
 import requests
-from jinja2 import Environment, FileSystemLoader
 
 # Configure logging
 logging.basicConfig(
@@ -89,11 +88,9 @@ def get_test_report(project_id, pipeline_id):
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    # logging.info(f"Fetching test report from URL: {url}")
     return response.json()
 
 
-# char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "🚧"}
 char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"}
 
 
@@ -134,7 +131,7 @@ def to_html(
             <tr>
                 <td style="width: 60%;vertical-align: top;">
     <br>
-    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped/Not Implemented<br><br>
+    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped<br><br>
     <table style="border-collapse: collapse;">
         <tr>
             <th style="border: 1px solid black;">Test Name</th>
@@ -165,11 +162,9 @@ def to_html(
                         html += '            <td style="border-left: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
                         for test in instr_map[ins]:
                             text, status, url = test
-                            # status, url = instr_map[ins]
                             if len(text) > 16:
                                 text = text[:16] + "..."
                             html += f"{text}: <br>" if text else ""
-                            # html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
                         html += "</td>\n"
                         html += '            <td style="border-right: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
                         for test in instr_map[ins]:
@@ -291,7 +286,6 @@ Plotly.newPlot('groups_chart', data_groups, layout_groups);
 def main():
     pipeline, last_50 = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
     pipeline_id = pipeline["id"]
-    # pipeline_id = datetime.fromisoformat(pipeline["updated_at"].replace("Z", "+00:00"))
     jobs = get_jobs(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
 
     success, failed, others = [], [], []
@@ -320,8 +314,6 @@ def main():
     groups_chart = {group: [(0, 0) for _ in range(len(last_50))] for group in GROUPS}
     for i, (pid, updated_at) in enumerate(last_50):
         test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pid)
-        # print(test_report)
-        # assert False
         total_tests = test_report["total_count"]
         failed_tests = test_report["failed_count"]
         skipped_tests = test_report["skipped_count"]
@@ -343,9 +335,7 @@ def main():
 
         # group_char should gather the percentage of success tests for each group
         for test_suite in test_report["test_suites"]:
-            # test_suites = test_report["test_suites"]
             for test in test_suite["test_cases"]:
-                # print(test["classname"])
                 for group in GROUPS:
                     if f".{group}." in test["classname"]:
                         ntot = groups_chart[group][i][0] + (test["status"] != "skipped")
@@ -353,13 +343,6 @@ def main():
                             test["status"] == "success"
                         )
                         groups_chart[group][i] = (ntot, nsuccess)
-                        # groups_chart[group][0] += 1
-                        # if test["status"] == "success":
-                        #     groups_chart[group][1] += 1
-                # assert False
-
-    # print(groups_chart)
-    # assert False
 
     for group in GROUPS:
         groups_chart[group] = [
@@ -368,7 +351,6 @@ def main():
         groups_chart[group].reverse()
 
     run_chart.reverse()
-    # last_run_skipped_test
     last_run_test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
     test_suites = last_run_test_report["test_suites"]
     skipped_test_suites = []
@@ -381,16 +363,9 @@ def main():
                     (test_cases["classname"], test_cases["name"], job_name_url)
                 )
 
-    environment = Environment(loader=FileSystemLoader("templates/"))
-    template = environment.get_template("dashboard.html")
-
-    date = datetime.fromisoformat(pipeline["updated_at"].replace("Z", "+00:00"))
-    formatted_date = date.strftime("%B %d, %Y %I:%M %p") + " UTC"
-
     percentage_data = [i[2] for i in run_chart]
     failed_job_percentage = f"{percentage_data[-1]:.2f}%"
     pipeline_run_ids = [i[0] for i in run_chart]
-    number_of_tests = [i[1] for i in run_chart]
     failing_test = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
@@ -432,8 +407,6 @@ def main():
                     global_map[group][name_root][instr] = []
                 global_map[group][name_root][instr].append((subtest, status, url))
 
-    # print("MAAAAAAAAAAAAAAP:", global_map)
-
     content = to_html(
         global_map,
         pipeline_run_ids=pipeline_run_ids,
@@ -443,21 +416,6 @@ def main():
         dates=dates,
         groups_chart=groups_chart,
     )
-
-    # content = template.render(
-    #     gitlab_tests=all_jobs,
-    #     failed_tests=failed,
-    #     failed_job_percentage=failed_job_percentage,
-    #     pipeline_end_time=formatted_date,
-    #     teams=TEAMS,
-    #     failing_test=failing_test,
-    #     pipeline_run_ids=pipeline_run_ids,
-    #     skipped_tests=skipped_tests,
-    #     number_of_tests=number_of_tests,
-    #     passing_tests=passing_tests,
-    #     pipeline_id=pipeline_id,
-    #     skipped_test_suites=skipped_test_suites,
-    # )
 
     filename = "render/rendered.html"
     with open(filename, mode="w", encoding="utf-8") as message:
