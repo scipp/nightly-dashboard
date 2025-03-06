@@ -95,7 +95,7 @@ def to_html(
     <meta http-equiv="refresh" content="3600">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMSC Integration Testing</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
 </head>
 <body style="font-family: Tahoma, sans-serif;">
 <div style="width: 100%; display: flex; background-color: #0094ca;">
@@ -111,92 +111,110 @@ def to_html(
     html += """</h3>
 </div>
 </div>
-<div style="width: 100%; display: flex;">
-    <div style="flex:1;">
+<div style="width: 100%;">
+    <table style="border-collapse: collapse;">
+            <tr>
+                <td style="width: 60%;vertical-align: top;">
     <br>
-    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped<br><br>
-    <table style="width: 100%; border-collapse: collapse;">
+    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped/Not Implemented<br><br>
+    <table style="border-collapse: collapse;">
         <tr>
             <th style="border: 1px solid black;">Test Name</th>
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        html += f'            <th style="border: 1px solid black;">{instr}</th>\n'
+        html += f'            <th colspan="2" style="border: 1px solid black;">{instr}</th>\n'
     html += "        </tr>\n"
     for group in GROUPS:
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"><b>{group}</b></td>\n'
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;"><b>{group}</b></td>\n'
         html += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
-            html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name}</td>\n'
+            html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
             if "none" in instr_map:
-                html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;">'
+                html += f'            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;">'
                 for test in instr_map["none"]:
                     text, status, url = test
+                    if len(text) > 16:
+                        text = text[:16] + "..."
                     prefix = f"{text}: " if text else ""
                     html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
                 html += "</td>\n"
             else:
                 for ins in instruments:
                     if ins not in instr_map:
-                        html += f'            <td style="border: 1px solid black;">{char_map["error"]}</td>\n'
+                        html += f'            <td colspan="2" style="border: 1px solid black;">{char_map["error"]}</td>\n'
                     else:
-                        html += '            <td style="border: 1px solid black;">'
+                        html += '            <td style="border-left: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
                         for test in instr_map[ins]:
                             text, status, url = test
                             # status, url = instr_map[ins]
-                            prefix = f"{text}: " if text else ""
-                            html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
+                            if len(text) > 16:
+                                text = text[:16] + "..."
+                            html += f"{text}: <br>" if text else ""
+                            # html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
+                        html += "</td>\n"
+                        html += '            <td style="border-right: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
+                        for test in instr_map[ins]:
+                            text, status, url = test
+                            html += f'<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
                         html += "</td>\n"
 
             html += "        </tr>\n"
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" ">&nbsp;</td>\n        </tr>\n'
     html += """    </table>
-</div>
+</td>
+<td style=" width: 40%; vertical-align: top;">
 """
 
     # Add plotly chart with test history
-    chart = """
-<div style="flex: 1;">
+    chart = f"""
     <div id="chart"></div>
-</div>
+</td>
+</tr>
+</table>
 <script>
-"""
-    chart += f"var pipeline_run_ids = {dates};\n"
-    chart += f"var failing_test = {failing_test};\n"
-    chart += f"var skipped_tests = {skipped_tests};\n"
-    chart += f"var passing_tests = {passing_tests};\n"
-    chart += """
+var dates = {dates};
+var failing_test = {failing_test};
+var skipped_tests = {skipped_tests};
+var passing_tests = {passing_tests};
 var data = [
-    {
-        x: pipeline_run_ids,
+    {{
+        x: dates,
         y: failing_test,
         type: 'scatter',
         mode: 'lines+markers',
         name: 'Failed Tests',
-        marker: {color: 'red'}
-    },
-    {
-        x: pipeline_run_ids,
+        marker: {{color: 'red'}}
+    }},
+    {{
+        x: dates,
         y: skipped_tests,
         type: 'scatter',
         mode: 'lines+markers',
         name: 'Skipped Tests',
-        marker: {color: 'orange'}
-    },
-    {
-        x: pipeline_run_ids,
+        marker: {{color: 'orange'}}
+    }},
+    {{
+        x: dates,
         y: passing_tests,
         type: 'scatter',
         mode: 'lines+markers',
         name: 'Passed Tests',
-        marker: {color: 'green'}
-    }
+        marker: {{color: 'green'}}
+    }}
 ];
-var layout = {
+var layout = {{
     title: 'Test History',
-    xaxis: {title: 'Pipeline Run ID'},
-    yaxis: {title: 'Number of Tests'}
-};
+    yaxis: {{title: 'Number of Tests'}},
+    showlegend: true,
+    legend: {{
+        x: 1,
+        y: 1.1,
+        xanchor: 'right',
+        yanchor: 'bottom',
+        orientation: 'h',
+    }}
+}};
 Plotly.newPlot('chart', data, layout);
 </script>
 """
