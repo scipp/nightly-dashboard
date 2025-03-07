@@ -1,5 +1,4 @@
 import os
-import random
 import logging
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -35,8 +34,6 @@ class Job:
     job_run_url: str
     job_run_status: str
     job_name: str
-    job_stage: str
-    teams: str
 
 
 # API Functions
@@ -290,10 +287,10 @@ def main():
 
     success, failed, others = [], [], []
     for job in jobs:
-        # TODO: Map teams to jobs
-        temp_teams = ", ".join(random.choices(TEAMS, k=2))
         job_obj = Job(
-            job["web_url"], job["status"], job["name"], job["stage"], temp_teams
+            job_run_url=job["web_url"],
+            job_run_status=job["status"],
+            job_name=job["name"],
         )
 
         if job["status"] == "success":
@@ -307,7 +304,7 @@ def main():
     all_jobs = success + failed + others
     for job in all_jobs:
         logging.info(
-            f"Job: {job.job_name}, Status: {job.job_run_status}, URL: {job.job_run_url}, Stage: {job.job_stage}"
+            f"Job: {job.job_name}, Status: {job.job_run_status}, URL: {job.job_run_url}"
         )
 
     run_chart = []
@@ -365,7 +362,6 @@ def main():
 
     percentage_data = [i[2] for i in run_chart]
     failed_job_percentage = f"{percentage_data[-1]:.2f}%"
-    # pipeline_run_ids = [i[0] for i in run_chart]
     failing_test = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
