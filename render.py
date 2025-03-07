@@ -27,18 +27,6 @@ GROUPS = [
     "scipp-analysis",
     "scitacean",
 ]
-PLOTLY_COLORS = [
-    "rgba(31, 119, 180, 0.3)",
-    "rgba(255, 127, 14, 0.3)",
-    "rgba(44, 160, 44, 0.3)",
-    "rgba(214, 39, 40, 0.3)",
-    "rgba(148, 103, 189, 0.3)",
-    "rgba(140, 86, 75, 0.3)",
-    "rgba(227, 119, 194, 0.3)",
-    "rgba(127, 127, 127, 0.3)",
-    "rgba(188, 189, 34, 0.3)",
-    "rgba(23, 190, 207, 0.3)",
-]
 
 
 # Data class for Job
@@ -54,7 +42,7 @@ class Job:
 # API Functions
 def get_pipelines(project_id):
     # TODO: Add pagination or control number of pipelines to fetch
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page=5"
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page=50"
     logging.info(f"Fetching pipelines from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
@@ -91,12 +79,11 @@ def get_test_report(project_id, pipeline_id):
     return response.json()
 
 
-char_map = {"success": "✅", "failed": "❌", "skipped": "⚠️", "error": "-"}
+color_map = {"success": "rgba(0, 128, 0, 0.5)", "failed": "rgba(255, 0, 0, 0.5)", "skipped": "rgba(255, 165, 0, 0.5)", "error": "white"}
 
 
 def to_html(
     test_map,
-    pipeline_run_ids,
     failing_test,
     skipped_tests,
     passing_tests,
@@ -108,19 +95,20 @@ def to_html(
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="3600">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMSC Integration Testing</title>
     <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
 </head>
 <body style="font-family: Tahoma, sans-serif;">
-<div style="width: 100%; display: flex; background-color: #0094ca;">
-<div style="flex:1;">
-    <img src="ess.png" alt="Logo">
+<div style="width: 100%; display: flex;">
+<div style="flex:0.3;">
+    <img src="https://ess.eu/themes/custom/ess/logo.svg" alt="Logo" width="200">
 </div>
-<div style="flex:1; text-align: center; color: white;">
+<div style="flex:1; text-align: center; color: white; background-color: #0094ca;">
     <h1><b>DMSC Integration Testing</b></h1>
 </div>
-<div style="flex:1; text-align:right; color: white;">
+<div style="flex:1; text-align:right; color: white; background-color: #0094ca;">
     <h3>Last updated: """
     html += datetime.now().strftime("%B %d, %Y %I:%M %p")
     html += """</h3>
@@ -131,49 +119,61 @@ def to_html(
             <tr>
                 <td style="width: 60%;vertical-align: top;">
     <br>
-    Key: &nbsp;&nbsp;&nbsp;&nbsp; ✅=Passed &nbsp;&nbsp;&nbsp;&nbsp; ❌=Failed &nbsp;&nbsp;&nbsp;&nbsp; ⚠️=Skipped<br><br>
+    """
+    # Add colored rectangles for legend
+    html += f"Key: &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['success']};'></div> = Success &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['failed']};'></div> = Failed &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['skipped']};'></div> = Skipped"
+    html += """<br><br>
     <table style="border-collapse: collapse;">
         <tr>
             <th style="border: 1px solid black;">Test Name</th>
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        html += f'            <th colspan="2" style="border: 1px solid black;">{instr}</th>\n'
-    html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" ">&nbsp;</td>\n        </tr>\n'
+        html += f'            <th style="border: 1px solid black;">{instr}</th>\n'
+    html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;background-color: {PLOTLY_COLORS[i]};"><b>{group}</b></td>\n'
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;background-color: #D3D3D3;font-size: 1.5em;"><b>{group}</b></td>\n'
         html += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
-            html += f'        <tr>\n            <td style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
+            # Find max number of tests
+            max_tests = 0
+            for ins in INSTRUMENTS:
+                if ins in instr_map:
+                    max_tests = max(max_tests, len(instr_map[ins]))
+            html += f'        <tr>\n            <td rowspan="{max_tests}" style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
             if "none" in instr_map:
-                html += f'            <td colspan="{len(INSTRUMENTS) * 2}" style="border: 1px solid black;">'
-                for test in instr_map["none"]:
-                    text, status, url = test
-                    if len(text) > 16:
-                        text = text[:16] + "..."
-                    prefix = f"{text}: " if text else ""
-                    html += f'{prefix}<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
-                html += "</td>\n"
-            else:
-                for ins in instruments:
-                    if ins not in instr_map:
-                        html += f'            <td colspan="2" style="border: 1px solid black;">{char_map["error"]}</td>\n'
+                for i in range(max_tests):
+                    if i > 0:
+                        html += "        <tr>\n"
+                    if i >= len(instr_map["none"]):
+                        html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"></td></tr>\n'
                     else:
-                        html += '            <td style="border-left: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
-                        for test in instr_map[ins]:
-                            text, status, url = test
-                            if len(text) > 16:
-                                text = text[:16] + "..."
-                            html += f"{text}: <br>" if text else ""
-                        html += "</td>\n"
-                        html += '            <td style="border-right: 1px solid black; border-bottom: 1px solid black;border-top: 1px solid black;">'
-                        for test in instr_map[ins]:
-                            text, status, url = test
-                            html += f'<a href="{url}" style="text-decoration:none;">{char_map[status]}</a><br>'
-                        html += "</td>\n"
-
-            html += "        </tr>\n"
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS) * 2}" ">&nbsp;</td>\n        </tr>\n'
+                        text, status, url = instr_map["none"][i]
+                        if len(text) > 16:
+                            text = text[:16] + "..."
+                        if not text:
+                            text = "&nbsp;"
+                        html += f'<td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black; background-color: {color_map[status]};"><a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
+            else:
+                for i in range(max_tests):
+                    if i > 0:
+                        html += "        <tr>\n"
+                    for ins in instruments:
+                        if ins not in instr_map:
+                            html += f'            <td style="border: 1px solid black; background-color: {color_map['error']};"></td>\n'
+                        else:
+                            if i >= len(instr_map[ins]):
+                                html += f'            <td style="border: 1px solid black; background-color: {color_map["error"]};"></td>\n'
+                            else:
+                                text, status, url = instr_map[ins][i]
+                                if len(text) > 16:
+                                    text = text[:16] + "..."
+                                if not text:
+                                    text = "&nbsp;"
+                                html += f'<td style="border: 1px solid black; background-color: {color_map[status]};"><a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%; color: black;">{text}</a></td>\n'
+                    html += "        </tr>\n"
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     html += """    </table>
 </td>
 <td style=" width: 40%; vertical-align: top;">
@@ -365,7 +365,7 @@ def main():
 
     percentage_data = [i[2] for i in run_chart]
     failed_job_percentage = f"{percentage_data[-1]:.2f}%"
-    pipeline_run_ids = [i[0] for i in run_chart]
+    # pipeline_run_ids = [i[0] for i in run_chart]
     failing_test = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
@@ -409,7 +409,6 @@ def main():
 
     content = to_html(
         global_map,
-        pipeline_run_ids=pipeline_run_ids,
         failing_test=failing_test,
         skipped_tests=skipped_tests,
         passing_tests=passing_tests,
