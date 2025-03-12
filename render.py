@@ -97,10 +97,10 @@ def to_html(
     <title>DMSC Integration Testing</title>
     <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
 </head>
-<body style="font-family: Tahoma, sans-serif;">
-<div style="width: 100%; display: flex;">
+<body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+<div style="width: 100%; display: flex; height: 80px;">
 <div style="flex:0.3;">
-    <img src="https://ess.eu/themes/custom/ess/logo.svg" alt="Logo" width="200">
+    <img src="https://ess.eu/themes/custom/ess/logo.svg" alt="Logo" height="80">
 </div>
 <div style="flex:1; text-align: center; color: white; background-color: #0094ca;">
     <h1><b>DMSC Integration Testing</b></h1>
