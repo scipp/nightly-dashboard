@@ -76,7 +76,12 @@ def get_test_report(project_id, pipeline_id):
     return response.json()
 
 
-color_map = {"success": "rgba(0, 128, 0, 0.5)", "failed": "rgba(255, 0, 0, 0.5)", "skipped": "rgba(255, 165, 0, 0.5)", "error": "white"}
+color_map = {
+    "success": "rgba(0, 128, 0, 0.5)",
+    "failed": "rgba(255, 0, 0, 0.5)",
+    "skipped": "rgba(255, 165, 0, 0.5)",
+    "error": "white",
+}
 
 
 def to_html(
@@ -118,7 +123,11 @@ def to_html(
     <br>
     """
     # Add colored rectangles for legend
-    html += f"Key: &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['success']};'></div> = Success &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['failed']};'></div> = Failed &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['skipped']};'></div> = Skipped"
+    html += (
+        f"Key: &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['success']};'></div> "
+        f"= Success &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['failed']};'></div> "
+        f"= Failed &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['skipped']};'></div> = Skipped"
+    )
     html += """<br><br>
     <table style="border-collapse: collapse;">
         <tr>
@@ -150,14 +159,17 @@ def to_html(
                             text = text[:16] + "..."
                         if not text:
                             text = "&nbsp;"
-                        html += f'<td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black; background-color: {color_map[status]};"><a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
+                        html += (
+                            f'<td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black; background-color: {color_map[status]};">'
+                            f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
+                        )
             else:
                 for i in range(max_tests):
                     if i > 0:
                         html += "        <tr>\n"
                     for ins in instruments:
                         if ins not in instr_map:
-                            html += f'            <td style="border: 1px solid black; background-color: {color_map['error']};"></td>\n'
+                            html += f'            <td style="border: 1px solid black; background-color: {color_map["error"]};"></td>\n'
                         else:
                             if i >= len(instr_map[ins]):
                                 html += f'            <td style="border: 1px solid black; background-color: {color_map["error"]};"></td>\n'
@@ -167,7 +179,10 @@ def to_html(
                                     text = text[:16] + "..."
                                 if not text:
                                     text = "&nbsp;"
-                                html += f'<td style="border: 1px solid black; background-color: {color_map[status]};"><a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%; color: black;">{text}</a></td>\n'
+                                html += (
+                                    f'<td style="border: 1px solid black; background-color: {color_map[status]};">'
+                                    f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%; color: black;">{text}</a></td>\n'
+                                )
                     html += "        </tr>\n"
         html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
         html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
@@ -391,12 +406,16 @@ def main():
         for instr in INSTRUMENTS:
             for test_name, (status, url) in test_map[group][instr].items():
                 raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
-                parts = raw_name.split("[")
-                name_root = parts[0]
-                if len(parts) > 1:
+                subtest = ""
+                name_root = raw_name
+                if "[" in raw_name:
+                    parts = raw_name.split("[")
+                    name_root = parts[0]
                     subtest = parts[1].replace("]", "")
-                else:
-                    subtest = ""
+                elif "__" in raw_name:
+                    parts = raw_name.split("__")
+                    name_root = parts[0]
+                    subtest = parts[1]
                 if name_root not in global_map[group]:
                     global_map[group][name_root] = {}
                 if instr not in global_map[group][name_root]:
