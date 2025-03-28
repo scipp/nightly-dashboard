@@ -25,7 +25,7 @@ jobs:
         mv render/* .
         mv rendered.html index.html
         git checkout -b deploy-temp
-        git add index.html favicon.ico
+        git add index.html favicon.ico plot.js style.css
         git commit -m "Deployed on $(date -u '+%Y-%m-%d %H:%M:%S')"
         git push -f origin deploy-temp:deploy
         git checkout main
