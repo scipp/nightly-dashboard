@@ -1,4 +1,17 @@
 :root {
+	--gray-1: #111111;
+	--gray-2: #191919;
+	--gray-3: #222222;
+	--gray-4: #2a2a2a;
+	--gray-5: #313131;
+	--gray-6: #3a3a3a;
+	--gray-7: #484848;
+	--gray-8: #606060;
+	--gray-9: #6e6e6e;
+	--gray-10: #7b7b7b;
+	--gray-11: #b4b4b4;
+	--gray-12: #eeeeee;
+
 	--red-1: #191111;
 	--red-2: #201314;
 	--red-3: #3b1219;
@@ -39,12 +52,34 @@
 	--green-12: #b1f1cb;
 }
 
+body {
+    background: var(--gray-2);
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+
+main {
+    margin: 10pt;
+}
+
+.logo {
+    padding: 10px;
+}
+
 .success {
     background: var(--green-9);
 }
 
 .success a, .success a:visited {
     color: var(--green-1);
+}
+
+.success:hover {
+    background: var(--green-10);
 }
 
 .failed {
@@ -55,12 +90,40 @@
     color: var(--red-1);
 }
 
+.failed:hover {
+    background: var(--red-10);
+}
+
 .skipped {
     background: var(--yellow-9);
 }
 
 .skipped a, .skipped a:visited {
     color: var(--yellow-1);
+}
+
+.skipped:hover {
+    background: var(--yellow-10);
+}
+
+.tests-table {
+    border-collapse: collapse;
+}
+
+.tests-table td, .tests-table th {
+    border: 1px solid var(--gray-8);
+}
+
+.tests-table a {
+    text-decoration:none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.group-header {
+    background-color: var(--gray-5);
+    font-size: 1.5em;
 }
 
 .plot-container {

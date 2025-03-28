@@ -94,14 +94,14 @@ def to_html(
 
     tests_table = """
 <tr>
-    <th style="border: 1px solid black;">Test Name</th>
+    <th>Test Name</th>
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        tests_table += f'            <th style="border: 1px solid black;">{instr}</th>\n'
+        tests_table += f'            <th>{instr}</th>\n'
     tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
-        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;background-color: #D3D3D3;font-size: 1.5em;"><b>{group}</b></td>\n'
+        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
             # Find max number of tests
@@ -109,13 +109,13 @@ def to_html(
             for ins in INSTRUMENTS:
                 if ins in instr_map:
                     max_tests = max(max_tests, len(instr_map[ins]))
-            tests_table += f'        <tr>\n            <td rowspan="{max_tests}" style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
+            tests_table += f'        <tr>\n            <td rowspan="{max_tests}">{test_name.replace("_", " ")}</td>\n'
             if "none" in instr_map:
                 for i in range(max_tests):
                     if i > 0:
                         tests_table += "        <tr>\n"
                     if i >= len(instr_map["none"]):
-                        tests_table += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"></td></tr>\n'
+                        tests_table += f'            <td colspan="{len(INSTRUMENTS)}"></td></tr>\n'
                     else:
                         text, status, url = instr_map["none"][i]
                         if len(text) > 16:
@@ -123,7 +123,7 @@ def to_html(
                         if not text:
                             text = "&nbsp;"
                         tests_table += (
-                            f'<td colspan="{len(INSTRUMENTS)}" class="{status}" style="border: 1px solid black;">'
+                            f'<td colspan="{len(INSTRUMENTS)}" class="{status}">'
                             f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
                         )
             else:
@@ -132,10 +132,10 @@ def to_html(
                         tests_table += "        <tr>\n"
                     for ins in instruments:
                         if ins not in instr_map:
-                            tests_table += '            <td style="border: 1px solid black;"></td>\n'
+                            tests_table += '            <td></td>\n'
                         else:
                             if i >= len(instr_map[ins]):
-                                tests_table += '            <td style="border: 1px solid black;"></td>\n'
+                                tests_table += '            <td></td>\n'
                             else:
                                 text, status, url = instr_map[ins][i]
                                 if len(text) > 16:
@@ -143,8 +143,8 @@ def to_html(
                                 if not text:
                                     text = "&nbsp;"
                                 tests_table += (
-                                    f'<td class="{status}" style="border: 1px solid black;">'
-                                    f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td>\n'
+                                    f'<td class="{status}">'
+                                    f'<a href="{url}">{text}</a></td>\n'
                                 )
                     tests_table += "        </tr>\n"
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
