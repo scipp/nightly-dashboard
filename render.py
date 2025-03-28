@@ -83,7 +83,7 @@ def load_main_template():
 
 def to_html(
     test_map,
-    failing_test,
+    failing_tests,
     skipped_tests,
     passing_tests,
     dates,
@@ -151,66 +151,15 @@ def to_html(
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
 
     # Add plotly chart with test history
-    plotly_script = f"""
-var dates = {dates};
-var failing_test = {failing_test};
-var skipped_tests = {skipped_tests};
-var passing_tests = {passing_tests};
-var data = [
-    {{
-        x: dates,
-        y: failing_test,
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Failed Tests',
-        marker: {{color: 'red'}}
-    }},
-    {{
-        x: dates,
-        y: skipped_tests,
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Skipped Tests',
-        marker: {{color: 'orange'}}
-    }},
-    {{
-        x: dates,
-        y: passing_tests,
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Passed Tests',
-        marker: {{color: 'green'}}
-    }}
-];
-var layout = {{
-    title: {{
-        text: 'Test History',
-    }},
-    yaxis: {{
-        title: {{
-            text: 'Number of Tests'
-        }}
-    }},
-    showlegend: true,
-    legend: {{
-        x: 1,
-        y: 1,
-        xanchor: 'right',
-        yanchor: 'bottom',
-        orientation: 'h',
-    }},
-    paper_bgcolor: 'rgba(255,255,255, 0)',
-    plot_bgcolor: 'rgba(255,255,255, 0)',
-}};
-Plotly.newPlot('chart', data, layout);
-"""
+    plotly_script = f"historyChart({dates}, {failing_tests}, {skipped_tests}, {passing_tests});"
+    # Add plotly chart with test groups
     for group in GROUPS:
         plotly_script += f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
     plotly_script += "var data_groups = [\n"
     for group in GROUPS:
         plotly_script += f"""
     {{
-        x: dates,
+        x: {dates},
         y: group_{group.replace("-", "_")},
         type: 'scatter',
         mode: 'lines+markers',
@@ -218,31 +167,7 @@ Plotly.newPlot('chart', data, layout);
     }},
 """
     plotly_script += "];\n"
-    plotly_script += """
-var layout_groups = {
-    title: {
-        text: 'Success Rate by Group',
-    },
-    yaxis: {
-        title: {
-            text: 'Success Rate',
-        },
-        range: [0, 105],
-    },
-    showlegend: true,
-    legend: {
-        x: 1,
-        y: -0.2,
-        xanchor: 'right',
-        yanchor: 'top',
-        orientation: 'h',
-    },
-    paper_bgcolor: 'rgba(255,255,255, 0)',
-    plot_bgcolor: 'rgba(255,255,255, 0)',
-};
-Plotly.newPlot('groups_chart', data_groups, layout_groups);
-</script>
-"""
+    plotly_script += "groupsChart(data_groups);"
 
     return main_html.format(
         last_updated=last_updated,
@@ -333,7 +258,7 @@ def main():
 
     percentage_data = [i[2] for i in run_chart]
     failed_job_percentage = f"{percentage_data[-1]:.2f}%"
-    failing_test = [i[3] for i in run_chart]
+    failing_tests = [i[3] for i in run_chart]
     skipped_tests = [i[4] for i in run_chart]
     passing_tests = [i[5] for i in run_chart]
     dates = [i[6] for i in run_chart]
@@ -380,7 +305,7 @@ def main():
 
     content = to_html(
         global_map,
-        failing_test=failing_test,
+        failing_tests=failing_tests,
         skipped_tests=skipped_tests,
         passing_tests=passing_tests,
         dates=dates,
