@@ -2,6 +2,7 @@ import os
 import logging
 from datetime import datetime, timedelta
 from dataclasses import dataclass
+from pathlib import Path
 from urllib.parse import quote
 
 import requests
@@ -76,12 +77,8 @@ def get_test_report(project_id, pipeline_id):
     return response.json()
 
 
-color_map = {
-    "success": "rgba(0, 128, 0, 0.5)",
-    "failed": "rgba(255, 0, 0, 0.5)",
-    "skipped": "rgba(255, 165, 0, 0.5)",
-    "error": "white",
-}
+def load_main_template():
+    return Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
 
 
 def to_html(
@@ -92,113 +89,69 @@ def to_html(
     dates,
     groups_chart,
 ):
-    html = """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="3600">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMSC Integration Testing</title>
-    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
-</head>
-<body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
-<div style="width: 100%; display: flex; height: 80px;">
-<div style="flex:0.3;">
-    <img src="https://ess.eu/themes/custom/ess/logo.svg" alt="Logo" height="80">
-</div>
-<div style="flex:1; text-align: center; color: white; background-color: #0094ca;">
-    <h1><b>DMSC Integration Testing</b></h1>
-</div>
-<div style="flex:1; text-align:right; color: white; background-color: #0094ca;">
-    <h3>Last updated: """
-    html += datetime.now().strftime("%B %d, %Y %I:%M %p")
-    html += """</h3>
-</div>
-</div>
-<div style="width: 100%;">
-    <table style="border-collapse: collapse;">
-            <tr>
-                <td style="width: 60%;vertical-align: top;">
-    <br>
-    """
-    # Add colored rectangles for legend
-    html += (
-        f"Key: &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['success']};'></div> "
-        f"= Success &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['failed']};'></div> "
-        f"= Failed &nbsp;&nbsp;&nbsp;&nbsp; <div style='display:inline-block; width: 20px; height: 20px; background-color: {color_map['skipped']};'></div> = Skipped"
-    )
-    html += """<br><br>
-    <table style="border-collapse: collapse;">
-        <tr>
-            <th style="border: 1px solid black;">Test Name</th>
+    main_html = load_main_template()
+    last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
+
+    tests_table = """
+<tr>
+    <th style="border: 1px solid black;">Test Name</th>
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        html += f'            <th style="border: 1px solid black;">{instr}</th>\n'
-    html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+        tests_table += f'            <th style="border: 1px solid black;">{instr}</th>\n'
+    tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;background-color: #D3D3D3;font-size: 1.5em;"><b>{group}</b></td>\n'
-        html += "        </tr>\n"
+        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;background-color: #D3D3D3;font-size: 1.5em;"><b>{group}</b></td>\n'
+        tests_table += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
             # Find max number of tests
             max_tests = 0
             for ins in INSTRUMENTS:
                 if ins in instr_map:
                     max_tests = max(max_tests, len(instr_map[ins]))
-            html += f'        <tr>\n            <td rowspan="{max_tests}" style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
+            tests_table += f'        <tr>\n            <td rowspan="{max_tests}" style="border: 1px solid black;">{test_name.replace("_", " ")}</td>\n'
             if "none" in instr_map:
                 for i in range(max_tests):
                     if i > 0:
-                        html += "        <tr>\n"
+                        tests_table += "        <tr>\n"
                     if i >= len(instr_map["none"]):
-                        html += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"></td></tr>\n'
+                        tests_table += f'            <td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black;"></td></tr>\n'
                     else:
                         text, status, url = instr_map["none"][i]
                         if len(text) > 16:
                             text = text[:16] + "..."
                         if not text:
                             text = "&nbsp;"
-                        html += (
-                            f'<td colspan="{len(INSTRUMENTS)}" style="border: 1px solid black; background-color: {color_map[status]};">'
+                        tests_table += (
+                            f'<td colspan="{len(INSTRUMENTS)}" class="{status}" style="border: 1px solid black;">'
                             f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
                         )
             else:
                 for i in range(max_tests):
                     if i > 0:
-                        html += "        <tr>\n"
+                        tests_table += "        <tr>\n"
                     for ins in instruments:
                         if ins not in instr_map:
-                            html += f'            <td style="border: 1px solid black; background-color: {color_map["error"]};"></td>\n'
+                            tests_table += '            <td style="border: 1px solid black;"></td>\n'
                         else:
                             if i >= len(instr_map[ins]):
-                                html += f'            <td style="border: 1px solid black; background-color: {color_map["error"]};"></td>\n'
+                                tests_table += '            <td style="border: 1px solid black;"></td>\n'
                             else:
                                 text, status, url = instr_map[ins][i]
                                 if len(text) > 16:
                                     text = text[:16] + "..."
                                 if not text:
                                     text = "&nbsp;"
-                                html += (
-                                    f'<td style="border: 1px solid black; background-color: {color_map[status]};">'
-                                    f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%; color: black;">{text}</a></td>\n'
+                                tests_table += (
+                                    f'<td class="{status}" style="border: 1px solid black;">'
+                                    f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td>\n'
                                 )
-                    html += "        </tr>\n"
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
-        html += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
-    html += """    </table>
-</td>
-<td style=" width: 40%; vertical-align: top;">
-"""
+                    tests_table += "        </tr>\n"
+        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
 
     # Add plotly chart with test history
-    chart = f"""
-    <div id="chart"></div>
-    <div id="groups_chart"></div>
-</td>
-</tr>
-</table>
-<script>
+    plotly_script = f"""
 var dates = {dates};
 var failing_test = {failing_test};
 var skipped_tests = {skipped_tests};
@@ -245,15 +198,17 @@ var layout = {{
         xanchor: 'right',
         yanchor: 'bottom',
         orientation: 'h',
-    }}
+    }},
+    paper_bgcolor: 'rgba(255,255,255, 0)',
+    plot_bgcolor: 'rgba(255,255,255, 0)',
 }};
 Plotly.newPlot('chart', data, layout);
 """
     for group in GROUPS:
-        chart += f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
-    chart += "var data_groups = [\n"
+        plotly_script += f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
+    plotly_script += "var data_groups = [\n"
     for group in GROUPS:
-        chart += f"""
+        plotly_script += f"""
     {{
         x: dates,
         y: group_{group.replace("-", "_")},
@@ -262,8 +217,8 @@ Plotly.newPlot('chart', data, layout);
         name: '{group}',
     }},
 """
-    chart += "];\n"
-    chart += """
+    plotly_script += "];\n"
+    plotly_script += """
 var layout_groups = {
     title: {
         text: 'Success Rate by Group',
@@ -282,17 +237,18 @@ var layout_groups = {
         yanchor: 'top',
         orientation: 'h',
     },
+    paper_bgcolor: 'rgba(255,255,255, 0)',
+    plot_bgcolor: 'rgba(255,255,255, 0)',
 };
 Plotly.newPlot('groups_chart', data_groups, layout_groups);
 </script>
 """
-    html += chart
 
-    html += """
-</div>
-</body>
-</html>"""
-    return html
+    return main_html.format(
+        last_updated=last_updated,
+        tests_table=tests_table,
+        plotly_script=plotly_script
+    )
 
 
 def main():
