@@ -1,59 +1,27 @@
 :root {
-	--gray-1: #111111;
-	--gray-2: #191919;
-	--gray-3: #222222;
-	--gray-4: #2a2a2a;
-	--gray-5: #313131;
-	--gray-6: #3a3a3a;
-	--gray-7: #484848;
-	--gray-8: #606060;
-	--gray-9: #6e6e6e;
-	--gray-10: #7b7b7b;
-	--gray-11: #b4b4b4;
-	--gray-12: #eeeeee;
+    /* Colors are based on the radix scales at
+         https://www.radix-ui.com/colors/docs/palette-composition/scales
+       Comments show the specific scale name and index.
+    */
+    --background-1: light-dark(#fff7f7, #201314);  /* gray-2 */
+    --background-2: light-dark(#e0e0e0, #313131);  /* gray-5 */
+    --text-1: light-dark(#202020, #eeeeee);  /* gray-12 */
+    --border: light-dark(#bbbbbb, #606060);  /* gray-8 */
 
-	--red-1: #191111;
-	--red-2: #201314;
-	--red-3: #3b1219;
-	--red-4: #500f1c;
-	--red-5: #611623;
-	--red-6: #72232d;
-	--red-7: #8c333a;
-	--red-8: #b54548;
-	--red-9: #e5484d;
-	--red-10: #ec5d5e;
-	--red-11: #ff9592;
-	--red-12: #ffd1d9;
-
-	--yellow-1: #14120b;
-	--yellow-2: #1b180f;
-	--yellow-3: #2d2305;
-	--yellow-4: #362b00;
-	--yellow-5: #433500;
-	--yellow-6: #524202;
-	--yellow-7: #665417;
-	--yellow-8: #836a21;
-	--yellow-9: #ffe629;
-	--yellow-10: #ffff57;
-	--yellow-11: #f5e147;
-	--yellow-12: #f6eeb4;
-
-	--green-1: #0e1512;
-	--green-2: #121b17;
-	--green-3: #132d21;
-	--green-4: #113b29;
-	--green-5: #174933;
-	--green-6: #20573e;
-	--green-7: #28684a;
-	--green-8: #2f7c57;
-	--green-9: #30a46c;
-	--green-10: #33b074;
-	--green-11: #3dd68c;
-	--green-12: #b1f1cb;
+    --success-fg:  light-dark(#fbfefb, #0e1511);  /* grass-1 */
+    --success-bg: light-dark(#46a758, #46a758);  /* grass-9 */
+    --success-bg-hover: light-dark(#3e9b4f, #53b365);  /* grass-10 */
+    --failed-fg: light-dark(#fffcfc, #191111);  /* red-1 */
+    --failed-bg: light-dark(#e5484d, #e5484d);  /* red-9 */
+    --failed-bg-hover: light-dark(#dc3e42, #ec5d5e);  /* red-10 */
+    --skipped-fg: light-dark(#4f3422, #16120c);  /* (amber-12, amber-1) */
+    --skipped-bg: light-dark(#ffc53d, #ffc53d);  /* amber-9 */
+    --skipped-bg-hover: light-dark(#ffba18, #ffd60a);  /* amber-10 */
 }
 
 body {
-    background: var(--gray-2);
+    background: var(--background-1);
+    color: var(text-1);
 }
 
 header {
@@ -71,39 +39,39 @@ main {
 }
 
 .success {
-    background: var(--green-9);
+    background: var(--success-bg);
 }
 
 .success a, .success a:visited {
-    color: var(--green-1);
+    color: var(--success-fg);
 }
 
 .success:hover {
-    background: var(--green-10);
+    background: var(--success-bg-hover);
 }
 
 .failed {
-    background: var(--red-9);
+    background: var(--failed-bg);
 }
 
 .failed a, .failed a:visited {
-    color: var(--red-1);
+    color: var(--failed-fg);
 }
 
 .failed:hover {
-    background: var(--red-10);
+    background: var(--failed-bg-hover);
 }
 
 .skipped {
-    background: var(--yellow-9);
+    background: var(--skipped-bg);
 }
 
 .skipped a, .skipped a:visited {
-    color: var(--yellow-1);
+    color: var(--skipped-fg);
 }
 
 .skipped:hover {
-    background: var(--yellow-10);
+    background: var(--skipped-bg-hover);
 }
 
 .tests-table {
@@ -111,7 +79,7 @@ main {
 }
 
 .tests-table td, .tests-table th {
-    border: 1px solid var(--gray-8);
+    border: 1px solid var(--border);
 }
 
 .tests-table a {
@@ -122,10 +90,13 @@ main {
 }
 
 .group-header {
-    background-color: var(--gray-5);
+    background-color: var(--background-2);
     font-size: 1.5em;
 }
 
-.plot-container {
-    filter: invert(75%) hue-rotate(180deg);
+/* make plots dark */
+@media(prefers-color-scheme: dark) {
+    .plot-container {
+        filter: invert(75%) hue-rotate(180deg);
+    }
 }
