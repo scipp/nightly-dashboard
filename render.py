@@ -93,13 +93,14 @@ def to_html(
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
     tests_table = """
-<tr>
+<thead>
+<tr class="tests-table-header">
     <th>Test Name</th>
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
         tests_table += f'            <th>{instr}</th>\n'
-    tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+    tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
@@ -147,8 +148,8 @@ def to_html(
                                     f'<a href="{url}">{text}</a></td>\n'
                                 )
                     tests_table += "        </tr>\n"
-        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
-        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n' * 2
+    tests_table += '</tbody>'
 
     # Add plotly chart with test history
     plotly_script = f"historyChart({dates}, {failing_tests}, {skipped_tests}, {passing_tests});"

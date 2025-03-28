@@ -38,6 +38,48 @@ main {
     padding: 10px;
 }
 
+.tests-table {
+    border-collapse: collapse;
+}
+
+.tests-table td, .tests-table th {
+    border: 1px solid var(--border);
+}
+
+.tests-table td.row-gap {
+    border: none;
+}
+
+.tests-table a {
+    text-decoration:none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* make header stick to the top of the page */
+.tests-table thead th {
+    position: sticky;
+    top: -1px;
+    
+    /* the border does not stick with the element, so emulate a sticking border */
+    box-shadow: 1px 1px 0 var(--border), -1px -1px 0 var(--border);
+    border: none;
+    
+    background-color: var(--background-2);
+    font-size: 1.2em;
+}
+
+.tests-table thead {
+    /* fill little gaps left by shadow */
+    border: 1px solid var(--border);
+}
+
+.group-header {
+    background-color: var(--background-2);
+    font-size: 1.5em;
+}
+
 .success {
     background: var(--success-bg);
 }
@@ -72,26 +114,6 @@ main {
 
 .skipped:hover {
     background: var(--skipped-bg-hover);
-}
-
-.tests-table {
-    border-collapse: collapse;
-}
-
-.tests-table td, .tests-table th {
-    border: 1px solid var(--border);
-}
-
-.tests-table a {
-    text-decoration:none;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.group-header {
-    background-color: var(--background-2);
-    font-size: 1.5em;
 }
 
 /* make plots dark */
