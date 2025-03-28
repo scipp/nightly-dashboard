@@ -80,6 +80,16 @@ main {
     font-size: 1.5em;
 }
 
+.table-legend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.table-legend div {
+    margin-right: 5pt;
+}
+
 .success {
     background: var(--success-bg);
 }

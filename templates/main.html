@@ -25,13 +25,21 @@
     </header>
     <main style="width: 100%;">
         <table style="border-collapse: collapse;">
+            <thead>
             <tr>
-                <td style="width: 60%;vertical-align: top;">
+                <th class="table-legend" style="width: 60%;">
                     <br>
                     Key: &nbsp;&nbsp;&nbsp;&nbsp; <div class='success' style='display:inline-block; width: 20px; height: 20px;'></div>
                     = Success &nbsp;&nbsp;&nbsp;&nbsp; <div class='failed' style='display:inline-block; width: 20px; height: 20px;'></div>
                     = Failed &nbsp;&nbsp;&nbsp;&nbsp; <div class='skipped' style='display:inline-block; width: 20px; height: 20px;'></div> = Skipped
                     <br><br>
+                </th>
+                <th style=" width: 40%;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width: 60%; vertical-align: top;">
                     <table class="tests-table">
                         {tests_table}
                     </table>
@@ -41,6 +49,7 @@
                     <div id="groups_chart"></div>
                 </td>
             </tr>
+            </tbody>
         </table>
         <script>{plotly_script}</script>
     </main>
