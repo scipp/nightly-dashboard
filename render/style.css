@@ -3,7 +3,7 @@
          https://www.radix-ui.com/colors/docs/palette-composition/scales
        Comments show the specific scale name and index.
     */
-    --background-1: light-dark(#fff7f7, #201314);  /* gray-2 */
+    --background-1: light-dark(#f9f9f9, #191919);  /* gray-2 */
     --background-2: light-dark(#e0e0e0, #313131);  /* gray-5 */
     --text-1: light-dark(#202020, #eeeeee);  /* gray-12 */
     --border: light-dark(#bbbbbb, #606060);  /* gray-8 */
