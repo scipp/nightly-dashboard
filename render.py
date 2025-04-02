@@ -100,7 +100,7 @@ def to_html(
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
         tests_table += f'            <th>{instr}</th>\n'
-    tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" ">&nbsp;</td>\n        </tr>\n'
+    tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
