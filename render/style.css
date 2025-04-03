@@ -1,22 +1,43 @@
-:root {
-    /* Colors are based on the radix scales at
-         https://www.radix-ui.com/colors/docs/palette-composition/scales
-       Comments show the specific scale name and index.
-    */
-    --background-1: light-dark(#f9f9f9, #191919);  /* gray-2 */
-    --background-2: light-dark(#e0e0e0, #313131);  /* gray-5 */
-    --text-1: light-dark(#202020, #eeeeee);  /* gray-12 */
-    --border: light-dark(#bbbbbb, #606060);  /* gray-8 */
+/* Colors are based on the radix scales at
+     https://www.radix-ui.com/colors/docs/palette-composition/scales
+   Comments show the specific scale name and index.
+*/
+@media(prefers-color-scheme: light) {
+    :root {
+        --background-1: #f9f9f9;  /* gray-2 */
+        --background-2: #e0e0e0;  /* gray-5 */
+        --text-1: #202020;  /* gray-12 */
+        --border: #bbbbbb;  /* gray-8 */
 
-    --success-fg:  light-dark(#fbfefb, #0e1511);  /* grass-1 */
-    --success-bg: light-dark(#46a758, #46a758);  /* grass-9 */
-    --success-bg-hover: light-dark(#3e9b4f, #53b365);  /* grass-10 */
-    --failed-fg: light-dark(#fffcfc, #191111);  /* red-1 */
-    --failed-bg: light-dark(#e5484d, #e5484d);  /* red-9 */
-    --failed-bg-hover: light-dark(#dc3e42, #ec5d5e);  /* red-10 */
-    --skipped-fg: light-dark(#4f3422, #16120c);  /* (amber-12, amber-1) */
-    --skipped-bg: light-dark(#ffc53d, #ffc53d);  /* amber-9 */
-    --skipped-bg-hover: light-dark(#ffba18, #ffd60a);  /* amber-10 */
+        --success-fg:  #fbfefb;  /* grass-1 */
+        --success-bg: #46a758;  /* grass-9 */
+        --success-bg-hover: #3e9b4f;  /* grass-10 */
+        --failed-fg: #fffcfc;  /* red-1 */
+        --failed-bg: #e5484d;  /* red-9 */
+        --failed-bg-hover: #dc3e42;  /* red-10 */
+        --skipped-fg: #4f3422;  /* amber-12 */
+        --skipped-bg: #ffc53d;  /* amber-9 */
+        --skipped-bg-hover: #ffba18;  /* amber-10 */
+    }
+}
+
+@media(prefers-color-scheme: dark) {
+    :root {
+        --background-1: #191919;  /* gray-2 */
+        --background-2: #313131;  /* gray-5 */
+        --text-1: #eeeeee;  /* gray-12 */
+        --border: #606060;  /* gray-8 */
+
+        --success-fg: #0e1511;  /* grass-1 */
+        --success-bg: #46a758;  /* grass-9 */
+        --success-bg-hover: #53b365;  /* grass-10 */
+        --failed-fg: #191111;  /* red-1 */
+        --failed-bg: #e5484d;  /* red-9 */
+        --failed-bg-hover: #ec5d5e;  /* red-10 */
+        --skipped-fg: #16120c;  /* amber-1 */
+        --skipped-bg: #ffc53d;  /* amber-9 */
+        --skipped-bg-hover: #ffd60a;  /* amber-10 */
+    }
 }
 
 body {
@@ -61,11 +82,11 @@ main {
 .tests-table thead th {
     position: sticky;
     top: -1px;
-    
+
     /* the border does not stick with the element, so emulate a sticking border */
     box-shadow: 1px 1px 0 var(--border), -1px -1px 0 var(--border);
     border: none;
-    
+
     background-color: var(--background-2);
     font-size: 1.2em;
 }
