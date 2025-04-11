@@ -123,15 +123,16 @@ main {
     background: var(--success-bg-hover);
 }
 
-.failed {
+.failed, .error {
     background: var(--failed-bg);
 }
 
-.failed a, .failed a:visited {
+.failed a, .failed a:visited,
+.error a, .error a:visited {
     color: var(--failed-fg);
 }
 
-.failed:hover {
+.failed:hover, .error:hover {
     background: var(--failed-bg-hover);
 }
 
@@ -145,6 +146,17 @@ main {
 
 .skipped:hover {
     background: var(--skipped-bg-hover);
+}
+
+.error a:before {
+    content: '\f33b';
+    font-family:bootstrap-icons!important;
+    font-style:normal;
+    font-weight:400!important;
+    font-variant:normal;
+    line-height:1;
+    vertical-align:-.125em;
+    padding-right: 3pt;
 }
 
 /* make plots dark */
