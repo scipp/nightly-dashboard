@@ -105,6 +105,9 @@ def to_html(
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
+            instr_map = {
+                instr: sorted(tests, key=lambda t: t[0]) for instr, tests in instr_map.items()
+            }
             # Find max number of tests
             max_tests = 0
             for ins in INSTRUMENTS:
