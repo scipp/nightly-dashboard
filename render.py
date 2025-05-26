@@ -1,4 +1,5 @@
 import os
+import json
 import logging
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -38,27 +39,29 @@ class Job:
 
 
 # API Functions
-def get_pipelines(project_id):
+def get_pipelines(project_id, n=5):
     # TODO: Add pagination or control number of pipelines to fetch
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page=50"
+    # url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page={n}"
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     pipelines = response.json()
-    latest_pipeline = pipelines[0]
-    # Get the last 50 pipeline ids
-    last_50_pipelines = [
-        (
-            pipeline["id"],
-            str(
+    # latest_pipeline = pipelines[0]
+    # Get the last n pipeline ids
+    last_n_pipelines = {
+        pipeline["id"]: {
+            "updated_at": str(
                 datetime.fromisoformat(pipeline["updated_at"].replace("Z", ""))
                 + timedelta(hours=1)
             ),
-        )
-        for pipeline in pipelines[:50]
-    ]
-    return latest_pipeline, last_50_pipelines
+            "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
+        }
+        for pipeline in pipelines  # [:n]
+    }
+    return last_n_pipelines
+    # return latest_pipeline, last_n_pipelines
 
 
 def get_jobs(project_id, pipeline_id):
@@ -78,19 +81,49 @@ def get_test_report(project_id, pipeline_id):
 
 
 def load_main_template():
-    return Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
+    return (
+        Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
+    )
 
 
 def to_html(
     test_map,
-    failing_tests,
-    skipped_tests,
-    passing_tests,
-    dates,
+    # failing_tests,
+    # skipped_tests,
+    # passing_tests,
+    # dates,
+    global_chart,
     groups_chart,
 ):
     main_html = load_main_template()
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
+
+    # Add plotly chart with test history
+    plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
+
+    # Add plotly chart with test groups
+    # for group, data in groups_chart.items():
+    #     plotly_script += (
+    #         f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
+    #     )
+
+    plotly_script += "var data_groups = [\n"
+    for group, data in groups_chart.items():
+        plotly_script += f"""
+    {{
+        x: {data["date"]},
+        y: {data["percentage"]},
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: '{group}',
+    }},
+"""
+    plotly_script += "];\n"
+    plotly_script += "groupsChart(data_groups);"
+
+    return main_html.format(
+        last_updated=last_updated, tests_table="", plotly_script=plotly_script
+    )
 
     tests_table = """
 <thead>
@@ -99,14 +132,15 @@ def to_html(
 """
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        tests_table += f'            <th>{instr}</th>\n'
+        tests_table += f"            <th>{instr}</th>\n"
     tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
     for i, group in enumerate(GROUPS):
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
         for test_name, instr_map in test_map[group].items():
             instr_map = {
-                instr: sorted(tests, key=lambda t: t[0]) for instr, tests in instr_map.items()
+                instr: sorted(tests, key=lambda t: t[0])
+                for instr, tests in instr_map.items()
             }
             # Find max number of tests
             max_tests = 0
@@ -119,7 +153,9 @@ def to_html(
                     if i > 0:
                         tests_table += "        <tr>\n"
                     if i >= len(instr_map["none"]):
-                        tests_table += f'            <td colspan="{len(INSTRUMENTS)}"></td></tr>\n'
+                        tests_table += (
+                            f'            <td colspan="{len(INSTRUMENTS)}"></td></tr>\n'
+                        )
                     else:
                         text, status, url = instr_map["none"][i]
                         if len(text) > 16:
@@ -136,10 +172,10 @@ def to_html(
                         tests_table += "        <tr>\n"
                     for ins in instruments:
                         if ins not in instr_map:
-                            tests_table += '            <td></td>\n'
+                            tests_table += "            <td></td>\n"
                         else:
                             if i >= len(instr_map[ins]):
-                                tests_table += '            <td></td>\n'
+                                tests_table += "            <td></td>\n"
                             else:
                                 text, status, url = instr_map[ins][i]
                                 if len(text) > 16:
@@ -151,66 +187,168 @@ def to_html(
                                     f'<a href="{url}">{text}</a></td>\n'
                                 )
                     tests_table += "        </tr>\n"
-        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n' * 2
-    tests_table += '</tbody>'
+        tests_table += (
+            f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
+            * 2
+        )
+    tests_table += "</tbody>"
 
     # Add plotly chart with test history
-    plotly_script = f"historyChart({dates}, {failing_tests}, {skipped_tests}, {passing_tests});"
-    # Add plotly chart with test groups
-    for group in GROUPS:
-        plotly_script += f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
-    plotly_script += "var data_groups = [\n"
-    for group in GROUPS:
-        plotly_script += f"""
-    {{
-        x: {dates},
-        y: group_{group.replace("-", "_")},
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: '{group}',
-    }},
-"""
-    plotly_script += "];\n"
-    plotly_script += "groupsChart(data_groups);"
+    plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
+
+    #     # Add plotly chart with test groups
+    #     for group in GROUPS:
+    #         plotly_script += (
+    #             f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
+    #         )
+    #     plotly_script += "var data_groups = [\n"
+    #     for group in GROUPS:
+    #         plotly_script += f"""
+    #     {{
+    #         x: {dates},
+    #         y: group_{group.replace("-", "_")},
+    #         type: 'scatter',
+    #         mode: 'lines+markers',
+    #         name: '{group}',
+    #     }},
+    # """
+    #     plotly_script += "];\n"
+    #     plotly_script += "groupsChart(data_groups);"
 
     return main_html.format(
-        last_updated=last_updated,
-        tests_table=tests_table,
-        plotly_script=plotly_script
+        last_updated=last_updated, tests_table=tests_table, plotly_script=plotly_script
     )
 
 
+def _make_chart_container():
+    return {key: [] for key in ("date", "success", "failed", "skipped")}
+
+
+@dataclass
+class Test:
+    job_url: str
+    status: str
+    suite_name: str
+    test_name: str
+    output: str
+
+
 def main():
-    pipeline, last_50 = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
-    pipeline_id = pipeline["id"]
-    jobs = get_jobs(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
+    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
 
-    success, failed, others = [], [], []
-    for job in jobs:
-        job_obj = Job(
-            job_run_url=job["web_url"],
-            job_run_status=job["status"],
-            job_name=job["name"],
-        )
+    # print(pipelines)
 
-        if job["status"] == "success":
-            success.append(job_obj)
-        elif job["status"] == "failed":
-            failed.append(job_obj)
-        else:
-            job_obj.job_run_status = ""
-            others.append(job_obj)
+    latest_pipeline = next(iter(pipelines))
 
-    all_jobs = success + failed + others
-    for job in all_jobs:
-        logging.info(
-            f"Job: {job.job_name}, Status: {job.job_run_status}, URL: {job.job_run_url}"
-        )
+    # pipeline_id = pipeline["id"]
+    # jobs = get_jobs(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
+
+    global_chart = _make_chart_container()
+    groups_chart = {group: _make_chart_container() for group in GROUPS}
+
+    all_tests = []
+
+    for pline in pipelines.values():
+        global_chart["date"].append(pline["updated_at"])
+        report = pline["test_report"]
+        global_chart["success"].append(report["success_count"])
+        global_chart["failed"].append(report["failed_count"] + report["error_count"])
+        global_chart["skipped"].append(report["skipped_count"])
+
+        for group in GROUPS:
+            groups_chart[group]["date"].append(pline["updated_at"])
+            groups_chart[group]["success"].append(0)
+            groups_chart[group]["failed"].append(0)
+            groups_chart[group]["skipped"].append(0)
+
+        for suite in report["test_suites"]:
+            for group in GROUPS:
+                if group in suite["name"]:
+                    groups_chart[group]["success"][-1] += suite["success_count"]
+                    groups_chart[group]["failed"][-1] += (
+                        suite["failed_count"] + suite["error_count"]
+                    )
+                    groups_chart[group]["skipped"][-1] += suite["skipped_count"]
+
+            for test in suite["test_cases"]:
+                test_obj = Test(
+                    job_url=f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{latest_pipeline}/test_report?job_name={quote(suite['name'])}",
+                    status=test["status"],
+                    suite_name=suite["name"],
+                    test_name=test["name"],
+                    output=str(test["system_output"]).replace("\n", "<br>"),
+                )
+                all_tests.append(test_obj)
+
+    print(groups_chart)
+
+    # Compute percentage of success for each group
+    for data in groups_chart.values():
+        perc = []
+        for i in range(len(data["success"])):
+            total = data["success"][i] + data["failed"][i]
+            perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
+        data["percentage"] = perc
+
+        # groups_chart[group] = [
+        #     (i[0], i[1] / i[0] * 100 if i[0] > 0 else 0.0) for i in groups_chart[group]
+        # ]
+
+    content = to_html(
+        "",
+        global_chart=global_chart,
+        # failing_tests=failing_tests,
+        # skipped_tests=skipped_tests,
+        # passing_tests=passing_tests,
+        # dates=dates,
+        groups_chart=groups_chart,
+    )
+
+    filename = "render/rendered.html"
+    with open(filename, mode="w", encoding="utf-8") as message:
+        message.write(content)
+        logging.info(f"... wrote {filename}")
+
+    return
+
+    # for job in jobs:
+    #     job_obj = Job(
+    #         job_run_url=job["web_url"],
+    #         job_run_status=job["status"],
+    #         job_name=job["name"],
+    #     )
+
+    #     if job["status"] == "success":
+    #         success.append(job_obj)
+    #     elif job["status"] == "failed":
+    #         failed.append(job_obj)
+    #     else:
+    #         job_obj.job_run_status = ""
+    #         others.append(job_obj)
+
+    # all_jobs = success + failed + others
+    # for job in all_jobs:
+    #     logging.info(
+    #         f"Job: {job.job_name}, Status: {job.job_run_status}, URL: {job.job_run_url}"
+    #     )
 
     run_chart = []
     groups_chart = {group: [(0, 0) for _ in range(len(last_50))] for group in GROUPS}
+
+    pipelines = {}
+
     for i, (pid, updated_at) in enumerate(last_50):
         test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pid)
+        # print("========================================================")
+        # print(f"Pipeline ID: {pid}, Updated at: {updated_at}")
+        # print(test_report)
+        # print(get_jobs(DMSC_NIGHTLY_PROJECT_ID, pid))
+        pipelines[pid] = {
+            "test_report": test_report,
+            "updated_at": updated_at,
+            # "jobs": get_jobs(DMSC_NIGHTLY_PROJECT_ID, pid),
+        }
+        # print([t["name"] for t in test_report["test_suites"]])
         total_tests = test_report["total_count"]
         failed_tests = test_report["failed_count"]
         skipped_tests = test_report["skipped_count"]
@@ -240,6 +378,13 @@ def main():
                             test["status"] == "success"
                         )
                         groups_chart[group][i] = (ntot, nsuccess)
+
+    json.dump(
+        pipelines,
+        open("render/pipelines.json", "w", encoding="utf-8"),
+        indent=4,
+        ensure_ascii=False,
+    )
 
     for group in GROUPS:
         groups_chart[group] = [
