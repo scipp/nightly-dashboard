@@ -80,13 +80,24 @@ def get_test_report(project_id, pipeline_id):
     return response.json()
 
 
-def load_main_template():
-    return (
-        Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
-    )
+def load_template(name):
+    return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
 
-def to_html(
+def test_html(
+    history_chart,
+    test_info,
+):
+    test_html = load_template("test.html")
+    last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
+
+    # Add plotly chart with test history
+    plotly_script = f"historyChart({history_chart['date']}, {history_chart['failed']}, {history_chart['skipped']}, {history_chart['success']});"
+
+    return test_html.format(last_updated=last_updated, plotly_script=plotly_script)
+
+
+def main_html(
     test_map,
     # failing_tests,
     # skipped_tests,
@@ -95,7 +106,9 @@ def to_html(
     global_chart,
     groups_chart,
 ):
-    main_html = load_main_template()
+    main_html = (
+        Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
+    )
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
     # Add plotly chart with test history
@@ -231,6 +244,10 @@ class Test:
     suite_name: str
     test_name: str
     output: str
+    group: str
+    raw_name: str = ""
+    subtest: str = ""
+    name_root: str = ""
 
 
 def main():
@@ -245,8 +262,9 @@ def main():
 
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
+    tests_chart = {}
 
-    all_tests = []
+    all_tests = {}
 
     for pline in pipelines.values():
         global_chart["date"].append(pline["updated_at"])
@@ -264,11 +282,14 @@ def main():
         for suite in report["test_suites"]:
             for group in GROUPS:
                 if group in suite["name"]:
-                    groups_chart[group]["success"][-1] += suite["success_count"]
-                    groups_chart[group]["failed"][-1] += (
-                        suite["failed_count"] + suite["error_count"]
-                    )
-                    groups_chart[group]["skipped"][-1] += suite["skipped_count"]
+                    test_group = group
+                    break
+
+            groups_chart[test_group]["success"][-1] += suite["success_count"]
+            groups_chart[test_group]["failed"][-1] += (
+                suite["failed_count"] + suite["error_count"]
+            )
+            groups_chart[test_group]["skipped"][-1] += suite["skipped_count"]
 
             for test in suite["test_cases"]:
                 test_obj = Test(
@@ -277,10 +298,75 @@ def main():
                     suite_name=suite["name"],
                     test_name=test["name"],
                     output=str(test["system_output"]).replace("\n", "<br>"),
+                    group=test_group,
                 )
-                all_tests.append(test_obj)
+                raw_name = test_obj.test_name.replace("test_", "")
+                subtest = ""
+                name_root = raw_name
+                if "[" in raw_name:
+                    parts = raw_name.split("[")
+                    name_root = parts[0]
+                    subtest = parts[1].replace("]", "")
+                elif "__" in raw_name:
+                    parts = raw_name.split("__")
+                    name_root = parts[0]
+                    subtest = parts[1]
+                test_obj.raw_name = raw_name
+                test_obj.subtest = subtest
+                test_obj.name_root = name_root
 
-    print(groups_chart)
+                unique_name = f"{test_obj.suite_name}___{test_obj.test_name}"
+                if unique_name not in all_tests:
+                    all_tests[unique_name] = []
+                all_tests[unique_name].append(test_obj)
+
+                if unique_name not in tests_chart:
+                    tests_chart[unique_name] = _make_chart_container()
+                tests_chart[unique_name]["date"].append(pline["updated_at"])
+                tests_chart[unique_name]["success"].append(
+                    1 if test_obj.status == "success" else 0
+                )
+                tests_chart[unique_name]["failed"].append(
+                    1 if test_obj.status in ("failed", "error") else 0
+                )
+
+    # print([(t.suite_name, t.test_name) for t in all_tests])
+
+    test = next(iter(all_tests.values))
+
+    content = test_html(
+        history_chart=global_chart,
+    )
+
+    filename = "render/rendered.html"
+    with open(filename, mode="w", encoding="utf-8") as message:
+        message.write(content)
+        logging.info(f"... wrote {filename}")
+
+    return
+
+    # table_map = {group: {} for group in GROUPS}
+    # for group in GROUPS:
+    #     for instr in INSTRUMENTS:
+    #         for test_name, (status, url) in test_map[group][instr].items():
+    #             raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
+    #             subtest = ""
+    #             name_root = raw_name
+    #             if "[" in raw_name:
+    #                 parts = raw_name.split("[")
+    #                 name_root = parts[0]
+    #                 subtest = parts[1].replace("]", "")
+    #             elif "__" in raw_name:
+    #                 parts = raw_name.split("__")
+    #                 name_root = parts[0]
+    #                 subtest = parts[1]
+    #             if name_root not in global_map[group]:
+    #                 global_map[group][name_root] = {}
+    #             if instr not in global_map[group][name_root]:
+    #                 global_map[group][name_root][instr] = []
+    #             global_map[group][name_root][instr].append((subtest, status, url))
+
+    return
 
     # Compute percentage of success for each group
     for data in groups_chart.values():
@@ -289,10 +375,6 @@ def main():
             total = data["success"][i] + data["failed"][i]
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
-
-        # groups_chart[group] = [
-        #     (i[0], i[1] / i[0] * 100 if i[0] > 0 else 0.0) for i in groups_chart[group]
-        # ]
 
     content = to_html(
         "",
