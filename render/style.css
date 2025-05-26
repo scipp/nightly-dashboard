@@ -81,6 +81,11 @@ main {
     margin: 10pt;
 }
 
+a {
+    color: var(--text-1);
+    text-decoration: none;
+}
+
 .logo {
     padding: 10px;
 }

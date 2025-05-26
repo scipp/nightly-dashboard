@@ -91,16 +91,12 @@ def test_html(
 ):
     out_html = load_template("test.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
-    colors = {
-        "success": "green",
-        "failed": "red",
-        "error": "orange",
-        "skipped": "gray",
-    }
 
     test_results = ""
-    for date, status in zip(test_history["date"], test_history["status"]):
-        test_results += f'<tr><td class="{status}">{date}</td><td class="{status}">{status}</td></tr>\n'
+    for date, status, url in zip(
+        test_history["date"], test_history["status"], test_history["url"]
+    ):
+        test_results += f'<tr><td class="{status}"><a href="{url}">{date}</a></td><td class="{status}"><a href="{url}">{status}</a></td></tr>\n'
 
     return out_html.format(
         last_updated=last_updated,
@@ -122,32 +118,26 @@ def main_html(
     out_html = load_template("main.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
-    # Add plotly chart with test history
-    plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
+    #     # Add plotly chart with test history
+    #     plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
 
-    # Add plotly chart with test groups
-    # for group, data in groups_chart.items():
-    #     plotly_script += (
-    #         f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
+    #     plotly_script += "var data_groups = [\n"
+    #     for group, data in groups_chart.items():
+    #         plotly_script += f"""
+    #     {{
+    #         x: {data["date"]},
+    #         y: {data["percentage"]},
+    #         type: 'scatter',
+    #         mode: 'lines+markers',
+    #         name: '{group}',
+    #     }},
+    # """
+    #     plotly_script += "];\n"
+    #     plotly_script += "groupsChart(data_groups);"
+
+    #     return out_html.format(
+    #         last_updated=last_updated, tests_table="", plotly_script=plotly_script
     #     )
-
-    plotly_script += "var data_groups = [\n"
-    for group, data in groups_chart.items():
-        plotly_script += f"""
-    {{
-        x: {data["date"]},
-        y: {data["percentage"]},
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: '{group}',
-    }},
-"""
-    plotly_script += "];\n"
-    plotly_script += "groupsChart(data_groups);"
-
-    return out_html.format(
-        last_updated=last_updated, tests_table="", plotly_script=plotly_script
-    )
 
     tests_table = """
 <thead>
@@ -220,6 +210,27 @@ def main_html(
     # Add plotly chart with test history
     plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
 
+    plotly_script += "var data_groups = [\n"
+    for group, data in groups_chart.items():
+        plotly_script += f"""
+    {{
+        x: {data["date"]},
+        y: {data["percentage"]},
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: '{group}',
+    }},
+"""
+    plotly_script += "];\n"
+    plotly_script += "groupsChart(data_groups);"
+
+    return out_html.format(
+        last_updated=last_updated, tests_table=tests_table, plotly_script=plotly_script
+    )
+
+    # Add plotly chart with test history
+    plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
+
     #     # Add plotly chart with test groups
     #     for group in GROUPS:
     #         plotly_script += (
@@ -256,13 +267,18 @@ class Test:
     test_name: str
     output: str
     group: str
+    classname: str
     raw_name: str = ""
     subtest: str = ""
     name_root: str = ""
+    instrument: str = "none"
 
 
 def main():
-    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
+    # pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
+
+    with open("render/pipelines.json", "r", encoding="utf-8") as f:
+        pipelines = json.load(f)
 
     # print(pipelines)
 
@@ -274,11 +290,18 @@ def main():
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
 
+    # json.dump(
+    #     pipelines,
+    #     open("render/pipelines.json", "w", encoding="utf-8"),
+    #     indent=4,
+    #     ensure_ascii=False,
+    # )
+
     tests_history = {}
 
     all_tests = {}
 
-    for pline in pipelines.values():
+    for pid, pline in pipelines.items():
         global_chart["date"].append(pline["updated_at"])
         report = pline["test_report"]
         global_chart["success"].append(report["success_count"])
@@ -304,13 +327,19 @@ def main():
             groups_chart[test_group]["skipped"][-1] += suite["skipped_count"]
 
             for test in suite["test_cases"]:
+                # print(test["classname"], test["classname"].split(".")[1])
                 test_obj = Test(
-                    job_url=f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{latest_pipeline}/test_report?job_name={quote(suite['name'])}",
+                    job_url=f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pid}/test_report?job_name={quote(suite['name'])}",
                     status=test["status"],
                     suite_name=suite["name"],
                     test_name=test["name"],
                     output=str(test["system_output"]).replace("\n", "<br>"),
                     group=test_group,
+                    classname=(
+                        test["name"]
+                        if len(test["classname"]) == 0
+                        else test["classname"]
+                    ).split(".")[1],
                 )
                 raw_name = test_obj.test_name.replace("test_", "")
                 subtest = ""
@@ -326,63 +355,49 @@ def main():
                 test_obj.raw_name = raw_name
                 test_obj.subtest = subtest
                 test_obj.name_root = name_root
+                for instr in INSTRUMENTS:
+                    if instr in test_obj.suite_name:
+                        test_obj.instrument = instr
 
-                unique_name = (
-                    f"{test_obj.suite_name}___{test_obj.test_name}".replace(" ", "_")
-                    .replace(":", "_")
-                    .replace("(", "")
-                    .replace("[", "_")
-                    .replace("]", "_")
-                    .replace(",", "_")
-                )
+                unique_name = f"{test_obj.classname}|{test_obj.instrument}|{test_obj.name_root}|{test_obj.subtest}"
                 if unique_name not in all_tests:
                     all_tests[unique_name] = []
                 all_tests[unique_name].append(test_obj)
 
                 if unique_name not in tests_history:
-                    tests_history[unique_name] = {"date": [], "status": []}
+                    tests_history[unique_name] = {"date": [], "status": [], "url": []}
                 tests_history[unique_name]["date"].append(pline["updated_at"])
                 tests_history[unique_name]["status"].append(test_obj.status)
+                tests_history[unique_name]["url"].append(test_obj.job_url)
 
     # print([(t.suite_name, t.test_name) for t in all_tests])
 
-    name, test = next(iter(tests_history.items()))
+    for name, test in tests_history.items():
+        content = test_html(
+            test_history=test,
+            test_name=name,
+            test_report=all_tests[name][0].output,
+        )
 
-    content = test_html(
-        test_history=test,
-        test_name=name,
-        test_report=all_tests[name][0].output,
-    )
+        filename = f"render/{name.replace("|", "_")}.html"
+        with open(filename, mode="w", encoding="utf-8") as message:
+            message.write(content)
+            # logging.info(f"... wrote {filename}")
 
-    filename = f"render/{name}.html"
-    with open(filename, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        logging.info(f"... wrote {filename}")
-
-    return
-
-    # table_map = {group: {} for group in GROUPS}
-    # for group in GROUPS:
-    #     for instr in INSTRUMENTS:
-    #         for test_name, (status, url) in test_map[group][instr].items():
-    #             raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
-    #             subtest = ""
-    #             name_root = raw_name
-    #             if "[" in raw_name:
-    #                 parts = raw_name.split("[")
-    #                 name_root = parts[0]
-    #                 subtest = parts[1].replace("]", "")
-    #             elif "__" in raw_name:
-    #                 parts = raw_name.split("__")
-    #                 name_root = parts[0]
-    #                 subtest = parts[1]
-    #             if name_root not in global_map[group]:
-    #                 global_map[group][name_root] = {}
-    #             if instr not in global_map[group][name_root]:
-    #                 global_map[group][name_root][instr] = []
-    #             global_map[group][name_root][instr].append((subtest, status, url))
-
-    return
+    table_map = {group: {} for group in GROUPS}
+    for name, history in all_tests.items():
+        test = history[0]  # Use the first test as representative
+        if test.group not in table_map:
+            table_map[test.group] = {}
+        name_root = test.name_root.replace(f"{test.instrument}_", "")
+        if name_root not in table_map[test.group]:
+            table_map[test.group][name_root] = {}
+        if test.instrument not in table_map[test.group][name_root]:
+            table_map[test.group][name_root][test.instrument] = []
+        filename = f"{name.replace("|", "_")}.html"
+        table_map[test.group][name_root][test.instrument].append(
+            (test.subtest, test.status, filename)
+        )
 
     # Compute percentage of success for each group
     for data in groups_chart.values():
@@ -392,8 +407,8 @@ def main():
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
-    content = to_html(
-        "",
+    content = main_html(
+        table_map,
         global_chart=global_chart,
         # failing_tests=failing_tests,
         # skipped_tests=skipped_tests,
@@ -402,7 +417,7 @@ def main():
         groups_chart=groups_chart,
     )
 
-    filename = "render/rendered.html"
+    filename = "render/index.html"
     with open(filename, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {filename}")
