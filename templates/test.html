@@ -27,9 +27,32 @@
         </div>
     </header>
     <main style="width: 100%;">
-        <div id="test_chart" style="width: 60%; vertical-align: top;"></div>
-        <div id="test_report" style="width: 60%; vertical-align: top;"></div>
-        <script>{ plotly_script }</script>
+        <h2>Test: {test_name}</h2>
+        <table>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {test_results}
+                        </tbody>
+                    </table>
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    Test Report:<br>
+                    <div style="width:80%; display: block;font-family: monospace, monospace;">
+                        {test_report}
+                    </div>
+                </td>
+            </tr>
+        </table>
     </main>
 </body>
 

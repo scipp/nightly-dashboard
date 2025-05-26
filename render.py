@@ -85,16 +85,29 @@ def load_template(name):
 
 
 def test_html(
-    history_chart,
-    test_info,
+    test_history,
+    test_name,
+    test_report,
 ):
-    test_html = load_template("test.html")
+    out_html = load_template("test.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
+    colors = {
+        "success": "green",
+        "failed": "red",
+        "error": "orange",
+        "skipped": "gray",
+    }
 
-    # Add plotly chart with test history
-    plotly_script = f"historyChart({history_chart['date']}, {history_chart['failed']}, {history_chart['skipped']}, {history_chart['success']});"
+    test_results = ""
+    for date, status in zip(test_history["date"], test_history["status"]):
+        test_results += f'<tr><td class="{status}">{date}</td><td class="{status}">{status}</td></tr>\n'
 
-    return test_html.format(last_updated=last_updated, plotly_script=plotly_script)
+    return out_html.format(
+        last_updated=last_updated,
+        test_results=test_results,
+        test_name=test_name,
+        test_report=test_report,
+    )
 
 
 def main_html(
@@ -106,9 +119,7 @@ def main_html(
     global_chart,
     groups_chart,
 ):
-    main_html = (
-        Path(__file__).resolve().parent.joinpath("templates", "main.html").read_text()
-    )
+    out_html = load_template("main.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
     # Add plotly chart with test history
@@ -134,7 +145,7 @@ def main_html(
     plotly_script += "];\n"
     plotly_script += "groupsChart(data_groups);"
 
-    return main_html.format(
+    return out_html.format(
         last_updated=last_updated, tests_table="", plotly_script=plotly_script
     )
 
@@ -262,7 +273,8 @@ def main():
 
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
-    tests_chart = {}
+
+    tests_history = {}
 
     all_tests = {}
 
@@ -315,30 +327,34 @@ def main():
                 test_obj.subtest = subtest
                 test_obj.name_root = name_root
 
-                unique_name = f"{test_obj.suite_name}___{test_obj.test_name}"
+                unique_name = (
+                    f"{test_obj.suite_name}___{test_obj.test_name}".replace(" ", "_")
+                    .replace(":", "_")
+                    .replace("(", "")
+                    .replace("[", "_")
+                    .replace("]", "_")
+                    .replace(",", "_")
+                )
                 if unique_name not in all_tests:
                     all_tests[unique_name] = []
                 all_tests[unique_name].append(test_obj)
 
-                if unique_name not in tests_chart:
-                    tests_chart[unique_name] = _make_chart_container()
-                tests_chart[unique_name]["date"].append(pline["updated_at"])
-                tests_chart[unique_name]["success"].append(
-                    1 if test_obj.status == "success" else 0
-                )
-                tests_chart[unique_name]["failed"].append(
-                    1 if test_obj.status in ("failed", "error") else 0
-                )
+                if unique_name not in tests_history:
+                    tests_history[unique_name] = {"date": [], "status": []}
+                tests_history[unique_name]["date"].append(pline["updated_at"])
+                tests_history[unique_name]["status"].append(test_obj.status)
 
     # print([(t.suite_name, t.test_name) for t in all_tests])
 
-    test = next(iter(all_tests.values))
+    name, test = next(iter(tests_history.items()))
 
     content = test_html(
-        history_chart=global_chart,
+        test_history=test,
+        test_name=name,
+        test_report=all_tests[name][0].output,
     )
 
-    filename = "render/rendered.html"
+    filename = f"render/{name}.html"
     with open(filename, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {filename}")
