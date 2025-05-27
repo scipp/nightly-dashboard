@@ -30,16 +30,8 @@ GROUPS = [
 ]
 
 
-# # Data class for Job
-# @dataclass
-# class Job:
-#     job_run_url: str
-#     job_run_status: str
-#     job_name: str
-
-
 # API Functions
-def get_pipelines(project_id, build_type, n=5):
+def get_pipelines(project_id, build_type, n=50):
     source_spec = "&source=schedule" if build_type == "nightly" else ""
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main{source_spec}&per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
@@ -59,14 +51,6 @@ def get_pipelines(project_id, build_type, n=5):
         for pipeline in pipelines
     }
     return last_n_pipelines
-
-
-# def get_jobs(project_id, pipeline_id):
-#     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/jobs?per_page=100"
-#     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-#     response = requests.get(url, headers=headers)
-#     response.raise_for_status()
-#     return response.json()
 
 
 def get_test_report(project_id, pipeline_id):
