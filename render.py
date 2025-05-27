@@ -1,5 +1,4 @@
 import os
-import json
 import logging
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -30,16 +29,16 @@ GROUPS = [
 ]
 
 
-# Data class for Job
-@dataclass
-class Job:
-    job_run_url: str
-    job_run_status: str
-    job_name: str
+# # Data class for Job
+# @dataclass
+# class Job:
+#     job_run_url: str
+#     job_run_status: str
+#     job_name: str
 
 
 # API Functions
-def get_pipelines(project_id, n=5):
+def get_pipelines(project_id, n=50):
     # TODO: Add pagination or control number of pipelines to fetch
     # url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page={n}"
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&per_page={n}"
@@ -48,7 +47,6 @@ def get_pipelines(project_id, n=5):
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     pipelines = response.json()
-    # latest_pipeline = pipelines[0]
     # Get the last n pipeline ids
     last_n_pipelines = {
         pipeline["id"]: {
@@ -58,18 +56,17 @@ def get_pipelines(project_id, n=5):
             ),
             "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
         }
-        for pipeline in pipelines  # [:n]
+        for pipeline in pipelines
     }
     return last_n_pipelines
-    # return latest_pipeline, last_n_pipelines
 
 
-def get_jobs(project_id, pipeline_id):
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/jobs?per_page=100"
-    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
+# def get_jobs(project_id, pipeline_id):
+#     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/jobs?per_page=100"
+#     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
+#     response = requests.get(url, headers=headers)
+#     response.raise_for_status()
+#     return response.json()
 
 
 def get_test_report(project_id, pipeline_id):
@@ -106,38 +103,9 @@ def test_html(
     )
 
 
-def main_html(
-    test_map,
-    # failing_tests,
-    # skipped_tests,
-    # passing_tests,
-    # dates,
-    global_chart,
-    groups_chart,
-):
+def main_html(test_map, global_chart, groups_chart):
     out_html = load_template("main.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
-
-    #     # Add plotly chart with test history
-    #     plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
-
-    #     plotly_script += "var data_groups = [\n"
-    #     for group, data in groups_chart.items():
-    #         plotly_script += f"""
-    #     {{
-    #         x: {data["date"]},
-    #         y: {data["percentage"]},
-    #         type: 'scatter',
-    #         mode: 'lines+markers',
-    #         name: '{group}',
-    #     }},
-    # """
-    #     plotly_script += "];\n"
-    #     plotly_script += "groupsChart(data_groups);"
-
-    #     return out_html.format(
-    #         last_updated=last_updated, tests_table="", plotly_script=plotly_script
-    #     )
 
     tests_table = """
 <thead>
@@ -228,32 +196,6 @@ def main_html(
         last_updated=last_updated, tests_table=tests_table, plotly_script=plotly_script
     )
 
-    # Add plotly chart with test history
-    plotly_script = f"historyChart({global_chart['date']}, {global_chart['failed']}, {global_chart['skipped']}, {global_chart['success']});"
-
-    #     # Add plotly chart with test groups
-    #     for group in GROUPS:
-    #         plotly_script += (
-    #             f"var group_{group.replace('-', '_')} = {groups_chart[group]};\n"
-    #         )
-    #     plotly_script += "var data_groups = [\n"
-    #     for group in GROUPS:
-    #         plotly_script += f"""
-    #     {{
-    #         x: {dates},
-    #         y: group_{group.replace("-", "_")},
-    #         type: 'scatter',
-    #         mode: 'lines+markers',
-    #         name: '{group}',
-    #     }},
-    # """
-    #     plotly_script += "];\n"
-    #     plotly_script += "groupsChart(data_groups);"
-
-    return main_html.format(
-        last_updated=last_updated, tests_table=tests_table, plotly_script=plotly_script
-    )
-
 
 def _make_chart_container():
     return {key: [] for key in ("date", "success", "failed", "skipped")}
@@ -275,17 +217,10 @@ class Test:
 
 
 def main():
-    # pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
+    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
 
-    with open("render/pipelines.json", "r", encoding="utf-8") as f:
-        pipelines = json.load(f)
-
-    # print(pipelines)
-
-    latest_pipeline = next(iter(pipelines))
-
-    # pipeline_id = pipeline["id"]
-    # jobs = get_jobs(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
+    # with open("render/pipelines.json", "r", encoding="utf-8") as f:
+    #     pipelines = json.load(f)
 
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
@@ -327,7 +262,6 @@ def main():
             groups_chart[test_group]["skipped"][-1] += suite["skipped_count"]
 
             for test in suite["test_cases"]:
-                # print(test["classname"], test["classname"].split(".")[1])
                 test_obj = Test(
                     job_url=f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pid}/test_report?job_name={quote(suite['name'])}",
                     status=test["status"],
@@ -370,8 +304,6 @@ def main():
                 tests_history[unique_name]["status"].append(test_obj.status)
                 tests_history[unique_name]["url"].append(test_obj.job_url)
 
-    # print([(t.suite_name, t.test_name) for t in all_tests])
-
     for name, test in tests_history.items():
         content = test_html(
             test_history=test,
@@ -382,7 +314,7 @@ def main():
         filename = f"render/{name.replace("|", "_")}.html"
         with open(filename, mode="w", encoding="utf-8") as message:
             message.write(content)
-            # logging.info(f"... wrote {filename}")
+            logging.info(f"... wrote {filename}")
 
     table_map = {group: {} for group in GROUPS}
     for name, history in all_tests.items():
@@ -407,15 +339,7 @@ def main():
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
-    content = main_html(
-        table_map,
-        global_chart=global_chart,
-        # failing_tests=failing_tests,
-        # skipped_tests=skipped_tests,
-        # passing_tests=passing_tests,
-        # dates=dates,
-        groups_chart=groups_chart,
-    )
+    content = main_html(table_map, global_chart=global_chart, groups_chart=groups_chart)
 
     filename = "render/index.html"
     with open(filename, mode="w", encoding="utf-8") as message:
@@ -424,161 +348,6 @@ def main():
 
     return
 
-    # for job in jobs:
-    #     job_obj = Job(
-    #         job_run_url=job["web_url"],
-    #         job_run_status=job["status"],
-    #         job_name=job["name"],
-    #     )
-
-    #     if job["status"] == "success":
-    #         success.append(job_obj)
-    #     elif job["status"] == "failed":
-    #         failed.append(job_obj)
-    #     else:
-    #         job_obj.job_run_status = ""
-    #         others.append(job_obj)
-
-    # all_jobs = success + failed + others
-    # for job in all_jobs:
-    #     logging.info(
-    #         f"Job: {job.job_name}, Status: {job.job_run_status}, URL: {job.job_run_url}"
-    #     )
-
-    run_chart = []
-    groups_chart = {group: [(0, 0) for _ in range(len(last_50))] for group in GROUPS}
-
-    pipelines = {}
-
-    for i, (pid, updated_at) in enumerate(last_50):
-        test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pid)
-        # print("========================================================")
-        # print(f"Pipeline ID: {pid}, Updated at: {updated_at}")
-        # print(test_report)
-        # print(get_jobs(DMSC_NIGHTLY_PROJECT_ID, pid))
-        pipelines[pid] = {
-            "test_report": test_report,
-            "updated_at": updated_at,
-            # "jobs": get_jobs(DMSC_NIGHTLY_PROJECT_ID, pid),
-        }
-        # print([t["name"] for t in test_report["test_suites"]])
-        total_tests = test_report["total_count"]
-        failed_tests = test_report["failed_count"]
-        skipped_tests = test_report["skipped_count"]
-        passed_tests = total_tests - failed_tests - skipped_tests
-        failed_job_percentage = (
-            (failed_tests / total_tests * 100) if total_tests else 0.0
-        )
-        run_chart.append(
-            (
-                pid,
-                total_tests,
-                failed_job_percentage,
-                failed_tests,
-                skipped_tests,
-                passed_tests,
-                updated_at,
-            )
-        )
-
-        # group_char should gather the percentage of success tests for each group
-        for test_suite in test_report["test_suites"]:
-            for test in test_suite["test_cases"]:
-                for group in GROUPS:
-                    if f".{group}." in test["classname"]:
-                        ntot = groups_chart[group][i][0] + (test["status"] != "skipped")
-                        nsuccess = groups_chart[group][i][1] + (
-                            test["status"] == "success"
-                        )
-                        groups_chart[group][i] = (ntot, nsuccess)
-
-    json.dump(
-        pipelines,
-        open("render/pipelines.json", "w", encoding="utf-8"),
-        indent=4,
-        ensure_ascii=False,
-    )
-
-    for group in GROUPS:
-        groups_chart[group] = [
-            (i[0], i[1] / i[0] * 100 if i[0] > 0 else 0.0) for i in groups_chart[group]
-        ]
-        groups_chart[group].reverse()
-
-    run_chart.reverse()
-    last_run_test_report = get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline_id)
-    test_suites = last_run_test_report["test_suites"]
-    skipped_test_suites = []
-    for test in test_suites:
-        job_name = test["name"]
-        job_name_url = f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pipeline_id}/test_report?job_name={quote(job_name)}"
-        for test_cases in test["test_cases"]:
-            if test_cases["status"] == "skipped":
-                skipped_test_suites.append(
-                    (test_cases["classname"], test_cases["name"], job_name_url)
-                )
-
-    percentage_data = [i[2] for i in run_chart]
-    failed_job_percentage = f"{percentage_data[-1]:.2f}%"
-    failing_tests = [i[3] for i in run_chart]
-    skipped_tests = [i[4] for i in run_chart]
-    passing_tests = [i[5] for i in run_chart]
-    dates = [i[6] for i in run_chart]
-
-    test_map = {group: {instr: {} for instr in INSTRUMENTS} for group in GROUPS}
-    for test in test_suites:
-        job_name = test["name"]
-        job_name_url = f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pipeline_id}/test_report?job_name={quote(job_name)}"
-        instr = "none"
-        for ins in INSTRUMENTS:
-            if ins in test["name"]:
-                instr = ins
-                break
-        for test_cases in test["test_cases"]:
-            for group in GROUPS:
-                if f".{group}." in test_cases["classname"]:
-                    name = test_cases["name"].replace("test_", "")
-                    test_map[group][instr][name] = (
-                        test_cases["status"],
-                        job_name_url,
-                    )
-
-    # Make an inventory of all tests
-    global_map = {group: {} for group in GROUPS}
-    for group in GROUPS:
-        for instr in INSTRUMENTS:
-            for test_name, (status, url) in test_map[group][instr].items():
-                raw_name = test_name.replace(f"{instr}_", "").replace(f"_{instr}", "")
-                subtest = ""
-                name_root = raw_name
-                if "[" in raw_name:
-                    parts = raw_name.split("[")
-                    name_root = parts[0]
-                    subtest = parts[1].replace("]", "")
-                elif "__" in raw_name:
-                    parts = raw_name.split("__")
-                    name_root = parts[0]
-                    subtest = parts[1]
-                if name_root not in global_map[group]:
-                    global_map[group][name_root] = {}
-                if instr not in global_map[group][name_root]:
-                    global_map[group][name_root][instr] = []
-                global_map[group][name_root][instr].append((subtest, status, url))
-
-    content = to_html(
-        global_map,
-        failing_tests=failing_tests,
-        skipped_tests=skipped_tests,
-        passing_tests=passing_tests,
-        dates=dates,
-        groups_chart=groups_chart,
-    )
-
-    filename = "render/rendered.html"
-    with open(filename, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        logging.info(f"... wrote {filename}")
-
 
 if __name__ == "__main__":
-    main()
+    main("nightly")
