@@ -204,6 +204,11 @@ a {
     }
 }
 
+/*
+Tabs to make test report appear on click.
+Based on https://stackoverflow.com/a/19097013
+*/
+
 .tab {
     /*float: left; */
     height: 41px;
