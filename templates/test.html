@@ -26,39 +26,7 @@
     </header>
     <main style="width: 100%;">
         <h2>Test: {test_name}</h2>
-        <table>
-            <tr>
-                <td style="vertical-align: top; padding-right: 20px;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {test_results}
-                        </tbody>
-                    </table>
-                </td>
-                <td style="vertical-align: top; padding-left: 20px">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="text-align: left;">Test Report:</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="TestReport">
-                                    {test_report}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </table>
+        {test_results}
     </main>
 </body>
 

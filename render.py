@@ -65,27 +65,34 @@ def load_template(name):
     return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
 
-def test_html(
-    test_history,
-    test_name,
-    test_reports,
-):
+def test_html(test_history, test_name):
     out_html = load_template("test.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
-    test_results = ""
-    for date, status, url in zip(
-        test_history["date"], test_history["status"], test_history["url"]
-    ):
-        test_results += f'<tr><td class="{status}"><a href="{url}">{date}</a></td><td class="{status}"><a href="{url}">{status}</a></td></tr>\n'
+    colors = {
+        "success": "var(--success-bg)",
+        "failed": "var(--failed-bg)",
+        "skipped": "var(--skipped-bg)",
+        "error": "var(--failed-bg)",
+    }
 
-    # store all test reports in a javascript variable
+    test_results = ""
+    for i, (date, status, report) in enumerate(
+        zip(test_history["date"], test_history["status"], test_history["report"])
+    ):
+        test_results += f"""<div class="tab">
+    <input type="radio" id="tab-{i+1}" name="tab-group-1"{' checked' if i == 0 else ''}>
+    <label  style="color: {colors[status]};" for="tab-{i+1}">{date}: {status}</label>
+    <div class="content">
+        <p>{report}</p>
+    </div>
+</div>
+"""
 
     return out_html.format(
         last_updated=last_updated,
         test_results=test_results,
         test_name=test_name,
-        test_report=test_report,
     )
 
 
@@ -284,17 +291,19 @@ def main(build_type, npipelines=50):
                 all_tests[unique_name].append(test_obj)
 
                 if unique_name not in tests_history:
-                    tests_history[unique_name] = {"date": [], "status": [], "url": []}
+                    tests_history[unique_name] = {
+                        "date": [],
+                        "status": [],
+                        "url": [],
+                        "report": [],
+                    }
                 tests_history[unique_name]["date"].append(pline["updated_at"])
                 tests_history[unique_name]["status"].append(test_obj.status)
                 tests_history[unique_name]["url"].append(test_obj.job_url)
+                tests_history[unique_name]["report"].append(test_obj.output)
 
     for name, test in tests_history.items():
-        content = test_html(
-            test_history=test,
-            test_name=name,
-            test_reports=[r.output for r in all_tests[name]],
-        )
+        content = test_html(test_history=test, test_name=name)
 
         filename = folder / f"{name.replace('|', '_')}.html"
         with open(filename, mode="w", encoding="utf-8") as message:
