@@ -39,7 +39,7 @@ GROUPS = [
 
 
 # API Functions
-def get_pipelines(project_id, build_type, n=50):
+def get_pipelines(project_id, build_type, n=5):
     source_spec = "&source=schedule" if build_type == "nightly" else ""
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main{source_spec}&per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
@@ -103,7 +103,7 @@ def test_html(
     )
 
 
-def main_html(test_map, global_chart, groups_chart):
+def main_html(test_map, global_chart, groups_chart, build_type):
     out_html = load_template("main.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
@@ -193,7 +193,11 @@ def main_html(test_map, global_chart, groups_chart):
     plotly_script += "groupsChart(data_groups);"
 
     return out_html.format(
-        last_updated=last_updated, tests_table=tests_table, plotly_script=plotly_script
+        last_updated=last_updated,
+        tests_table=tests_table,
+        plotly_script=plotly_script,
+        build_type=build_type,
+        other_type="latest" if build_type == "nightly" else "nightly",
     )
 
 
@@ -220,6 +224,7 @@ def main(build_type):
     pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID, build_type=build_type)
 
     folder = Path("render") / build_type
+    folder.mkdir(parents=True, exist_ok=True)
 
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
@@ -331,7 +336,12 @@ def main(build_type):
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
-    content = main_html(table_map, global_chart=global_chart, groups_chart=groups_chart)
+    content = main_html(
+        table_map,
+        global_chart=global_chart,
+        groups_chart=groups_chart,
+        build_type=build_type,
+    )
 
     filename = folder / "index.html"
     with open(filename, mode="w", encoding="utf-8") as message:
