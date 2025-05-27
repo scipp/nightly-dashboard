@@ -31,7 +31,7 @@ GROUPS = [
 
 
 # API Functions
-def get_pipelines(project_id, build_type, n=50):
+def get_pipelines(project_id, build_type, n):
     source_spec = "&source=schedule" if build_type == "nightly" else ""
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main{source_spec}&per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
@@ -68,7 +68,7 @@ def load_template(name):
 def test_html(
     test_history,
     test_name,
-    test_report,
+    test_reports,
 ):
     out_html = load_template("test.html")
     last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
@@ -78,6 +78,8 @@ def test_html(
         test_history["date"], test_history["status"], test_history["url"]
     ):
         test_results += f'<tr><td class="{status}"><a href="{url}">{date}</a></td><td class="{status}"><a href="{url}">{status}</a></td></tr>\n'
+
+    # store all test reports in a javascript variable
 
     return out_html.format(
         last_updated=last_updated,
@@ -204,8 +206,10 @@ class Test:
     instrument: str = "none"
 
 
-def main(build_type):
-    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID, build_type=build_type)
+def main(build_type, npipelines=50):
+    pipelines = get_pipelines(
+        DMSC_NIGHTLY_PROJECT_ID, build_type=build_type, n=npipelines
+    )
 
     folder = Path("render") / build_type
     folder.mkdir(parents=True, exist_ok=True)
@@ -289,7 +293,7 @@ def main(build_type):
         content = test_html(
             test_history=test,
             test_name=name,
-            test_report=all_tests[name][0].output,
+            test_reports=[r.output for r in all_tests[name]],
         )
 
         filename = folder / f"{name.replace('|', '_')}.html"
@@ -342,6 +346,13 @@ if __name__ == "__main__":
         choices=["nightly", "latest"],
         help="Type of dashboard to render: nightly or latest.",
     )
+    parser.add_argument(
+        "-n",
+        "--number",
+        type=int,
+        default=50,
+        help="Number of pipelines to fetch (default: 50).",
+    )
     args = parser.parse_args()
 
-    main(args.build_type)
+    main(build_type=args.build_type, npipelines=args.number)
