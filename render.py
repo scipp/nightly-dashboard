@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import quote
 
+import argparse
 import requests
 
 # Configure logging
@@ -38,10 +39,9 @@ GROUPS = [
 
 
 # API Functions
-def get_pipelines(project_id, n=50):
-    # TODO: Add pagination or control number of pipelines to fetch
-    # url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&source=schedule&per_page={n}"
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main&per_page={n}"
+def get_pipelines(project_id, build_type, n=50):
+    source_spec = "&source=schedule" if build_type == "nightly" else ""
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main{source_spec}&per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
@@ -216,21 +216,13 @@ class Test:
     instrument: str = "none"
 
 
-def main():
-    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID)
+def main(build_type):
+    pipelines = get_pipelines(DMSC_NIGHTLY_PROJECT_ID, build_type=build_type)
 
-    # with open("render/pipelines.json", "r", encoding="utf-8") as f:
-    #     pipelines = json.load(f)
+    folder = Path("render") / build_type
 
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
-
-    # json.dump(
-    #     pipelines,
-    #     open("render/pipelines.json", "w", encoding="utf-8"),
-    #     indent=4,
-    #     ensure_ascii=False,
-    # )
 
     tests_history = {}
 
@@ -311,7 +303,7 @@ def main():
             test_report=all_tests[name][0].output,
         )
 
-        filename = f"render/{name.replace("|", "_")}.html"
+        filename = folder / f"{name.replace('|', '_')}.html"
         with open(filename, mode="w", encoding="utf-8") as message:
             message.write(content)
             logging.info(f"... wrote {filename}")
@@ -326,7 +318,7 @@ def main():
             table_map[test.group][name_root] = {}
         if test.instrument not in table_map[test.group][name_root]:
             table_map[test.group][name_root][test.instrument] = []
-        filename = f"{name.replace("|", "_")}.html"
+        filename = f"{name.replace('|', '_')}.html"
         table_map[test.group][name_root][test.instrument].append(
             (test.subtest, test.status, filename)
         )
@@ -341,7 +333,7 @@ def main():
 
     content = main_html(table_map, global_chart=global_chart, groups_chart=groups_chart)
 
-    filename = "render/index.html"
+    filename = folder / "index.html"
     with open(filename, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {filename}")
@@ -350,4 +342,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main("nightly")
+    parser = argparse.ArgumentParser(description="Render the DMSC Nightly dashboard.")
+    parser.add_argument(
+        "build_type",
+        choices=["nightly", "latest"],
+        help="Type of dashboard to render: nightly or latest.",
+    )
+    args = parser.parse_args()
+
+    main(args.build_type)

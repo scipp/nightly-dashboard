@@ -1,23 +1,12 @@
 name: Generate Dashboard
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 5 * * *"  # Runs at 05:00 every day
-  workflow_dispatch:
-    inputs:
-      nightly:
-        default: true
-        type: boolean
-      latest:
-        default: true
-        type: boolean
-
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    with:
-      nightly: ${{ inputs.nightly || true }}
-      latest: ${{ inputs.latest || true }}
 
     steps:
     - name: Checkout repository
@@ -29,30 +18,25 @@ jobs:
         pixi-version: v0.40.3
         cache: true
 
-
     - run: pixi run render nightly
-      if: ${{ inputs.nightly }}
-
     - run: pixi run render latest
-      if: ${{ inputs.latest }}
 
     - uses: JamesIves/github-pages-deploy-action@v4.7.3
-        if: ${{ inputs.publish }}
-        with:
-          branch: gh-pages
-          folder: html
-          single-commit: true
+      with:
+        branch: gh-pages
+        folder: render
+        single-commit: true
 
-    - name: Commit and push changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        mv render/* .
-        git checkout -b deploy-temp
-        git add *.html favicon.ico plot.js style.css
-        git commit -m "Deployed on $(date -u '+%Y-%m-%d %H:%M:%S')"
-        git push -f origin deploy-temp:deploy
-        git checkout main
-        git branch -D deploy-temp
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Commit and push changes
+    #   run: |
+    #     git config --global user.name 'github-actions[bot]'
+    #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+    #     mv render/* .
+    #     git checkout -b deploy-temp
+    #     git add *.html favicon.ico plot.js style.css
+    #     git commit -m "Deployed on $(date -u '+%Y-%m-%d %H:%M:%S')"
+    #     git push -f origin deploy-temp:deploy
+    #     git checkout main
+    #     git branch -D deploy-temp
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
