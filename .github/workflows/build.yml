@@ -26,17 +26,3 @@ jobs:
         branch: gh-pages
         folder: render
         single-commit: true
-
-    # - name: Commit and push changes
-    #   run: |
-    #     git config --global user.name 'github-actions[bot]'
-    #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-    #     mv render/* .
-    #     git checkout -b deploy-temp
-    #     git add *.html favicon.ico plot.js style.css
-    #     git commit -m "Deployed on $(date -u '+%Y-%m-%d %H:%M:%S')"
-    #     git push -f origin deploy-temp:deploy
-    #     git checkout main
-    #     git branch -D deploy-temp
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
