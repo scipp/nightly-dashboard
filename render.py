@@ -1,6 +1,7 @@
-import os
 import logging
-from datetime import datetime, timezone
+import os
+import pytz
+from datetime import datetime
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import quote
@@ -43,8 +44,7 @@ def get_pipelines(project_id, build_type, n):
     last_n_pipelines = {
         pipeline["id"]: {
             "updated_at": datetime.fromisoformat(pipeline["updated_at"])
-            .replace(tzinfo=timezone.utc)
-            .astimezone(tz=None)
+            .astimezone(tz=pytz.timezone("Europe/Copenhagen"))
             .strftime("%Y-%m-%d %H:%M:%S"),
             "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
         }
