@@ -81,8 +81,8 @@ def test_html(test_history, test_name):
         zip(test_history["date"], test_history["status"], test_history["report"])
     ):
         test_results += f"""<div class="tab">
-    <input type="radio" id="tab-{i+1}" name="tab-group-1"{' checked' if i == 0 else ''}>
-    <label  style="color: {colors[status]};" for="tab-{i+1}">{date}: {status}</label>
+    <input type="radio" id="tab-{i + 1}" name="tab-group-1"{" checked" if i == 0 else ""}>
+    <label  style="color: {colors[status]};" for="tab-{i + 1}">{date}: {status}</label>
     <div class="content">
         <p>{report}</p>
     </div>
@@ -225,10 +225,9 @@ def main(build_type, npipelines=50):
     groups_chart = {group: _make_chart_container() for group in GROUPS}
 
     tests_history = {}
-
     all_tests = {}
 
-    for pid, pline in pipelines.items():
+    for i, (pid, pline) in enumerate(pipelines.items()):
         global_chart["date"].append(pline["updated_at"])
         report = pline["test_report"]
         global_chart["success"].append(report["success_count"])
@@ -286,6 +285,8 @@ def main(build_type, npipelines=50):
                         test_obj.instrument = instr
 
                 unique_name = f"{test_obj.classname}|{test_obj.instrument}|{test_obj.name_root}|{test_obj.subtest}"
+                if (i > 0) and (unique_name not in all_tests):
+                    continue
                 if unique_name not in all_tests:
                     all_tests[unique_name] = []
                 all_tests[unique_name].append(test_obj)
