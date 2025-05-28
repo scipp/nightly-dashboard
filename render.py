@@ -1,7 +1,7 @@
 import logging
 import os
 import pytz
-from datetime import datetime
+from datetime import datetime, UTC
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import quote
@@ -17,6 +17,7 @@ logging.basicConfig(
 # Constants
 GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
+TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
 TEAMS = ["ECDC", "SCIPP", "SWAT", "DST", "DONKI", "IDS"]
 INSTRUMENTS = ["bifrost", "dream", "estia", "loki", "nmx", "odin", "tbl", "none"]
@@ -44,7 +45,7 @@ def get_pipelines(project_id, build_type, n):
     last_n_pipelines = {
         pipeline["id"]: {
             "updated_at": datetime.fromisoformat(pipeline["updated_at"])
-            .astimezone(tz=pytz.timezone("Europe/Copenhagen"))
+            .astimezone(tz=TIMEZONE)
             .strftime("%Y-%m-%d %H:%M:%S"),
             "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
         }
@@ -67,7 +68,8 @@ def load_template(name):
 
 def test_html(test_history, test_name):
     out_html = load_template("test.html")
-    last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
+    now = datetime.now(UTC)
+    last_updated = now.astimezone(tz=TIMEZONE).strftime("%B %d, %Y %I:%M %p")
 
     colors = {
         "success": "var(--success-bg)",
