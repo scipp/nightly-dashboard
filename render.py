@@ -1,6 +1,6 @@
 import os
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import quote
@@ -42,10 +42,10 @@ def get_pipelines(project_id, build_type, n):
     # Get the last n pipeline ids
     last_n_pipelines = {
         pipeline["id"]: {
-            "updated_at": str(
-                datetime.fromisoformat(pipeline["updated_at"].replace("Z", ""))
-                + timedelta(hours=1)
-            ),
+            "updated_at": datetime.fromisoformat(pipeline["updated_at"])
+            .replace(tzinfo=timezone.utc)
+            .astimezone(tz=None)
+            .strftime("%Y-%m-%d %H:%M:%S"),
             "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
         }
         for pipeline in pipelines
