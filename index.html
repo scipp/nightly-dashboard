@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="3600">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>DMSC Integration Testing</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+<script src="plot.js"></script>
+</head>
+<body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+    <header>
+        <div class="logo" style="flex:0.3;">
+            <img src="https://ess.eu/themes/custom/ess/logo.svg" alt="Logo" height="80">
+        </div>
+        <div style="flex:1; text-align: center; color: white; background-color: #0094ca;">
+            <h1><b>DMSC Integration Testing</b></h1>
+        </div>
+        <div style="flex:1; text-align:right; color: white; background-color: #0094ca;">
+            <h3>Last updated: May 28, 2025 05:35 AM</h3>
+        </div>
+    </header>
+    <main style="width: 100%;">
+        <table style="border-collapse: collapse;">
+            <thead>
+            <tr>
+                <th class="table-legend" style="width: 60%;">
+                    Key: &nbsp;&nbsp;&nbsp;&nbsp; <div class='success' style='display:inline-block; width: 20px; height: 20px;'></div>
+                    = Success &nbsp;&nbsp;&nbsp;&nbsp; <div class='failed' style='display:inline-block; width: 20px; height: 20px;'></div>
+                    = Failed &nbsp;&nbsp;&nbsp;&nbsp; <div class='skipped' style='display:inline-block; width: 20px; height: 20px;'></div> = Skipped
+                </th>
+                <th style=" width: 40%;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width: 60%; vertical-align: top;">
+                    <table class="tests-table">
+                        
+<thead>
+<tr class="tests-table-header">
+    <th>Test Name</th>
+            <th>bifrost</th>
+            <th>dream</th>
+            <th>estia</th>
+            <th>loki</th>
+            <th>nmx</th>
+            <th>odin</th>
+            <th>tbl</th>
+        <tr></thead></tbody>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>chexus</b></td>
+        </tr>
+        <tr>
+            <td rowspan="1">run chexus</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bdream%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bestia%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bloki%2C%20manual%5D">&nbsp;</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bnmx%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Bodin%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=chexus-tests%3A%20%5Btbl%2C%20manual%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>nexusfiles-scipp</b></td>
+        </tr>
+        <tr>
+            <td rowspan="1">read choppers</td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">&nbsp;</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">&nbsp;</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td rowspan="1">load raw file</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td rowspan="9">read detector data</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">endcap_backward_...</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">multiblade_detec...</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_0</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">detector_name0</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">detector_name0</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">he3_detector_ban...</a></td>
+        </tr>
+        <tr>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">endcap_forward_d...</a></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_1</a></td>
+            <td></td>
+            <td></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">he3_detector_ban...</a></td>
+        </tr>
+        <tr>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">high_resolution_...</a></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_2</a></td>
+            <td></td>
+            <td></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">multiblade_detec...</a></td>
+        </tr>
+        <tr>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">mantle_detector</a></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_3</a></td>
+            <td></td>
+            <td></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">ngem_detector</a></td>
+        </tr>
+        <tr>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">sans_detector</a></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_4</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_5</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_6</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_7</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">detector_8</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="1">read components</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">analyzers</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="4">read monitor data</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">FrameMonitor0</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">BunkerMonitor</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">monitor_type0</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">IncidentMonitor</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">monitor_type0</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">monitor_type0</a></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">IncidentMonitor</a></td>
+        </tr>
+        <tr>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">FrameMonitor1</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">CaveMonitor</a></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">TransmissionMoni...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">FrameMonitor2</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">FrameMonitor3</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="1">can convert nexus data to wavelength</td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td rowspan="1">can unwrap tof from raw data</td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bbifrost%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bdream%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bestia%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bloki%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bnmx%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Bodin%2C%20manual%5D">&nbsp;</a></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=nexusfiles-scipp-tests%3A%20%5Btbl%2C%20manual%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>ingestor</b></td>
+        </tr>
+        <tr>
+            <td rowspan="1">file found by scicat is consistent with manual</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bbifrost%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bdream%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bestia%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bloki%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bnmx%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bodin%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Btbl%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td rowspan="1">dataset found is not old</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bbifrost%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bdream%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bestia%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bloki%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bnmx%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bodin%5D">&nbsp;</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Btbl%5D">&nbsp;</a></td>
+        </tr>
+        <tr>
+            <td rowspan="2">file found is not old</td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bbifrost%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bdream%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bestia%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bloki%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bnmx%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bodin%5D">manual</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Btbl%5D">manual</a></td>
+        </tr>
+        <tr>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bbifrost%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bdream%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bestia%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bloki%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bnmx%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Bodin%5D">scicat</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=ingestor-tests%3A%20%5Btbl%5D">scicat</a></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>mcstas-scipp</b></td>
+        </tr>
+        <tr>
+            <td rowspan="1">load geometry mcstas fails</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=mcstas-scipp-tests%3A%20%5Bnmx%5D">&nbsp;</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="1">reduce mcstas file</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=mcstas-scipp-tests%3A%20%5Bnmx%5D">&nbsp;</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>nexusjsontemplate-beamlime</b></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>scipp-analysis</b></td>
+        </tr>
+        <tr>
+            <td rowspan="6">validate physical data</td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">q_values_finite</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">q_values_non_neg...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">q_values_ureal_p...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">r_values_finite</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">r_values_non_neg...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="failed"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">r_values_ureal_p...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="2">package import</td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">easyreflectometr...</a></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bloki%5D">sasview_and_bump...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">essreflectometry</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="2">read reduced data</td>
+            <td></td>
+            <td></td>
+<td class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">check_structure</a></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bodin%5D">easyimaging</a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bodin%5D">pymuhrec</a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="1">validate meta data</td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bestia%5D">required_meta_da...</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="2">analyze reduced data</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bodin%5D">easyimaging_brag...</a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+<td class="skipped"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scipp-analysis-tests%3A%20%5Bodin%5D">pymuhrec</a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="group-header"><b>scitacean</b></td>
+        </tr>
+        <tr>
+            <td rowspan="1">can find input datasets</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">can create dataset</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">can download dataset with pid</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">can query for original datasets by proposal id</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">cannot query dataset without authentication</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">cannot get dataset without authentication</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td rowspan="1">cannot create dataset without authentication</td>
+<td colspan="8" class="success"><a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/13227/test_report?job_name=scitacean-tests" style="text-decoration:none;display: block; width: 100%; height: 100%;">&nbsp;</a></td></tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" class="row-gap">&nbsp;</td>
+        </tr>
+</tbody>
+                    </table>
+                </td>
+                <td style=" width: 40%; vertical-align: top;">
+                    <div id="history_chart"></div>
+                    <div id="groups_chart"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <script>historyChart(['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'], [13, 12, 10, 12, 12, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 13, 39, 12, 12, 13, 12, 23, 23, 23, 22, 13, 9, 12, 12, 12, 12, 13, 13, 13, 3, 10, 11, 38, 7, 11], [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28, 28, 28, 28, 28, 28, 28, 28, 28, 24, 26, 26, 26, 26, 28, 28, 28, 20, 27, 27, 27, 27, 29], [78, 79, 81, 79, 79, 79, 79, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 79, 78, 51, 83, 83, 82, 83, 72, 72, 72, 73, 82, 71, 76, 76, 76, 76, 82, 82, 82, 59, 86, 85, 57, 80, 84]);var group_chexus = [(7, 85.71428571428571), (7, 100.0), (7, 85.71428571428571), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 71.42857142857143), (7, 71.42857142857143), (7, 85.71428571428571)];
+var group_nexusfiles_scipp = [(40, 72.5), (40, 72.5), (40, 67.5), (40, 72.5), (40, 72.5), (40, 72.5), (40, 72.5), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 75.0), (40, 47.5), (40, 47.5), (40, 47.5), (40, 50.0), (40, 72.5), (23, 69.56521739130434), (32, 68.75), (32, 68.75), (32, 68.75), (32, 68.75), (40, 72.5), (40, 72.5), (40, 72.5), (3, 100.0), (41, 80.48780487804879), (41, 80.48780487804879), (41, 60.97560975609756), (32, 71.875), (41, 78.04878048780488)];
+var group_ingestor = [(28, 100.0), (28, 100.0), (28, 92.85714285714286), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 96.42857142857143), (28, 25.0), (28, 100.0), (28, 100.0), (28, 96.42857142857143), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 100.0), (28, 96.42857142857143), (28, 100.0), (28, 96.42857142857143), (28, 17.857142857142858), (28, 92.85714285714286), (28, 100.0)];
+var group_mcstas_scipp = [(0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0), (0, 0.0)];
+var group_nexusjsontemplate_beamlime = [(1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (0, 0.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (1, 100.0), (0, 0.0), (0, 0.0), (0, 0.0)];
+var group_scipp_analysis = [(7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (7, 85.71428571428571), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (11, 90.9090909090909), (10, 90.0), (10, 90.0)];
+var group_scitacean = [(7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 14.285714285714285), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 100.0), (7, 28.57142857142857), (7, 100.0), (7, 100.0)];
+var data_groups = [
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_chexus,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'chexus',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_nexusfiles_scipp,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'nexusfiles-scipp',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_ingestor,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'ingestor',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_mcstas_scipp,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'mcstas-scipp',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_nexusjsontemplate_beamlime,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'nexusjsontemplate-beamlime',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_scipp_analysis,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'scipp-analysis',
+    },
+
+    {
+        x: ['2025-04-08 23:16:32.400000', '2025-04-09 23:16:26.878000', '2025-04-10 23:16:20.778000', '2025-04-11 23:16:19.218000', '2025-04-12 23:15:57.852000', '2025-04-13 23:15:57.618000', '2025-04-14 23:15:35.926000', '2025-04-15 23:17:52.694000', '2025-04-16 23:15:47.373000', '2025-04-17 23:16:10.148000', '2025-04-18 23:16:03.245000', '2025-04-19 23:16:13.240000', '2025-04-20 23:16:09.544000', '2025-04-21 23:18:01.801000', '2025-04-22 23:17:28.346000', '2025-04-23 23:17:59.605000', '2025-04-24 23:19:51.896000', '2025-04-25 23:18:24.597000', '2025-04-26 23:17:13.422000', '2025-04-27 23:17:55.623000', '2025-04-28 23:16:59.712000', '2025-04-29 23:18:09.104000', '2025-04-30 23:16:38.284000', '2025-05-01 23:18:03.435000', '2025-05-02 23:20:17.862000', '2025-05-03 23:20:56.232000', '2025-05-05 13:06:46.880000', '2025-05-05 23:18:45.867000', '2025-05-06 23:20:59.712000', '2025-05-07 23:20:40.577000', '2025-05-08 23:20:50.998000', '2025-05-09 23:20:53.008000', '2025-05-10 23:19:44.284000', '2025-05-11 23:18:22.212000', '2025-05-12 23:20:14.493000', '2025-05-13 23:19:48.943000', '2025-05-14 23:19:30.747000', '2025-05-15 23:17:54.042000', '2025-05-16 23:18:43.363000', '2025-05-17 23:18:35.009000', '2025-05-18 23:18:58.407000', '2025-05-19 23:20:45.325000', '2025-05-20 23:19:18.199000', '2025-05-21 23:20:48.741000', '2025-05-22 23:17:13.402000', '2025-05-23 23:17:03.270000', '2025-05-24 23:17:08.024000', '2025-05-25 23:18:23.171000', '2025-05-26 23:18:51.031000', '2025-05-27 23:17:12.950000'],
+        y: group_scitacean,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'scitacean',
+    },
+];
+groupsChart(data_groups);</script>
+    </main>
+</body>
+</html>
