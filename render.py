@@ -66,10 +66,8 @@ def load_template(name):
     return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
 
-def test_html(test_history, test_name):
+def test_html(test_history, test_name, last_updated):
     out_html = load_template("test.html")
-    now = datetime.now(UTC)
-    last_updated = now.astimezone(tz=TIMEZONE).strftime("%B %d, %Y %I:%M %p")
 
     colors = {
         "success": "var(--success-bg)",
@@ -98,9 +96,8 @@ def test_html(test_history, test_name):
     )
 
 
-def main_html(test_map, global_chart, groups_chart, build_type):
+def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
     out_html = load_template("main.html")
-    last_updated = datetime.now().strftime("%B %d, %Y %I:%M %p")
 
     tests_table = """
 <thead>
@@ -216,6 +213,9 @@ class Test:
 
 
 def main(build_type, npipelines):
+    now = datetime.now(UTC)
+    last_updated = now.astimezone(tz=TIMEZONE).strftime("%B %d, %Y %H:%M:%S")
+
     pipelines = get_pipelines(
         DMSC_NIGHTLY_PROJECT_ID, build_type=build_type, n=npipelines
     )
@@ -306,7 +306,9 @@ def main(build_type, npipelines):
                 tests_history[unique_name]["report"].append(test_obj.output)
 
     for name, test in tests_history.items():
-        content = test_html(test_history=test, test_name=name)
+        content = test_html(
+            test_history=test, test_name=name, last_updated=last_updated
+        )
 
         filename = folder / f"{name.replace('|', '_')}.html"
         with open(filename, mode="w", encoding="utf-8") as message:
@@ -341,6 +343,7 @@ def main(build_type, npipelines):
         global_chart=global_chart,
         groups_chart=groups_chart,
         build_type=build_type,
+        last_updated=last_updated,
     )
 
     filename = folder / "index.html"
