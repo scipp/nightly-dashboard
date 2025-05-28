@@ -213,7 +213,7 @@ class Test:
     instrument: str = "none"
 
 
-def main(build_type, npipelines=50):
+def main(build_type, npipelines):
     pipelines = get_pipelines(
         DMSC_NIGHTLY_PROJECT_ID, build_type=build_type, n=npipelines
     )

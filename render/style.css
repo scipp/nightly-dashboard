@@ -249,5 +249,19 @@ Based on https://stackoverflow.com/a/19097013
 }
 
 [type=radio]:checked~label~.content {
+    z-index: 4;
+}
+
+.contentarea {
+    position: absolute;
+    top: 150px;
+    left: 17em;
+    background: var(--background-2);
+    right: 0;
+    bottom: 0;
+    padding-left: 1%;
+    width: 84em;
+    height: 200%;
     z-index: 3;
+    /* border: 1px solid #ccc; */
 }
