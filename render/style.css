@@ -4,39 +4,65 @@
 */
 @media(prefers-color-scheme: light) {
     :root {
-        --background-1: #f9f9f9;  /* gray-2 */
-        --background-2: #e0e0e0;  /* gray-5 */
-        --text-1: #202020;  /* gray-12 */
-        --border: #bbbbbb;  /* gray-8 */
+        --background-1: #f9f9f9;
+        /* gray-2 */
+        --background-2: #e0e0e0;
+        /* gray-5 */
+        --text-1: #202020;
+        /* gray-12 */
+        --border: #bbbbbb;
+        /* gray-8 */
 
-        --success-fg:  #fbfefb;  /* grass-1 */
-        --success-bg: #46a758;  /* grass-9 */
-        --success-bg-hover: #3e9b4f;  /* grass-10 */
-        --failed-fg: #fffcfc;  /* red-1 */
-        --failed-bg: #e5484d;  /* red-9 */
-        --failed-bg-hover: #dc3e42;  /* red-10 */
-        --skipped-fg: #4f3422;  /* amber-12 */
-        --skipped-bg: #ffc53d;  /* amber-9 */
-        --skipped-bg-hover: #ffba18;  /* amber-10 */
+        --success-fg: #fbfefb;
+        /* grass-1 */
+        --success-bg: #46a758;
+        /* grass-9 */
+        --success-bg-hover: #3e9b4f;
+        /* grass-10 */
+        --failed-fg: #fffcfc;
+        /* red-1 */
+        --failed-bg: #e5484d;
+        /* red-9 */
+        --failed-bg-hover: #dc3e42;
+        /* red-10 */
+        --skipped-fg: #4f3422;
+        /* amber-12 */
+        --skipped-bg: #ffc53d;
+        /* amber-9 */
+        --skipped-bg-hover: #ffba18;
+        /* amber-10 */
     }
 }
 
 @media(prefers-color-scheme: dark) {
     :root {
-        --background-1: #191919;  /* gray-2 */
-        --background-2: #313131;  /* gray-5 */
-        --text-1: #eeeeee;  /* gray-12 */
-        --border: #606060;  /* gray-8 */
+        --background-1: #191919;
+        /* gray-2 */
+        --background-2: #313131;
+        /* gray-5 */
+        --text-1: #eeeeee;
+        /* gray-12 */
+        --border: #606060;
+        /* gray-8 */
 
-        --success-fg: #0e1511;  /* grass-1 */
-        --success-bg: #46a758;  /* grass-9 */
-        --success-bg-hover: #53b365;  /* grass-10 */
-        --failed-fg: #191111;  /* red-1 */
-        --failed-bg: #e5484d;  /* red-9 */
-        --failed-bg-hover: #ec5d5e;  /* red-10 */
-        --skipped-fg: #16120c;  /* amber-1 */
-        --skipped-bg: #ffc53d;  /* amber-9 */
-        --skipped-bg-hover: #ffd60a;  /* amber-10 */
+        --success-fg: #0e1511;
+        /* grass-1 */
+        --success-bg: #46a758;
+        /* grass-9 */
+        --success-bg-hover: #53b365;
+        /* grass-10 */
+        --failed-fg: #191111;
+        /* red-1 */
+        --failed-bg: #e5484d;
+        /* red-9 */
+        --failed-bg-hover: #ec5d5e;
+        /* red-10 */
+        --skipped-fg: #16120c;
+        /* amber-1 */
+        --skipped-bg: #ffc53d;
+        /* amber-9 */
+        --skipped-bg-hover: #ffd60a;
+        /* amber-10 */
     }
 }
 
@@ -55,6 +81,11 @@ main {
     margin: 10pt;
 }
 
+a {
+    color: var(--text-1);
+    text-decoration: none;
+}
+
 .logo {
     padding: 10px;
 }
@@ -63,7 +94,8 @@ main {
     border-collapse: collapse;
 }
 
-.tests-table td, .tests-table th {
+.tests-table td,
+.tests-table th {
     border: 1px solid var(--border);
 }
 
@@ -72,7 +104,7 @@ main {
 }
 
 .tests-table a {
-    text-decoration:none;
+    text-decoration: none;
     display: block;
     width: 100%;
     height: 100%;
@@ -115,7 +147,8 @@ main {
     background: var(--success-bg);
 }
 
-.success a, .success a:visited {
+.success a,
+.success a:visited {
     color: var(--success-fg);
 }
 
@@ -123,16 +156,20 @@ main {
     background: var(--success-bg-hover);
 }
 
-.failed, .error {
+.failed,
+.error {
     background: var(--failed-bg);
 }
 
-.failed a, .failed a:visited,
-.error a, .error a:visited {
+.failed a,
+.failed a:visited,
+.error a,
+.error a:visited {
     color: var(--failed-fg);
 }
 
-.failed:hover, .error:hover {
+.failed:hover,
+.error:hover {
     background: var(--failed-bg-hover);
 }
 
@@ -140,7 +177,8 @@ main {
     background: var(--skipped-bg);
 }
 
-.skipped a, .skipped a:visited {
+.skipped a,
+.skipped a:visited {
     color: var(--skipped-fg);
 }
 
@@ -150,12 +188,12 @@ main {
 
 .error a:before {
     content: '\f33b';
-    font-family:bootstrap-icons!important;
-    font-style:normal;
-    font-weight:400!important;
-    font-variant:normal;
-    line-height:1;
-    vertical-align:-.125em;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: 400 !important;
+    font-variant: normal;
+    line-height: 1;
+    vertical-align: -.125em;
     padding-right: 3pt;
 }
 
@@ -164,4 +202,66 @@ main {
     .plot-container {
         filter: invert(75%) hue-rotate(180deg);
     }
+}
+
+/*
+Tabs to make test report appear on click.
+Based on https://stackoverflow.com/a/19097013
+*/
+
+.tab {
+    /*float: left; */
+    height: 41px;
+}
+
+.tab label {
+    background: var(--background-1);
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    margin-left: -1px;
+    position: relative;
+    left: 1px;
+    width: 15em;
+    display: block;
+}
+
+.tab [type=radio] {
+    display: none;
+}
+
+.content {
+    position: absolute;
+    top: 150px;
+    left: 17em;
+    background: var(--background-2);
+    right: 0;
+    bottom: 0;
+    padding-left: 1%;
+    width: 84em;
+    height: 100%;
+    /* border: 1px solid #ccc; */
+}
+
+[type=radio]:checked~label {
+    background: var(--background-2);
+    border-bottom: 1px solid var(--background-2);
+    z-index: 2;
+}
+
+[type=radio]:checked~label~.content {
+    z-index: 4;
+}
+
+.contentarea {
+    position: absolute;
+    top: 150px;
+    left: 17em;
+    background: var(--background-2);
+    right: 0;
+    bottom: 0;
+    padding-left: 1%;
+    width: 84em;
+    height: 200%;
+    z-index: 3;
+    /* border: 1px solid #ccc; */
 }
