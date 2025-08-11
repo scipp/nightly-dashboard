@@ -34,8 +34,8 @@ GROUPS = [
 
 # API Functions
 def get_pipelines(project_id, build_type, n):
-    source_spec = "&source=schedule" if build_type == "nightly" else ""
-    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?ref=main{source_spec}&per_page={n}"
+    source_spec = "source=schedule&" if build_type == "nightly" else ""
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?{source_spec}per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
