@@ -26,7 +26,7 @@ GROUPS = [
     "nexusfiles-scipp",
     "ingestor",
     "mcstas-scipp",
-    "nexusjsontemplate-beamlime",
+    "nexusjsontemplate-tests",
     "scipp-analysis",
     "scitacean",
 ]
