@@ -111,7 +111,7 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
     for i, group in enumerate(GROUPS):
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
-        for test_name, instr_map in test_map[group].items():
+        for test_name, instr_map in sorted(test_map[group].items()):
             instr_map = {
                 instr: sorted(tests, key=lambda t: t[0])
                 for instr, tests in instr_map.items()
