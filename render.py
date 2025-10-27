@@ -9,6 +9,9 @@ from urllib.parse import quote
 import argparse
 import requests
 
+from bs4 import BeautifulSoup
+
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -66,6 +69,12 @@ def load_template(name):
     return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
 
+def prettify_html(html_string):
+    """Prettify HTML string using BeautifulSoup."""
+    soup = BeautifulSoup(html_string, "html.parser")
+    return soup.prettify(formatter="html")
+
+
 def test_html(test_history, test_name, last_updated):
     out_html = load_template("test.html")
 
@@ -99,18 +108,15 @@ def test_html(test_history, test_name, last_updated):
 def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
     out_html = load_template("main.html")
 
-    tests_table = """
-<thead>
-<tr class="tests-table-header">
-    <th>Test Name</th>
-"""
+    tests_table = '<thead><tr class="tests-table-header"><th>Test Name</th>'
+
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
-        tests_table += f"            <th>{instr}</th>\n"
-    tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
+        tests_table += f"<th>{instr}</th>"
+    tests_table += f'</tr></thead><tbody><tr><td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td></tr>'
     for i, group in enumerate(GROUPS):
-        tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
-        tests_table += "        </tr>\n"
+        tests_table += f'<tr><td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>'
+        tests_table += "</tr>"
         for test_name, instr_map in sorted(test_map[group].items()):
             instr_map = {
                 instr: sorted(tests, key=lambda t: t[0])
@@ -121,15 +127,15 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
             for ins in INSTRUMENTS:
                 if ins in instr_map:
                     max_tests = max(max_tests, len(instr_map[ins]))
-            tests_table += f'        <tr>\n            <td rowspan="{max_tests}">{test_name.replace("_", " ")}</td>\n'
+            tests_table += (
+                f'<tr><td rowspan="{max_tests}">{test_name.replace("_", " ")}</td>'
+            )
             if "none" in instr_map:
                 for i in range(max_tests):
                     if i > 0:
-                        tests_table += "        <tr>\n"
+                        tests_table += "<tr>"
                     if i >= len(instr_map["none"]):
-                        tests_table += (
-                            f'            <td colspan="{len(INSTRUMENTS)}"></td></tr>\n'
-                        )
+                        tests_table += f'<td colspan="{len(INSTRUMENTS)}"></td></tr>'
                     else:
                         text, status, url = instr_map["none"][i]
                         if len(text) > 16:
@@ -138,18 +144,18 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
                             text = "&nbsp;"
                         tests_table += (
                             f'<td colspan="{len(INSTRUMENTS)}" class="{status}">'
-                            f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>\n'
+                            f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>'
                         )
             else:
                 for i in range(max_tests):
                     if i > 0:
-                        tests_table += "        <tr>\n"
+                        tests_table += "<tr>"
                     for ins in instruments:
                         if ins not in instr_map:
-                            tests_table += "            <td></td>\n"
+                            tests_table += "<td></td>"
                         else:
                             if i >= len(instr_map[ins]):
-                                tests_table += "            <td></td>\n"
+                                tests_table += "<td></td>"
                             else:
                                 text, status, url = instr_map[ins][i]
                                 if len(text) > 16:
@@ -158,12 +164,11 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
                                     text = "&nbsp;"
                                 tests_table += (
                                     f'<td class="{status}">'
-                                    f'<a href="{url}">{text}</a></td>\n'
+                                    f'<a href="{url}">{text}</a></td>'
                                 )
-                    tests_table += "        </tr>\n"
+                    tests_table += "</tr>"
         tests_table += (
-            f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
-            * 2
+            f'<tr><td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td></tr>' * 2
         )
     tests_table += "</tbody>"
 
@@ -306,8 +311,8 @@ def main(build_type, npipelines):
                 tests_history[unique_name]["report"].append(test_obj.output)
 
     for name, test in tests_history.items():
-        content = test_html(
-            test_history=test, test_name=name, last_updated=last_updated
+        content = prettify_html(
+            test_html(test_history=test, test_name=name, last_updated=last_updated)
         )
 
         filename = folder / f"{name.replace('|', '_')}.html"
@@ -338,12 +343,14 @@ def main(build_type, npipelines):
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
-    content = main_html(
-        table_map,
-        global_chart=global_chart,
-        groups_chart=groups_chart,
-        build_type=build_type,
-        last_updated=last_updated,
+    content = prettify_html(
+        main_html(
+            table_map,
+            global_chart=global_chart,
+            groups_chart=groups_chart,
+            build_type=build_type,
+            last_updated=last_updated,
+        )
     )
 
     filename = folder / "index.html"
