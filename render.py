@@ -315,8 +315,8 @@ def main(build_type, npipelines):
                 tests_history[unique_name]["report"].append(test_obj.output)
 
     for name, test in tests_history.items():
-        content = test_html(
-            test_history=test, test_name=name, last_updated=last_updated
+        content = prettify_html(
+            test_html(test_history=test, test_name=name, last_updated=last_updated)
         )
 
         filename = folder / f"{name.replace('|', '_')}.html"
