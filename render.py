@@ -9,6 +9,9 @@ from urllib.parse import quote
 import argparse
 import requests
 
+from bs4 import BeautifulSoup
+
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -66,6 +69,12 @@ def load_template(name):
     return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
 
+def prettify_html(html_string):
+    """Prettify HTML string using BeautifulSoup."""
+    soup = BeautifulSoup(html_string, "html.parser")
+    return soup.prettify(formatter="html")
+
+
 def test_html(test_history, test_name, last_updated):
     out_html = load_template("test.html")
 
@@ -107,7 +116,7 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
     instruments = sorted(set(INSTRUMENTS) - {"none"})
     for instr in instruments:
         tests_table += f"            <th>{instr}</th>\n"
-    tests_table += f'        <tr></thead></tbody>\n            <td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td>\n        </tr>\n'
+    tests_table += f'        </tr></thead><tbody>\n            <tr><td colspan="{len(INSTRUMENTS)}" class="row-gap">&nbsp;</td></tr>\n'
     for i, group in enumerate(GROUPS):
         tests_table += f'        <tr>\n            <td colspan="{len(INSTRUMENTS)}" class="group-header"><b>{group}</b></td>\n'
         tests_table += "        </tr>\n"
@@ -338,12 +347,14 @@ def main(build_type, npipelines):
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
-    content = main_html(
-        table_map,
-        global_chart=global_chart,
-        groups_chart=groups_chart,
-        build_type=build_type,
-        last_updated=last_updated,
+    content = prettify_html(
+        main_html(
+            table_map,
+            global_chart=global_chart,
+            groups_chart=groups_chart,
+            build_type=build_type,
+            last_updated=last_updated,
+        )
     )
 
     filename = folder / "index.html"
