@@ -265,3 +265,23 @@ Based on https://stackoverflow.com/a/19097013
     z-index: 3;
     /* border: 1px solid #ccc; */
 }
+
+
+.snowflake {
+    position: fixed;
+    top: 0;
+    color: white;
+    user-select: none;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s;
+    will-change: transform, top, left;
+}
+
+.snowflake:not([data-is-santa="true"]) {
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+.snowflake[data-is-santa="true"] {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
