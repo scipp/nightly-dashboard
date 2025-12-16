@@ -86,7 +86,7 @@ if (new Date().getMonth() == 11){
         const snowflake = document.createElement('div');
         snowflake.classList.add('snowflake');
 
-        // Every 100th flake is a Santa 🎅
+        // Every 1000th flake is a Santa 🎅
         snowflakeCount++;
         const isSanta = snowflakeCount % 1000 === 0;
         snowflake.textContent = isSanta ? '🎅' : '❄';
