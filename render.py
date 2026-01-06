@@ -105,7 +105,9 @@ def test_html(test_history, test_name, last_updated):
     )
 
 
-def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
+def main_html(
+    test_map, global_chart, groups_chart, instruments_chart, build_type, last_updated
+):
     out_html = load_template("main.html")
 
     tests_table = '<thead><tr class="tests-table-header"><th>Test Name</th>'
@@ -189,6 +191,20 @@ def main_html(test_map, global_chart, groups_chart, build_type, last_updated):
     plotly_script += "];\n"
     plotly_script += "groupsChart(data_groups);"
 
+    plotly_script += "var data_instruments = [\n"
+    for instr, data in instruments_chart.items():
+        plotly_script += f"""
+    {{
+        x: {data["date"]},
+        y: {data["percentage"]},
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: '{instr}',
+    }},
+"""
+    plotly_script += "];\n"
+    plotly_script += "instrumentsChart(data_instruments);"
+
     return out_html.format(
         last_updated=last_updated,
         tests_table=tests_table,
@@ -231,6 +247,9 @@ def main(build_type, npipelines):
     global_chart = _make_chart_container()
     groups_chart = {group: _make_chart_container() for group in GROUPS}
 
+    instrument_list = sorted(set(INSTRUMENTS) - {"none"})
+    instruments_chart = {instr: _make_chart_container() for instr in instrument_list}
+
     tests_history = {}
     all_tests = {}
 
@@ -246,6 +265,12 @@ def main(build_type, npipelines):
             groups_chart[group]["success"].append(0)
             groups_chart[group]["failed"].append(0)
             groups_chart[group]["skipped"].append(0)
+
+        for instr in instrument_list:
+            instruments_chart[instr]["date"].append(pline["updated_at"])
+            instruments_chart[instr]["success"].append(0)
+            instruments_chart[instr]["failed"].append(0)
+            instruments_chart[instr]["skipped"].append(0)
 
         for suite in report["test_suites"]:
             for group in GROUPS:
@@ -290,6 +315,15 @@ def main(build_type, npipelines):
                 for instr in INSTRUMENTS:
                     if instr in test_obj.suite_name:
                         test_obj.instrument = instr
+                        break
+
+                if test_obj.instrument != "none":
+                    if test_obj.status == "success":
+                        instruments_chart[test_obj.instrument]["success"][-1] += 1
+                    elif test_obj.status == "skipped":
+                        instruments_chart[test_obj.instrument]["skipped"][-1] += 1
+                    else:
+                        instruments_chart[test_obj.instrument]["failed"][-1] += 1
 
                 unique_name = f"{test_obj.classname}|{test_obj.instrument}|{test_obj.name_root}|{test_obj.subtest}"
                 if (i > 0) and (unique_name not in all_tests):
@@ -343,11 +377,20 @@ def main(build_type, npipelines):
             perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
         data["percentage"] = perc
 
+    # Compute percentage of success for each instrument
+    for instr, data in instruments_chart.items():
+        perc = []
+        for i in range(len(data["success"])):
+            total = data["success"][i] + data["failed"][i]
+            perc.append((data["success"][i] / total * 100) if total > 0 else 0.0)
+        data["percentage"] = perc
+
     content = prettify_html(
         main_html(
             table_map,
             global_chart=global_chart,
             groups_chart=groups_chart,
+            instruments_chart=instruments_chart,
             build_type=build_type,
             last_updated=last_updated,
         )

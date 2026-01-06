@@ -74,7 +74,33 @@ function groupsChart(data_groups) {
     Plotly.newPlot('groups_chart', data_groups, layout_groups);
 }
 
-if (new Date().getMonth() == 11){
+function instrumentsChart(data_instruments) {
+
+    var layout_instruments = {
+        title: {
+            text: 'Success Rate by Instrument',
+        },
+        yaxis: {
+            title: {
+                text: 'Success Rate',
+            },
+            range: [0, 105],
+        },
+        showlegend: true,
+        legend: {
+            x: 1,
+            y: -0.2,
+            xanchor: 'right',
+            yanchor: 'top',
+            orientation: 'h',
+        },
+        paper_bgcolor: 'rgba(255,255,255, 0)',
+        plot_bgcolor: 'rgba(255,255,255, 0)',
+    };
+    Plotly.newPlot('instruments_chart', data_instruments, layout_instruments);
+}
+
+if (new Date().getMonth() == 11) {
 
     const snowflakes = [];
     const maxSnowflakes = 250;
