@@ -301,14 +301,14 @@ def main(build_type, npipelines):
                 raw_name = test_obj.test_name.replace("test_", "")
                 subtest = ""
                 name_root = raw_name
-                if "[" in raw_name:
+                if "__" in raw_name:
+                    parts = raw_name.split("__")
+                    name_root = parts[0].replace("[", "").replace("]", "")
+                    subtest = parts[1].replace("[", "").replace("]", "")
+                elif "[" in raw_name:
                     parts = raw_name.split("[")
                     name_root = parts[0]
                     subtest = parts[1].replace("]", "")
-                elif "__" in raw_name:
-                    parts = raw_name.split("__")
-                    name_root = parts[0]
-                    subtest = parts[1]
                 test_obj.raw_name = raw_name
                 test_obj.subtest = subtest
                 test_obj.name_root = name_root
