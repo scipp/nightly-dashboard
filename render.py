@@ -23,7 +23,17 @@ DMSC_NIGHTLY_PROJECT_ID = 301
 TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
 TEAMS = ["ECDC", "SCIPP", "SWAT", "DST", "DONKI", "IDS"]
-INSTRUMENTS = ["bifrost", "dream", "estia", "loki", "nmx", "odin", "tbl", "none"]
+INSTRUMENTS = [
+    "beer",
+    "bifrost",
+    "dream",
+    "estia",
+    "loki",
+    "nmx",
+    "odin",
+    "tbl",
+    "none",
+]
 GROUPS = [
     "chexus",
     "nexusfiles-scipp",
