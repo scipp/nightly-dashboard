@@ -296,6 +296,9 @@ def main(build_type, npipelines):
             groups_chart[test_group]["skipped"][-1] += suite["skipped_count"]
 
             for test in suite["test_cases"]:
+                if test["classname"] is None:
+                    continue
+
                 classname = (
                     test["name"] if len(test["classname"]) == 0 else test["classname"]
                 ).split(".")
