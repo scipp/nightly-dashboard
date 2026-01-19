@@ -296,6 +296,13 @@ def main(build_type, npipelines):
             groups_chart[test_group]["skipped"][-1] += suite["skipped_count"]
 
             for test in suite["test_cases"]:
+                classname = (
+                    test["name"] if len(test["classname"]) == 0 else test["classname"]
+                ).split(".")
+                # Some test names and class names may be ill-formed (there is sometimes
+                # a test with test name=internal, classname=pytest).
+                classname = classname[int(len(classname) > 1)]
+
                 test_obj = Test(
                     job_url=f"https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pid}/test_report?job_name={quote(suite['name'])}",
                     status=test["status"],
@@ -303,11 +310,7 @@ def main(build_type, npipelines):
                     test_name=test["name"],
                     output=str(test["system_output"]).replace("\n", "<br>"),
                     group=test_group,
-                    classname=(
-                        test["name"]
-                        if len(test["classname"]) == 0
-                        else test["classname"]
-                    ).split(".")[1],
+                    classname=classname,
                 )
                 raw_name = test_obj.test_name.replace("test_", "")
                 subtest = ""
