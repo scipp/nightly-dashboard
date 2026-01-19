@@ -69,6 +69,7 @@ def get_pipelines(project_id, build_type, n):
 
 def get_test_report(project_id, pipeline_id):
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/test_report"
+    logging.info(f"Fetching test report for pipeline {pipeline_id} from URL: {url}")
     headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
