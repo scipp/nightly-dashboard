@@ -38,7 +38,6 @@ GROUPS = [
     "chexus",
     "nexusfiles-scipp",
     "ingestor",
-    "mcstas-scipp",
     "nexusjsontemplate-tests",
     "scipp-analysis",
     "scitacean",
