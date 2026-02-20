@@ -122,7 +122,7 @@ def test_html(test_history, test_name, last_updated):
 """
         if url is not None:
             test_results += f"""
-        <p style="color: #8ADEFF;"><b><u><a href="{url}" style="color: #8ADEFF;">View pipeline log here</a></u></b></p>
+        <p style="color: #8ADEFF;"><b><u><a href="{url}" style="color: #8ADEFF;">View job log here</a></u></b></p>
         <hr>
 """
         test_results += f"""
