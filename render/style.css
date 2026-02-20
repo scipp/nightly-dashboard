@@ -221,7 +221,7 @@ Based on https://stackoverflow.com/a/19097013
     margin-left: -1px;
     position: relative;
     left: 1px;
-    width: 15em;
+    width: 18em;
     display: block;
 }
 
@@ -232,12 +232,12 @@ Based on https://stackoverflow.com/a/19097013
 .content {
     position: absolute;
     top: 150px;
-    left: 17em;
+    left: 20em;
     background: var(--background-2);
     right: 0;
     bottom: 0;
     padding-left: 1%;
-    width: 84em;
+    width: 81em;
     height: 100%;
     /* border: 1px solid #ccc; */
 }
@@ -255,12 +255,12 @@ Based on https://stackoverflow.com/a/19097013
 .contentarea {
     position: absolute;
     top: 150px;
-    left: 17em;
+    left: 20em;
     background: var(--background-2);
     right: 0;
     bottom: 0;
     padding-left: 1%;
-    width: 84em;
+    width: 81em;
     height: 1000%;
     z-index: 3;
     /* border: 1px solid #ccc; */

@@ -75,6 +75,16 @@ def get_test_report(project_id, pipeline_id):
     return response.json()
 
 
+def get_job_list(project_id, pipeline_id):
+    url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/jobs?per_page=100"
+    logging.info(f"Fetching job list for pipeline {pipeline_id} from URL: {url}")
+    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    job_list = response.json()
+    return {job["name"]: job for job in job_list}
+
+
 def load_template(name):
     return Path(__file__).resolve().parent.joinpath("templates", name).read_text()
 
@@ -96,13 +106,26 @@ def test_html(test_history, test_name, last_updated):
     }
 
     test_results = ""
-    for i, (date, status, report) in enumerate(
-        zip(test_history["date"], test_history["status"], test_history["report"])
+    for i, (date, url, status, report, pid) in enumerate(
+        zip(
+            test_history["date"],
+            test_history["job_url"],
+            test_history["status"],
+            test_history["report"],
+            test_history["pipeline_id"],
+        )
     ):
         test_results += f"""<div class="tab">
     <input type="radio" id="tab-{i + 1}" name="tab-group-1"{" checked" if i == 0 else ""}>
-    <label  style="color: {colors[status]};" for="tab-{i + 1}">{date}: {status}</label>
+    <label  style="color: {colors[status]};" for="tab-{i + 1}">{date} [<a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/{pid}/builds">{pid}</a>]: {status}</label>
     <div class="content">
+"""
+        if url is not None:
+            test_results += f"""
+        <p style="color: #8ADEFF;"><b><u><a href="{url}" style="color: #8ADEFF;">View job log here</a></u></b></p>
+        <hr>
+"""
+        test_results += f"""
         <p>{report}</p>
     </div>
 </div>
@@ -264,6 +287,8 @@ def main(build_type, npipelines):
     all_tests = {}
 
     for i, (pid, pline) in enumerate(pipelines.items()):
+        job_list = get_job_list(DMSC_NIGHTLY_PROJECT_ID, pid)
+
         global_chart["date"].append(pline["updated_at"])
         report = pline["test_report"]
         global_chart["success"].append(report["success_count"])
@@ -354,8 +379,17 @@ def main(build_type, npipelines):
                         "status": [],
                         "url": [],
                         "report": [],
+                        "job_url": [],
+                        "pipeline_id": [],
                     }
                 tests_history[unique_name]["date"].append(pline["updated_at"])
+                tests_history[unique_name]["pipeline_id"].append(pid)
+                if suite["name"] in job_list:
+                    tests_history[unique_name]["job_url"].append(
+                        job_list[suite["name"]]["web_url"]
+                    )
+                else:
+                    tests_history[unique_name]["job_url"].append(None)
                 tests_history[unique_name]["status"].append(test_obj.status)
                 tests_history[unique_name]["url"].append(test_obj.job_url)
                 tests_history[unique_name]["report"].append(test_obj.output)
