@@ -31,6 +31,9 @@
         /* amber-9 */
         --skipped-bg-hover: #ffba18;
         /* amber-10 */
+        --failed-long-fg: #fffcfc;
+        --failed-long-bg: #9F0712;
+        --failed-long-bg-hover: #8b060f;
     }
 }
 
@@ -63,6 +66,9 @@
         /* amber-9 */
         --skipped-bg-hover: #ffd60a;
         /* amber-10 */
+        --failed-long-fg: #191111;
+        --failed-long-bg: #9F0712;
+        --failed-long-bg-hover: #8b060f;
     }
 }
 
@@ -171,6 +177,19 @@ a {
 .failed:hover,
 .error:hover {
     background: var(--failed-bg-hover);
+}
+
+.failed-long {
+    background: var(--failed-long-bg);
+}
+
+.failed-long a,
+.failed-long a:visited {
+    color: var(--failed-long-fg);
+}
+
+.failed-long:hover {
+    background: var(--failed-long-bg-hover);
 }
 
 .skipped {
