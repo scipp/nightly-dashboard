@@ -404,13 +404,13 @@ def main(build_type, npipelines):
             message.write(content)
             logging.info(f"... wrote {filename}")
 
-    # Look at the test history: if the test has been failing more the last 5 times or more, change status to failed-long
+    # Look at the test history: if the test has recently started failing (les than 5 days) change status to 'failed-new'.
     for name, history in tests_history.items():
         if history["status"][0] == "failed":
-            if len(history["status"]) >= 5 and all(
-                status == "failed" for status in history["status"][:5]
+            if len(history["status"]) >= 5 and (
+                not all(status == "failed" for status in history["status"][:5])
             ):
-                all_tests[name][0].status = "failed-long"
+                all_tests[name][0].status = "failed-new"
 
     table_map = {group: {} for group in GROUPS}
     for name, history in all_tests.items():

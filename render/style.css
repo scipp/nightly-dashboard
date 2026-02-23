@@ -31,9 +31,9 @@
         /* amber-9 */
         --skipped-bg-hover: #ffba18;
         /* amber-10 */
-        --failed-long-fg: #fffcfc;
-        --failed-long-bg: #9F0712;
-        --failed-long-bg-hover: #8b060f;
+        --failed-new-fg: #fffcfc;
+        --failed-new-border: #FF00FF;
+        --failed-new-bg-hover: #F024FF;
     }
 }
 
@@ -66,9 +66,10 @@
         /* amber-9 */
         --skipped-bg-hover: #ffd60a;
         /* amber-10 */
-        --failed-long-fg: #191111;
-        --failed-long-bg: #9F0712;
-        --failed-long-bg-hover: #8b060f;
+        --failed-new-fg: #191111;
+        --failed-new-bg: #FF00FF;
+        --failed-new-bg-hover: #F024FF;
+
     }
 }
 
@@ -179,17 +180,17 @@ a {
     background: var(--failed-bg-hover);
 }
 
-.failed-long {
-    background: var(--failed-long-bg);
+.failed-new {
+    background: var(--failed-new-bg);
 }
 
-.failed-long a,
-.failed-long a:visited {
-    color: var(--failed-long-fg);
+.failed-new a,
+.failed-new a:visited {
+    color: var(--failed-new-fg);
 }
 
-.failed-long:hover {
-    background: var(--failed-long-bg-hover);
+.failed-new:hover {
+    background: var(--failed-new-bg-hover);
 }
 
 .skipped {
