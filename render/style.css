@@ -163,6 +163,14 @@ a {
     background: var(--success-bg-hover);
 }
 
+
+.failed-gradient {
+    background: linear-gradient(45deg,
+            var(--failed-bg) 50%,
+            var(--failed-new-bg) 50%);
+}
+
+
 .failed,
 .error {
     background: var(--failed-bg);
