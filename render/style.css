@@ -32,7 +32,7 @@
         --skipped-bg-hover: #ffba18;
         /* amber-10 */
         --failed-new-fg: #fffcfc;
-        --failed-new-border: #FF00FF;
+        --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
     }
 }
