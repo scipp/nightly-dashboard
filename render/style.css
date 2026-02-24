@@ -31,6 +31,9 @@
         /* amber-9 */
         --skipped-bg-hover: #ffba18;
         /* amber-10 */
+        --failed-new-fg: #fffcfc;
+        --failed-new-bg: #FF00FF;
+        --failed-new-bg-hover: #F024FF;
     }
 }
 
@@ -63,6 +66,10 @@
         /* amber-9 */
         --skipped-bg-hover: #ffd60a;
         /* amber-10 */
+        --failed-new-fg: #191111;
+        --failed-new-bg: #FF00FF;
+        --failed-new-bg-hover: #F024FF;
+
     }
 }
 
@@ -156,6 +163,14 @@ a {
     background: var(--success-bg-hover);
 }
 
+
+.failed-gradient {
+    background: linear-gradient(45deg,
+            var(--failed-bg) 50%,
+            var(--failed-new-bg) 50%);
+}
+
+
 .failed,
 .error {
     background: var(--failed-bg);
@@ -171,6 +186,19 @@ a {
 .failed:hover,
 .error:hover {
     background: var(--failed-bg-hover);
+}
+
+.failed-new {
+    background: var(--failed-new-bg);
+}
+
+.failed-new a,
+.failed-new a:visited {
+    color: var(--failed-new-fg);
+}
+
+.failed-new:hover {
+    background: var(--failed-new-bg-hover);
 }
 
 .skipped {

@@ -404,6 +404,14 @@ def main(build_type, npipelines):
             message.write(content)
             logging.info(f"... wrote {filename}")
 
+    # Look at the test history: if the test has recently started failing (les than 5 days) change status to 'failed-new'.
+    for name, history in tests_history.items():
+        if history["status"][0] == "failed":
+            if len(history["status"]) >= 5 and (
+                not all(status == "failed" for status in history["status"][:5])
+            ):
+                all_tests[name][0].status = "failed-new"
+
     table_map = {group: {} for group in GROUPS}
     for name, history in all_tests.items():
         test = history[0]  # Use the first test as representative
