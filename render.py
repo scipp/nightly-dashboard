@@ -29,6 +29,7 @@ INSTRUMENTS = [
     "dream",
     "estia",
     "loki",
+    "magic",
     "nmx",
     "odin",
     "tbl",
