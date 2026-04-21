@@ -2,7 +2,7 @@ name: Generate Dashboard
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 5 * * *"  # Should run at 5am every day
+    - cron: "0 1 * * *"
 
 jobs:
   build:
