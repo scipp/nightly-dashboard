@@ -62,7 +62,7 @@ def get_pipelines(project_id, build_type, n):
             .strftime("%Y-%m-%d %H:%M:%S"),
             "test_report": get_test_report(DMSC_NIGHTLY_PROJECT_ID, pipeline["id"]),
         }
-        for pipeline in pipelines
+        for pipeline in pipelines[1:]
     }
     return last_n_pipelines
 
