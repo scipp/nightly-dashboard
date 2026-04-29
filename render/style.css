@@ -5,70 +5,50 @@
 @media(prefers-color-scheme: light) {
     :root {
         --background-1: #f9f9f9;
-        /* gray-2 */
         --background-2: #e0e0e0;
-        /* gray-5 */
         --text-1: #202020;
-        /* gray-12 */
         --border: #bbbbbb;
-        /* gray-8 */
 
-        --success-fg: #fbfefb;
-        /* grass-1 */
+        --success-fg: #0e1511;
         --success-bg: #46a758;
-        /* grass-9 */
-        --success-bg-hover: #3e9b4f;
-        /* grass-10 */
-        --failed-fg: #fffcfc;
-        /* red-1 */
+        --success-bg-hover: #53b365;
+        --failed-fg: #191111;
         --failed-bg: #e5484d;
-        /* red-9 */
-        --failed-bg-hover: #dc3e42;
-        /* red-10 */
-        --skipped-fg: #4f3422;
-        /* amber-12 */
+        --failed-bg-hover: #ec5d5e;
+        --skipped-fg: #16120c;
         --skipped-bg: #ffc53d;
-        /* amber-9 */
-        --skipped-bg-hover: #ffba18;
-        /* amber-10 */
-        --failed-new-fg: #fffcfc;
+        --skipped-bg-hover: #ffd60a;
+        --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
+        --success-new-fg: #0e1511;
+        --success-new-bg: #6bff86;
+        --success-new-bg-hover: #82ff99;
     }
 }
 
 @media(prefers-color-scheme: dark) {
     :root {
         --background-1: #191919;
-        /* gray-2 */
         --background-2: #313131;
-        /* gray-5 */
         --text-1: #eeeeee;
-        /* gray-12 */
         --border: #606060;
-        /* gray-8 */
 
         --success-fg: #0e1511;
-        /* grass-1 */
         --success-bg: #46a758;
-        /* grass-9 */
         --success-bg-hover: #53b365;
-        /* grass-10 */
         --failed-fg: #191111;
-        /* red-1 */
         --failed-bg: #e5484d;
-        /* red-9 */
         --failed-bg-hover: #ec5d5e;
-        /* red-10 */
         --skipped-fg: #16120c;
-        /* amber-1 */
         --skipped-bg: #ffc53d;
-        /* amber-9 */
         --skipped-bg-hover: #ffd60a;
-        /* amber-10 */
         --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
+        --success-new-fg: #0e1511;
+        --success-new-bg: #6bff86;
+        --success-new-bg-hover: #9effb0;
 
     }
 }
@@ -170,6 +150,11 @@ a {
             var(--failed-new-bg) 50%);
 }
 
+.success-gradient {
+    background: linear-gradient(45deg,
+            var(--success-bg) 50%,
+            var(--success-new-bg) 50%);
+}
 
 .failed,
 .error {
@@ -199,6 +184,19 @@ a {
 
 .failed-new:hover {
     background: var(--failed-new-bg-hover);
+}
+
+.success-new {
+    background: var(--success-new-bg);
+}
+
+.success-new a,
+.success-new a:visited {
+    color: var(--success-new-fg);
+}
+
+.success-new:hover {
+    background: var(--success-new-bg-hover);
 }
 
 .skipped {
