@@ -5,82 +5,50 @@
 @media(prefers-color-scheme: light) {
     :root {
         --background-1: #f9f9f9;
-        /* gray-2 */
         --background-2: #e0e0e0;
-        /* gray-5 */
         --text-1: #202020;
-        /* gray-12 */
         --border: #bbbbbb;
-        /* gray-8 */
 
         --success-fg: #0e1511;
-        /* grass-1 */
         --success-bg: #46a758;
-        /* grass-9 */
         --success-bg-hover: #53b365;
-        /* grass-10 */
         --failed-fg: #191111;
-        /* red-1 */
         --failed-bg: #e5484d;
-        /* red-9 */
         --failed-bg-hover: #ec5d5e;
-        /* red-10 */
         --skipped-fg: #16120c;
-        /* amber-1 */
         --skipped-bg: #ffc53d;
-        /* amber-9 */
         --skipped-bg-hover: #ffd60a;
-        /* amber-10 */
         --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
         --success-new-fg: #0e1511;
-        /* grass-1 */
         --success-new-bg: #6bff86;
-        /* grass-4 dark */
         --success-new-bg-hover: #00FF00;
-        /* grass-5 dark */
     }
 }
 
 @media(prefers-color-scheme: dark) {
     :root {
         --background-1: #191919;
-        /* gray-2 */
         --background-2: #313131;
-        /* gray-5 */
         --text-1: #eeeeee;
-        /* gray-12 */
         --border: #606060;
-        /* gray-8 */
 
         --success-fg: #0e1511;
-        /* grass-1 */
         --success-bg: #46a758;
-        /* grass-9 */
         --success-bg-hover: #53b365;
-        /* grass-10 */
         --failed-fg: #191111;
-        /* red-1 */
         --failed-bg: #e5484d;
-        /* red-9 */
         --failed-bg-hover: #ec5d5e;
-        /* red-10 */
         --skipped-fg: #16120c;
-        /* amber-1 */
         --skipped-bg: #ffc53d;
-        /* amber-9 */
         --skipped-bg-hover: #ffd60a;
-        /* amber-10 */
         --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
         --success-new-fg: #0e1511;
-        /* grass-1 */
         --success-new-bg: #6bff86;
-        /* grass-4 dark */
         --success-new-bg-hover: #00FF00;
-        /* grass-5 dark */
 
     }
 }
