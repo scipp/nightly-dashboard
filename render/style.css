@@ -13,33 +13,33 @@
         --border: #bbbbbb;
         /* gray-8 */
 
-        --success-fg: #fbfefb;
+        --success-fg: #0e1511;
         /* grass-1 */
         --success-bg: #46a758;
         /* grass-9 */
-        --success-bg-hover: #3e9b4f;
+        --success-bg-hover: #53b365;
         /* grass-10 */
-        --failed-fg: #fffcfc;
+        --failed-fg: #191111;
         /* red-1 */
         --failed-bg: #e5484d;
         /* red-9 */
-        --failed-bg-hover: #dc3e42;
+        --failed-bg-hover: #ec5d5e;
         /* red-10 */
-        --skipped-fg: #4f3422;
-        /* amber-12 */
+        --skipped-fg: #16120c;
+        /* amber-1 */
         --skipped-bg: #ffc53d;
         /* amber-9 */
-        --skipped-bg-hover: #ffba18;
+        --skipped-bg-hover: #ffd60a;
         /* amber-10 */
-        --failed-new-fg: #fffcfc;
+        --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
         --success-new-fg: #0e1511;
         /* grass-1 */
-        --success-new-bg: #b4dfc4;
-        /* grass-4 — lighter green */
-        --success-new-bg-hover: #9fd3b3;
-        /* grass-5 */
+        --success-new-bg: #6bff86;
+        /* grass-4 dark */
+        --success-new-bg-hover: #00FF00;
+        /* grass-5 dark */
     }
 }
 
@@ -75,11 +75,11 @@
         --failed-new-fg: #191111;
         --failed-new-bg: #FF00FF;
         --failed-new-bg-hover: #F024FF;
-        --success-new-fg: #fbfefb;
+        --success-new-fg: #0e1511;
         /* grass-1 */
-        --success-new-bg: #274d35;
+        --success-new-bg: #6bff86;
         /* grass-4 dark */
-        --success-new-bg-hover: #2e6040;
+        --success-new-bg-hover: #00FF00;
         /* grass-5 dark */
 
     }
@@ -182,6 +182,11 @@ a {
             var(--failed-new-bg) 50%);
 }
 
+.success-gradient {
+    background: linear-gradient(45deg,
+            var(--success-bg) 50%,
+            var(--success-new-bg) 50%);
+}
 
 .failed,
 .error {
