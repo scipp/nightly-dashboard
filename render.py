@@ -101,7 +101,9 @@ def test_html(test_history, test_name, last_updated):
 
     colors = {
         "success": "var(--success-bg)",
+        "success-new": "var(--success-new-bg)",
         "failed": "var(--failed-bg)",
+        "failed-new": "var(--failed-new-bg)",
         "skipped": "var(--skipped-bg)",
         "error": "var(--failed-bg)",
     }
@@ -412,6 +414,14 @@ def main(build_type, npipelines):
                 not all(status == "failed" for status in history["status"][:5])
             ):
                 all_tests[name][0].status = "failed-new"
+
+    # If the test has recently started succeeding (less than 5 consecutive runs), change status to 'success-new'.
+    for name, history in tests_history.items():
+        if history["status"][0] == "success":
+            if len(history["status"]) >= 5 and (
+                not all(status == "success" for status in history["status"][:5])
+            ):
+                all_tests[name][0].status = "success-new"
 
     table_map = {group: {} for group in GROUPS}
     for name, history in all_tests.items():
