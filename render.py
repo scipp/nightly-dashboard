@@ -274,14 +274,14 @@ def _get_overview_status(tests_history, key) -> str:
 def overview_html(tests_history, last_updated):
     out_html = load_template("overview.html")
 
-    processing_steps = [
-        "NeXus written",
-        "Scicat ingested",
-        "NeXus file read",
-        "Data reduced",
-        "Reduced file read",
-        "Analysis performed",
-    ]
+    processing_steps = {
+        "NeXus written": "ingestor|{instr}|file_found_is_not_old|manual",
+        "Scicat ingested": "ingestor|{instr}|file_found_by_scicat_is_consistent_with_manual|",
+        "NeXus file read": "{instr}_read_detector_everything",
+        "Data reduced": "{instr}|can_compute_wavelength",
+        "Reduced file read": "{instr}|read_reduced_data",
+        "Analysis performed": "{instr}|analyze_reduced_data",
+    }
 
     overview_table = (
         '<thead><tr class="overview-table-header"><th>Instrument &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>'
@@ -293,46 +293,12 @@ def overview_html(tests_history, last_updated):
     for instr in instruments:
         overview_table += f"<tr><td>{instr.capitalize()}</td>"
 
-        nexus_written = tests_history.get(
-            f"ingestor|{instr}|file_found_is_not_old|manual"
-        )
-        if nexus_written is not None:
-            overview_table += f"<td class='{nexus_written['status'][0]}'></td>"
-        else:
-            overview_table += "<td class='notimplemented'></td>"
-        overview_table += "<td>></td>"
-
-        ingested = tests_history.get(
-            f"ingestor|{instr}|file_found_by_scicat_is_consistent_with_manual|"
-        )
-        if ingested is not None:
-            overview_table += f"<td class='{ingested['status'][0]}'></td>"
-        else:
-            overview_table += "<td class='notimplemented'></td>"
-        overview_table += "<td>></td>"
-
-        # Nexus file read
-        overview_table += _get_overview_status(
-            tests_history, f"{instr}_read_detector_everything"
-        )
-        overview_table += "<td>></td>"
-
-        # Data reduced
-        overview_table += _get_overview_status(
-            tests_history, f"{instr}|can_compute_wavelength"
-        )
-        overview_table += "<td>></td>"
-
-        # Reduced file read
-        overview_table += _get_overview_status(
-            tests_history, f"{instr}|read_reduced_data"
-        )
-        overview_table += "<td>></td>"
-
-        # Analysis performed
-        overview_table += _get_overview_status(
-            tests_history, f"{instr}|analyze_reduced_data"
-        )
+        for step_name, key in processing_steps.items():
+            overview_table += _get_overview_status(
+                tests_history, key.format(instr=instr)
+            )
+            if "Analysis" not in step_name:
+                overview_table += "<td>></td>"
 
     overview_table += "</tbody>"
 
