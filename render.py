@@ -257,18 +257,28 @@ def main_html(
 
 
 def _get_overview_status(tests_history, key) -> str:
-    ok = True
+    history_length = 10
     found_at_least_one_test = False
+    history = [None] * history_length  # Look at the last 10 tests for this key
     for name in tests_history.keys():
         if key in name:
             found_at_least_one_test = True
-            if tests_history[name]["status"][0] != "success":
-                ok = False
-                break
+            for i in range(min(history_length, len(tests_history[name]["status"]))):
+                if history[i] is None:
+                    history[i] = True
+                history[i] = history[i] and (
+                    tests_history[name]["status"][i] == "success"
+                )
     if found_at_least_one_test:
-        return f"<td class='{'success' if ok else 'failed'}'></td>"
+        status_class = 'success' if history[0] else 'failed'
+        message = ""
+        for i in range(history_length):
+            if history[i] is None:
+                break
+            message += "✅" if history[i] else "❌"
+        return f"<td class='{status_class} hover-cell'><span class='message'>{message}</span></td>"
     else:
-        return "<td class='notimplemented'></td>"
+        return "<td class='notimplemented hover-cell'><span class='message'>Not implemented</span></td>"
 
 
 def overview_html(tests_history, last_updated):

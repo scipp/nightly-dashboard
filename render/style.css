@@ -326,3 +326,14 @@ Based on https://stackoverflow.com/a/19097013
 .snowflake[data-is-santa="true"] {
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
 }
+
+.message {
+    visibility: hidden;
+    font-size: 0.6em;
+    color: var(--text-1);
+    background: var(--background-2);
+}
+
+.hover-cell:hover .message {
+    visibility: visible;
+}
