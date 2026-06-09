@@ -22,7 +22,6 @@ GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
 TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
-TEAMS = ["ECDC", "SCIPP", "SWAT", "DST", "DONKI", "IDS"]
 INSTRUMENTS = [
     "beer",
     "bifrost",
@@ -33,6 +32,13 @@ INSTRUMENTS = [
     "nmx",
     "odin",
     "tbl",
+    "heimdal",
+    "freia",
+    "skadi",
+    "cspec",
+    "miracles",
+    "trex",
+    "vespa",
     "none",
 ]
 GROUPS = [
@@ -248,6 +254,89 @@ def main_html(
         build_type=build_type,
         other_type="latest" if build_type == "nightly" else "nightly",
     )
+
+
+def _get_overview_status(tests_history, key) -> str:
+    ok = True
+    found_at_least_one_test = False
+    for name in tests_history.keys():
+        if key in name:
+            found_at_least_one_test = True
+            if tests_history[name]["status"][0] != "success":
+                ok = False
+                break
+    if found_at_least_one_test:
+        return f"<td class='{'success' if ok else 'failed'}'></td>"
+    else:
+        return "<td class='notimplemented'></td>"
+
+
+def overview_html(tests_history, last_updated):
+    out_html = load_template("overview.html")
+
+    processing_steps = [
+        "NeXus written",
+        "Scicat ingested",
+        "NeXus file read",
+        "Data reduced",
+        "Reduced file read",
+        "Analysis performed",
+    ]
+
+    overview_table = (
+        '<thead><tr class="overview-table-header"><th>Instrument &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>'
+        + "</th><th></th><th>".join(processing_steps)
+        + '</th></tr></thead><tbody>'
+    )
+
+    instruments = sorted(set(INSTRUMENTS) - {"none"})
+    for instr in instruments:
+        overview_table += f"<tr><td>{instr.capitalize()}</td>"
+
+        nexus_written = tests_history.get(
+            f"ingestor|{instr}|file_found_is_not_old|manual"
+        )
+        if nexus_written is not None:
+            overview_table += f"<td class='{nexus_written['status'][0]}'></td>"
+        else:
+            overview_table += "<td class='notimplemented'></td>"
+        overview_table += "<td>></td>"
+
+        ingested = tests_history.get(
+            f"ingestor|{instr}|file_found_by_scicat_is_consistent_with_manual|"
+        )
+        if ingested is not None:
+            overview_table += f"<td class='{ingested['status'][0]}'></td>"
+        else:
+            overview_table += "<td class='notimplemented'></td>"
+        overview_table += "<td>></td>"
+
+        # Nexus file read
+        overview_table += _get_overview_status(
+            tests_history, f"{instr}_read_detector_everything"
+        )
+        overview_table += "<td>></td>"
+
+        # Data reduced
+        overview_table += _get_overview_status(
+            tests_history, f"{instr}|can_compute_wavelength"
+        )
+        overview_table += "<td>></td>"
+
+        # Reduced file read
+        overview_table += _get_overview_status(
+            tests_history, f"{instr}|read_reduced_data"
+        )
+        overview_table += "<td>></td>"
+
+        # Analysis performed
+        overview_table += _get_overview_status(
+            tests_history, f"{instr}|analyze_reduced_data"
+        )
+
+    overview_table += "</tbody>"
+
+    return out_html.format(last_updated=last_updated, overview_table=overview_table)
 
 
 def _make_chart_container():
@@ -470,6 +559,13 @@ def main(build_type, npipelines):
     )
 
     filename = folder / "index.html"
+    with open(filename, mode="w", encoding="utf-8") as message:
+        message.write(content)
+        logging.info(f"... wrote {filename}")
+
+    # Write overview page
+    content = prettify_html(overview_html(tests_history, last_updated=last_updated))
+    filename = Path("render") / "overview.html"
     with open(filename, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {filename}")
