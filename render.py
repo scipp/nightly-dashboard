@@ -22,7 +22,7 @@ GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
 TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
-INSTRUMENTS = [
+ALL_INSTRUMENTS = [
     "beer",
     "bifrost",
     "dream",
@@ -39,6 +39,17 @@ INSTRUMENTS = [
     "miracles",
     "trex",
     "vespa",
+]
+INSTRUMENTS = [
+    "beer",
+    "bifrost",
+    "dream",
+    "estia",
+    "loki",
+    "magic",
+    "nmx",
+    "odin",
+    "tbl",
     "none",
 ]
 GROUPS = [
@@ -299,8 +310,7 @@ def overview_html(tests_history, last_updated):
         + '</th></tr></thead><tbody>'
     )
 
-    instruments = sorted(set(INSTRUMENTS) - {"none"})
-    for instr in instruments:
+    for instr in ALL_INSTRUMENTS:
         overview_table += f"<tr><td>{instr.capitalize()}</td>"
 
         for step_name, key in processing_steps.items():
