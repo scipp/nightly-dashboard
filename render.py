@@ -22,7 +22,24 @@ GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
 TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
-TEAMS = ["ECDC", "SCIPP", "SWAT", "DST", "DONKI", "IDS"]
+ALL_INSTRUMENTS = [
+    "beer",
+    "bifrost",
+    "dream",
+    "estia",
+    "loki",
+    "magic",
+    "nmx",
+    "odin",
+    "tbl",
+    "heimdal",
+    "freia",
+    "skadi",
+    "cspec",
+    "miracles",
+    "trex",
+    "vespa",
+]
 INSTRUMENTS = [
     "beer",
     "bifrost",
@@ -250,6 +267,64 @@ def main_html(
     )
 
 
+def _get_overview_status(tests_history, key) -> str:
+    history_length = 10
+    found_at_least_one_test = False
+    history = [None] * history_length  # Look at the last 10 tests for this key
+    for name in tests_history.keys():
+        if key in name:
+            found_at_least_one_test = True
+            for i in range(min(history_length, len(tests_history[name]["status"]))):
+                if history[i] is None:
+                    history[i] = True
+                history[i] = history[i] and (
+                    tests_history[name]["status"][i] == "success"
+                )
+    if found_at_least_one_test:
+        status_class = 'success' if history[0] else 'failed'
+        message = ""
+        for i in range(history_length):
+            if history[i] is None:
+                break
+            message += "✅" if history[i] else "❌"
+        return f"<td class='{status_class} hover-cell'><span class='message'>{message}</span></td>"
+    else:
+        return "<td class='notimplemented hover-cell'><span class='message'>Not implemented</span></td>"
+
+
+def overview_html(tests_history, last_updated):
+    out_html = load_template("overview.html")
+
+    processing_steps = {
+        "NeXus written": "ingestor|{instr}|file_found_is_not_old|manual",
+        "Scicat ingested": "ingestor|{instr}|file_found_by_scicat_is_consistent_with_manual|",
+        "NeXus file read": "{instr}_read_detector_everything",
+        "Data reduced": "{instr}|can_compute_wavelength",
+        "Reduced file read": "{instr}|read_reduced_data",
+        "Analysis performed": "{instr}|analyze_reduced_data",
+    }
+
+    overview_table = (
+        '<thead><tr class="overview-table-header"><th>Instrument &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>'
+        + "</th><th></th><th>".join(processing_steps)
+        + '</th></tr></thead><tbody>'
+    )
+
+    for instr in ALL_INSTRUMENTS:
+        overview_table += f"<tr><td>{instr.capitalize()}</td>"
+
+        for step_name, key in processing_steps.items():
+            overview_table += _get_overview_status(
+                tests_history, key.format(instr=instr)
+            )
+            if "Analysis" not in step_name:
+                overview_table += "<td>></td>"
+
+    overview_table += "</tbody>"
+
+    return out_html.format(last_updated=last_updated, overview_table=overview_table)
+
+
 def _make_chart_container():
     return {key: [] for key in ("date", "success", "failed", "skipped")}
 
@@ -470,6 +545,13 @@ def main(build_type, npipelines):
     )
 
     filename = folder / "index.html"
+    with open(filename, mode="w", encoding="utf-8") as message:
+        message.write(content)
+        logging.info(f"... wrote {filename}")
+
+    # Write overview page
+    content = prettify_html(overview_html(tests_history, last_updated=last_updated))
+    filename = Path("render") / "overview.html"
     with open(filename, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {filename}")

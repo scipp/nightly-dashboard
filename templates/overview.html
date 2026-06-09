@@ -4,32 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="3600">
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title>DMSC Integration Testing</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>DMSC Integration Testing - Overview</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
     <header>
         <div class="logo" style="flex:0.3;">
-            <a href="index.html">
-                <img src="../ess-logo.svg" alt="Logo" height="80">
-            </a>
+            <img src="ess-logo.svg" alt="Logo" height="80">
         </div>
         <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
-            <h1><b>DMSC Integration Testing</b></h1>
+            <h1><b>DMSC Integration Testing: Overview</b></h1>
+            <h3>(switch to <a href="nightly/index.html" style="text-decoration: underline;">nightly</a>,
+                <a href="latest/index.html" style="text-decoration: underline;">latest</a>)
+            </h3>
         </div>
         <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
             <h3>Last updated: {last_updated}</h3>
         </div>
     </header>
     <main style="width: 100%;">
-        <h2>Test: {test_name}</h2>
-        <div class="contentarea"></div>
-        {test_results}
+        <table class="overview-table">
+            {overview_table}
+        </table>
     </main>
 </body>
 
