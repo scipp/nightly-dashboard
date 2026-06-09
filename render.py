@@ -550,11 +550,12 @@ def main(build_type, npipelines):
         logging.info(f"... wrote {filename}")
 
     # Write overview page
-    content = prettify_html(overview_html(tests_history, last_updated=last_updated))
-    filename = Path("render") / "overview.html"
-    with open(filename, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        logging.info(f"... wrote {filename}")
+    if build_type == "nightly":
+        content = prettify_html(overview_html(tests_history, last_updated=last_updated))
+        filename = Path("render") / "overview.html"
+        with open(filename, mode="w", encoding="utf-8") as message:
+            message.write(content)
+            logging.info(f"... wrote {filename}")
 
     return
 
