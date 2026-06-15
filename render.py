@@ -273,13 +273,14 @@ def _get_overview_status(tests_history, key) -> str:
     history = [None] * history_length  # Look at the last 10 tests for this key
     for name in tests_history.keys():
         if key in name:
-            found_at_least_one_test = True
             for i in range(min(history_length, len(tests_history[name]["status"]))):
                 if history[i] is None:
                     history[i] = True
                 history[i] = history[i] and (
                     tests_history[name]["status"][i] == "success"
                 )
+                if tests_history[name]["status"][i] != "skipped":
+                    found_at_least_one_test = True
     if found_at_least_one_test:
         status_class = 'success' if history[0] else 'failed'
         message = ""
