@@ -45,6 +45,7 @@ INSTRUMENTS = [
     "bifrost",
     "dream",
     "estia",
+    "freia",
     "loki",
     "magic",
     "nmx",
