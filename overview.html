@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing - Overview
+  </title>
+  <link href="style.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <img alt="Logo" height="80" src="ess-logo.svg"/>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing: Overview
+     </b>
+    </h1>
+    <h3>
+     (switch to
+     <a href="nightly/index.html" style="text-decoration: underline;">
+      nightly
+     </a>
+     ,
+     <a href="latest/index.html" style="text-decoration: underline;">
+      latest
+     </a>
+     )
+    </h3>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 12, 2026 07:35:11
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <table class="overview-table">
+    <thead>
+     <tr class="overview-table-header">
+      <th>
+       Instrument &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </th>
+      <th>
+       NeXus written
+      </th>
+      <th>
+      </th>
+      <th>
+       Scicat ingested
+      </th>
+      <th>
+      </th>
+      <th>
+       NeXus file read
+      </th>
+      <th>
+      </th>
+      <th>
+       Data reduced
+      </th>
+      <th>
+      </th>
+      <th>
+       Reduced file read
+      </th>
+      <th>
+      </th>
+      <th>
+       Analysis performed
+      </th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>
+       Beer
+      </td>
+      <td class="success hover-cell">
+       <span class="message">
+        ✅✅✅❌✅✅✅✅❌✅
+       </span>
+      </td>
+      <td>
+       &gt;
+      </td>
+      <td class="success hover-cell">
+       <span class="message">
+        ✅✅✅✅✅✅✅✅✅✅
+       </span>
+      </td>
+      <td>
+       &gt;
+      </td>
+      <td class="failed hover-cell">
+       <span class="message">
+        ❌❌❌❌❌❌❌❌❌❌
+       </span>
+      </td>
+      <td>
+       &gt;
+      </td>
+      <td class="notimplemented hover-cell">
+       <span class="message">
+        Not implemented
+       </span>
+      </td>
+      <td>
+       &gt;
+      </td>
+      <td class="notimplemented hover-cell">
+       <span class="message">
+        Not implemented
+       </span>
+      </td>
+      <td>
+       &gt;
+      </td>
+      <td class="notimplemented hover-cell">
+       <span class="message">
+        Not implemented
+       </span>
+      </td>
+      <tr>
+       <td>
+        Bifrost
+       </td>
+       <td class="success hover-cell">
+        <span class="message">
+         ✅✅✅❌✅✅✅✅❌✅
+        </span>
+       </td>
+       <td>
+        &gt;
+       </td>
+       <td class="success hover-cell">
+        <span class="message">
+         ✅✅✅✅✅✅✅✅✅✅
+        </span>
+       </td>
+       <td>
+        &gt;
+       </td>
+       <td class="failed hover-cell">
+        <span class="message">
+         ❌✅✅✅✅✅✅✅✅✅
+        </span>
+       </td>
+       <td>
+        &gt;
+       </td>
+       <td class="failed hover-cell">
+        <span class="message">
+         ❌❌❌❌❌❌❌❌❌❌
+        </span>
+       </td>
+       <td>
+        &gt;
+       </td>
+       <td class="notimplemented hover-cell">
+        <span class="message">
+         Not implemented
+        </span>
+       </td>
+       <td>
+        &gt;
+       </td>
+       <td class="notimplemented hover-cell">
+        <span class="message">
+         Not implemented
+        </span>
+       </td>
+       <tr>
+        <td>
+         Dream
+        </td>
+        <td class="success hover-cell">
+         <span class="message">
+          ✅✅✅❌✅✅✅✅❌✅
+         </span>
+        </td>
+        <td>
+         &gt;
+        </td>
+        <td class="success hover-cell">
+         <span class="message">
+          ✅✅✅✅✅✅✅✅✅✅
+         </span>
+        </td>
+        <td>
+         &gt;
+        </td>
+        <td class="success hover-cell">
+         <span class="message">
+          ✅✅✅✅✅✅✅✅✅✅
+         </span>
+        </td>
+        <td>
+         &gt;
+        </td>
+        <td class="failed hover-cell">
+         <span class="message">
+          ❌❌❌❌❌❌❌❌❌❌
+         </span>
+        </td>
+        <td>
+         &gt;
+        </td>
+        <td class="success hover-cell">
+         <span class="message">
+          ✅✅✅✅✅✅✅✅✅✅
+         </span>
+        </td>
+        <td>
+         &gt;
+        </td>
+        <td class="success hover-cell">
+         <span class="message">
+          ✅✅✅✅✅✅✅✅✅✅
+         </span>
+        </td>
+        <tr>
+         <td>
+          Estia
+         </td>
+         <td class="success hover-cell">
+          <span class="message">
+           ✅✅✅❌✅✅✅✅❌✅
+          </span>
+         </td>
+         <td>
+          &gt;
+         </td>
+         <td class="success hover-cell">
+          <span class="message">
+           ✅✅✅✅✅✅✅✅✅✅
+          </span>
+         </td>
+         <td>
+          &gt;
+         </td>
+         <td class="success hover-cell">
+          <span class="message">
+           ✅✅✅✅✅✅✅✅✅✅
+          </span>
+         </td>
+         <td>
+          &gt;
+         </td>
+         <td class="failed hover-cell">
+          <span class="message">
+           ❌❌❌❌❌❌❌❌❌❌
+          </span>
+         </td>
+         <td>
+          &gt;
+         </td>
+         <td class="success hover-cell">
+          <span class="message">
+           ✅✅✅✅✅✅✅✅✅✅
+          </span>
+         </td>
+         <td>
+          &gt;
+         </td>
+         <td class="failed hover-cell">
+          <span class="message">
+           ❌❌❌❌❌❌❌❌❌❌
+          </span>
+         </td>
+         <tr>
+          <td>
+           Loki
+          </td>
+          <td class="success hover-cell">
+           <span class="message">
+            ✅✅✅❌✅✅✅✅❌✅
+           </span>
+          </td>
+          <td>
+           &gt;
+          </td>
+          <td class="success hover-cell">
+           <span class="message">
+            ✅✅✅✅✅✅✅✅✅✅
+           </span>
+          </td>
+          <td>
+           &gt;
+          </td>
+          <td class="failed hover-cell">
+           <span class="message">
+            ❌❌❌❌❌❌❌❌❌❌
+           </span>
+          </td>
+          <td>
+           &gt;
+          </td>
+          <td class="failed hover-cell">
+           <span class="message">
+            ❌❌❌❌❌❌❌❌❌❌
+           </span>
+          </td>
+          <td>
+           &gt;
+          </td>
+          <td class="notimplemented hover-cell">
+           <span class="message">
+            Not implemented
+           </span>
+          </td>
+          <td>
+           &gt;
+          </td>
+          <td class="notimplemented hover-cell">
+           <span class="message">
+            Not implemented
+           </span>
+          </td>
+          <tr>
+           <td>
+            Magic
+           </td>
+           <td class="success hover-cell">
+            <span class="message">
+             ✅✅✅❌✅✅✅✅❌✅
+            </span>
+           </td>
+           <td>
+            &gt;
+           </td>
+           <td class="success hover-cell">
+            <span class="message">
+             ✅✅✅✅✅✅✅✅✅✅
+            </span>
+           </td>
+           <td>
+            &gt;
+           </td>
+           <td class="failed hover-cell">
+            <span class="message">
+             ❌❌❌❌❌❌❌❌❌❌
+            </span>
+           </td>
+           <td>
+            &gt;
+           </td>
+           <td class="notimplemented hover-cell">
+            <span class="message">
+             Not implemented
+            </span>
+           </td>
+           <td>
+            &gt;
+           </td>
+           <td class="notimplemented hover-cell">
+            <span class="message">
+             Not implemented
+            </span>
+           </td>
+           <td>
+            &gt;
+           </td>
+           <td class="notimplemented hover-cell">
+            <span class="message">
+             Not implemented
+            </span>
+           </td>
+           <tr>
+            <td>
+             Nmx
+            </td>
+            <td class="success hover-cell">
+             <span class="message">
+              ✅✅✅❌✅✅✅✅❌✅
+             </span>
+            </td>
+            <td>
+             &gt;
+            </td>
+            <td class="success hover-cell">
+             <span class="message">
+              ✅✅✅✅✅✅✅✅✅✅
+             </span>
+            </td>
+            <td>
+             &gt;
+            </td>
+            <td class="success hover-cell">
+             <span class="message">
+              ✅✅✅✅✅✅✅✅✅✅
+             </span>
+            </td>
+            <td>
+             &gt;
+            </td>
+            <td class="notimplemented hover-cell">
+             <span class="message">
+              Not implemented
+             </span>
+            </td>
+            <td>
+             &gt;
+            </td>
+            <td class="notimplemented hover-cell">
+             <span class="message">
+              Not implemented
+             </span>
+            </td>
+            <td>
+             &gt;
+            </td>
+            <td class="notimplemented hover-cell">
+             <span class="message">
+              Not implemented
+             </span>
+            </td>
+            <tr>
+             <td>
+              Odin
+             </td>
+             <td class="success hover-cell">
+              <span class="message">
+               ✅✅✅❌✅✅✅✅❌✅
+              </span>
+             </td>
+             <td>
+              &gt;
+             </td>
+             <td class="success hover-cell">
+              <span class="message">
+               ✅❌❌❌❌❌❌✅✅✅
+              </span>
+             </td>
+             <td>
+              &gt;
+             </td>
+             <td class="notimplemented hover-cell">
+              <span class="message">
+               Not implemented
+              </span>
+             </td>
+             <td>
+              &gt;
+             </td>
+             <td class="notimplemented hover-cell">
+              <span class="message">
+               Not implemented
+              </span>
+             </td>
+             <td>
+              &gt;
+             </td>
+             <td class="notimplemented hover-cell">
+              <span class="message">
+               Not implemented
+              </span>
+             </td>
+             <td>
+              &gt;
+             </td>
+             <td class="notimplemented hover-cell">
+              <span class="message">
+               Not implemented
+              </span>
+             </td>
+             <tr>
+              <td>
+               Tbl
+              </td>
+              <td class="success hover-cell">
+               <span class="message">
+                ✅✅✅❌✅✅✅✅✅✅
+               </span>
+              </td>
+              <td>
+               &gt;
+              </td>
+              <td class="success hover-cell">
+               <span class="message">
+                ✅✅✅✅✅✅✅✅✅✅
+               </span>
+              </td>
+              <td>
+               &gt;
+              </td>
+              <td class="failed hover-cell">
+               <span class="message">
+                ❌❌❌❌❌❌❌❌❌❌
+               </span>
+              </td>
+              <td>
+               &gt;
+              </td>
+              <td class="failed hover-cell">
+               <span class="message">
+                ❌❌❌❌❌❌❌❌❌❌
+               </span>
+              </td>
+              <td>
+               &gt;
+              </td>
+              <td class="notimplemented hover-cell">
+               <span class="message">
+                Not implemented
+               </span>
+              </td>
+              <td>
+               &gt;
+              </td>
+              <td class="notimplemented hover-cell">
+               <span class="message">
+                Not implemented
+               </span>
+              </td>
+              <tr>
+               <td>
+                Heimdal
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <td>
+                &gt;
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <td>
+                &gt;
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <td>
+                &gt;
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <td>
+                &gt;
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <td>
+                &gt;
+               </td>
+               <td class="notimplemented hover-cell">
+                <span class="message">
+                 Not implemented
+                </span>
+               </td>
+               <tr>
+                <td>
+                 Freia
+                </td>
+                <td class="success hover-cell">
+                 <span class="message">
+                  ✅✅✅❌✅✅✅✅❌✅
+                 </span>
+                </td>
+                <td>
+                 &gt;
+                </td>
+                <td class="success hover-cell">
+                 <span class="message">
+                  ✅✅✅✅✅✅✅✅✅✅
+                 </span>
+                </td>
+                <td>
+                 &gt;
+                </td>
+                <td class="failed hover-cell">
+                 <span class="message">
+                  ❌❌❌❌❌❌❌❌❌❌
+                 </span>
+                </td>
+                <td>
+                 &gt;
+                </td>
+                <td class="notimplemented hover-cell">
+                 <span class="message">
+                  Not implemented
+                 </span>
+                </td>
+                <td>
+                 &gt;
+                </td>
+                <td class="notimplemented hover-cell">
+                 <span class="message">
+                  Not implemented
+                 </span>
+                </td>
+                <td>
+                 &gt;
+                </td>
+                <td class="notimplemented hover-cell">
+                 <span class="message">
+                  Not implemented
+                 </span>
+                </td>
+                <tr>
+                 <td>
+                  Skadi
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <td>
+                  &gt;
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <td>
+                  &gt;
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <td>
+                  &gt;
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <td>
+                  &gt;
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <td>
+                  &gt;
+                 </td>
+                 <td class="notimplemented hover-cell">
+                  <span class="message">
+                   Not implemented
+                  </span>
+                 </td>
+                 <tr>
+                  <td>
+                   Cspec
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <td>
+                   &gt;
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <td>
+                   &gt;
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <td>
+                   &gt;
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <td>
+                   &gt;
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <td>
+                   &gt;
+                  </td>
+                  <td class="notimplemented hover-cell">
+                   <span class="message">
+                    Not implemented
+                   </span>
+                  </td>
+                  <tr>
+                   <td>
+                    Miracles
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <td>
+                    &gt;
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <td>
+                    &gt;
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <td>
+                    &gt;
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <td>
+                    &gt;
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <td>
+                    &gt;
+                   </td>
+                   <td class="notimplemented hover-cell">
+                    <span class="message">
+                     Not implemented
+                    </span>
+                   </td>
+                   <tr>
+                    <td>
+                     Trex
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <td>
+                     &gt;
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <td>
+                     &gt;
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <td>
+                     &gt;
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <td>
+                     &gt;
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <td>
+                     &gt;
+                    </td>
+                    <td class="notimplemented hover-cell">
+                     <span class="message">
+                      Not implemented
+                     </span>
+                    </td>
+                    <tr>
+                     <td>
+                      Vespa
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                     <td>
+                      &gt;
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                     <td>
+                      &gt;
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                     <td>
+                      &gt;
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                     <td>
+                      &gt;
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                     <td>
+                      &gt;
+                     </td>
+                     <td class="notimplemented hover-cell">
+                      <span class="message">
+                       Not implemented
+                      </span>
+                     </td>
+                    </tr>
+                   </tr>
+                  </tr>
+                 </tr>
+                </tr>
+               </tr>
+              </tr>
+             </tr>
+            </tr>
+           </tr>
+          </tr>
+         </tr>
+        </tr>
+       </tr>
+      </tr>
+     </tr>
+    </tbody>
+   </table>
+  </main>
+ </body>
+</html>

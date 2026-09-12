@@ -1,0 +1,3605 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js">
+  </script>
+  <script src="../plot.js">
+  </script>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <img alt="Logo" height="80" src="../ess-logo.svg"/>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing: nightly
+     </b>
+    </h1>
+    <h3>
+     (switch to
+     <a href="../latest/index.html" style="text-decoration: underline;">
+      latest
+     </a>
+     ,
+     <a href="../overview.html" style="text-decoration: underline;">
+      overview
+     </a>
+     )
+    </h3>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 12, 2026 07:35:11
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <table style="border-collapse: collapse;">
+    <thead>
+     <tr>
+      <th class="table-legend" style="width: 60%;">
+       Key: &nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="success-gradient" style="display:inline-block; width: 20px; height: 20px;">
+       </div>
+       = Success &nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="failed-gradient" style="display:inline-block; width: 20px; height: 20px;">
+       </div>
+       = Failed &nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="skipped" style="display:inline-block; width: 20px; height: 20px;">
+       </div>
+       = Skipped
+      </th>
+      <th style=" width: 40%;">
+      </th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td style="width: 60%; vertical-align: top;">
+       <table class="tests-table">
+        <thead>
+         <tr class="tests-table-header">
+          <th>
+           Test Name
+          </th>
+          <th>
+           beer
+          </th>
+          <th>
+           bifrost
+          </th>
+          <th>
+           dream
+          </th>
+          <th>
+           estia
+          </th>
+          <th>
+           freia
+          </th>
+          <th>
+           loki
+          </th>
+          <th>
+           magic
+          </th>
+          <th>
+           nmx
+          </th>
+          <th>
+           odin
+          </th>
+          <th>
+           tbl
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            chexus
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           run chexus
+          </td>
+          <td class="failed">
+           <a href="chexus_beer_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="chexus_bifrost_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_dream_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_estia_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_freia_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_loki_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="chexus_magic_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_nmx_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_odin_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="chexus_tbl_run_chexus_.html">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            nexusfiles-scipp
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="14">
+           can compute wavelength
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_beer_can_compute_wavelength_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_can_compute_wavelength_all_detectors.html">
+            all_detectors
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_endcap_backward_detector.html">
+            endcap_backward_...
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_estia_can_compute_wavelength_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_freia_can_compute_wavelength_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_beam_monitor_m0.html">
+            beam_monitor_m0
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_magic_can_compute_wavelength_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_nmx_can_compute_wavelength_detector_panel_0.html">
+            detector_panel_0
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_beam_monitor_1.html">
+            beam_monitor_1
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_can_compute_wavelength_monitor_elastic.html">
+            monitor_elastic
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_endcap_forward_detector.html">
+            endcap_forward_d...
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_estia_can_compute_wavelength_monitor_.html">
+            monitor_
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_freia_can_compute_wavelength_monitor_.html">
+            monitor_
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_beam_monitor_m1.html">
+            beam_monitor_m1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_nmx_can_compute_wavelength_detector_panel_1.html">
+            detector_panel_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_he3_detector_bank0.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_can_compute_wavelength_monitor_normalization.html">
+            monitor_normaliz...
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_high_resolution_detector.html">
+            high_resolution_...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_beam_monitor_m2.html">
+            beam_monitor_m2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_nmx_can_compute_wavelength_detector_panel_2.html">
+            detector_panel_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_he3_detector_bank1.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_can_compute_wavelength_monitor_overlap.html">
+            monitor_overlap
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_mantle_detector.html">
+            mantle_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_beam_monitor_m3.html">
+            beam_monitor_m3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_nmx_can_compute_wavelength_monitor_.html">
+            monitor_
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_can_compute_wavelength_monitor_psc.html">
+            monitor_psc
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_monitor_bunker.html">
+            monitor_bunker
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_beam_monitor_m4.html">
+            beam_monitor_m4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_ngem_detector.html">
+            ngem_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_monitor_cave.html">
+            monitor_cave
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_0.html">
+            loki_detector_0
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_tbl_can_compute_wavelength_timepix3_detector.html">
+            timepix3_detecto...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_dream_can_compute_wavelength_sans_detector.html">
+            sans_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_1.html">
+            loki_detector_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_2.html">
+            loki_detector_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_3.html">
+            loki_detector_3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_4.html">
+            loki_detector_4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_5.html">
+            loki_detector_5
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_6.html">
+            loki_detector_6
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_7.html">
+            loki_detector_7
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_loki_can_compute_wavelength_loki_detector_8.html">
+            loki_detector_8
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           load raw file
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_estia_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_nmx_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_tbl_load_raw_file_.html">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="2">
+           metadata
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_metadata_beamline.html">
+            beamline
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_metadata_measurement.html">
+            measurement
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           read choppers
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_choppers_.html">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="6">
+           read choppers to disk choppers
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_to_disk_choppers_fc1a_chopper.html">
+            fc1a_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_bandwidth_chopper_1.html">
+            bandwidth_choppe...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_to_disk_choppers_T0_chopper.html">
+            T0_chopper
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_estia_estia_read_choppers_to_disk_choppers_bwc.html">
+            bwc
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_choppers_to_disk_choppers_bw_chopper1.html">
+            bw_chopper1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_choppers_to_disk_choppers_bandwidth_chopper.html">
+            bandwidth_choppe...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_choppers_to_disk_choppers_WLS-1_chopper.html">
+            WLS-1_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_choppers_to_disk_choppers_bwc_1.html">
+            bwc_1
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_to_disk_choppers_fc2a_chopper.html">
+            fc2a_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_bandwidth_chopper_2.html">
+            bandwidth_choppe...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_to_disk_choppers_band_chopper.html">
+            band_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_choppers_to_disk_choppers_bw_chopper2.html">
+            bw_chopper2
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_choppers_to_disk_choppers_overlap_chopper.html">
+            overlap_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_choppers_to_disk_choppers_WLS-2A_chopper.html">
+            WLS-2A_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_choppers_to_disk_choppers_bwc_2.html">
+            bwc_2
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_to_disk_choppers_mca_chopper.html">
+            mca_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_frame_overlap_chopper_1.html">
+            frame_overlap_ch...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_to_disk_choppers_overlap_chopper.html">
+            overlap_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_choppers_to_disk_choppers_fo_chopper1.html">
+            fo_chopper1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_choppers_to_disk_choppers_pulse_shape_chopper_1.html">
+            pulse_shape_chop...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_choppers_to_disk_choppers_WLS-2B_chopper.html">
+            WLS-2B_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_to_disk_choppers_psc1_chopper.html">
+            psc1_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_frame_overlap_chopper_2.html">
+            frame_overlap_ch...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_to_disk_choppers_pulse_shaping_chopper1.html">
+            pulse_shaping_ch...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_choppers_to_disk_choppers_fo_chopper2.html">
+            fo_chopper2
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_choppers_to_disk_choppers_pulse_shape_chopper_2.html">
+            pulse_shape_chop...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_choppers_to_disk_choppers_psc2_chopper.html">
+            psc2_chopper
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_pulse_shaping_chopper_1.html">
+            pulse_shaping_ch...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_choppers_to_disk_choppers_pulse_shaping_chopper2.html">
+            pulse_shaping_ch...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_choppers_to_disk_choppers_pulse_shaping_chopper_2.html">
+            pulse_shaping_ch...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="8">
+           read choppers to diskchoppers
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_FOC-1_chopper.html">
+            FOC-1_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_FOC-2_chopper.html">
+            FOC-2_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_FOC-3_chopper.html">
+            FOC-3_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_WBC-1_chopper.html">
+            WBC-1_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_WBC-2_chopper.html">
+            WBC-2_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_WBC-3_chopper.html">
+            WBC-3_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_WFM-1_chopper.html">
+            WFM-1_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_choppers_to_diskchoppers_WFM-2_chopper.html">
+            WFM-2_chopper
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="2">
+           read component position
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_component_position_all_detectorssample_position.html">
+            all_detectorssam...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_component_position_sample_position.html">
+            sample_position
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_component_position_all_detectorssource_position.html">
+            all_detectorssou...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_component_position_source_position.html">
+            source_position
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           read components
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_components_analyzers.html">
+            analyzers
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="9">
+           read detector data
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_data_beer_detector_n2.html">
+            beer_detector_n2
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_detector_data_all_detectors.html">
+            all_detectors
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_data_endcap_backward_detector.html">
+            endcap_backward_...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_detector_data_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_freia_freia_read_detector_data_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_0.html">
+            loki_detector_0
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_data_magic_detector_a.html">
+            magic_detector_a
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_data_detector_panel_0.html">
+            detector_panel_0
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success-new">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_he3_detector_bank0.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_data_beer_detector_s2.html">
+            beer_detector_s2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_data_endcap_forward_detector.html">
+            endcap_forward_d...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_1.html">
+            loki_detector_1
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_data_magic_detector_b.html">
+            magic_detector_b
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_data_detector_panel_1.html">
+            detector_panel_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success-new">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_he3_detector_bank1.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_data_high_resolution_detector.html">
+            high_resolution_...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_2.html">
+            loki_detector_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_data_detector_panel_2.html">
+            detector_panel_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_data_mantle_detector.html">
+            mantle_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_3.html">
+            loki_detector_3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_ngem_detector.html">
+            ngem_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_data_sans_detector.html">
+            sans_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_4.html">
+            loki_detector_4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_orca_detector.html">
+            orca_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_5.html">
+            loki_detector_5
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success-new">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_data_timepix3_detector.html">
+            timepix3_detecto...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_6.html">
+            loki_detector_6
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_7.html">
+            loki_detector_7
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_data_loki_detector_8.html">
+            loki_detector_8
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="9">
+           read detector everything
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_everything_beer_detector_n2.html">
+            beer_detector_n2
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_detector_everything_all_detectors.html">
+            all_detectors
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_everything_endcap_backward_detector.html">
+            endcap_backward_...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_detector_everything_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_detector_everything_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_0.html">
+            loki_detector_0
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_everything_magic_detector_a.html">
+            magic_detector_a
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_everything_detector_panel_0.html">
+            detector_panel_0
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_he3_detector_bank0.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_everything_beer_detector_s2.html">
+            beer_detector_s2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_everything_endcap_forward_detector.html">
+            endcap_forward_d...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_1.html">
+            loki_detector_1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_everything_magic_detector_b.html">
+            magic_detector_b
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_everything_detector_panel_1.html">
+            detector_panel_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_he3_detector_bank1.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_everything_high_resolution_detector.html">
+            high_resolution_...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_2.html">
+            loki_detector_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_everything_detector_panel_2.html">
+            detector_panel_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_everything_mantle_detector.html">
+            mantle_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_3.html">
+            loki_detector_3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_ngem_detector.html">
+            ngem_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_everything_sans_detector.html">
+            sans_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_4.html">
+            loki_detector_4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_orca_detector.html">
+            orca_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_5.html">
+            loki_detector_5
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_everything_timepix3_detector.html">
+            timepix3_detecto...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_6.html">
+            loki_detector_6
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_7.html">
+            loki_detector_7
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_everything_loki_detector_8.html">
+            loki_detector_8
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="9">
+           read detector geometry
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_geometry_beer_detector_n2.html">
+            beer_detector_n2
+           </a>
+          </td>
+          <td class="failed-new">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_detector_geometry_all_detectors.html">
+            all_detectors
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_geometry_endcap_backward_detector.html">
+            endcap_backward_...
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_estia_estia_read_detector_geometry_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_freia_freia_read_detector_geometry_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_0.html">
+            loki_detector_0
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_geometry_magic_detector_a.html">
+            magic_detector_a
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_geometry_detector_panel_0.html">
+            detector_panel_0
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_he3_detector_bank0.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_detector_geometry_beer_detector_s2.html">
+            beer_detector_s2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_geometry_endcap_forward_detector.html">
+            endcap_forward_d...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_1.html">
+            loki_detector_1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_detector_geometry_magic_detector_b.html">
+            magic_detector_b
+           </a>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_geometry_detector_panel_1.html">
+            detector_panel_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_he3_detector_bank1.html">
+            he3_detector_ban...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_geometry_high_resolution_detector.html">
+            high_resolution_...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_2.html">
+            loki_detector_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_detector_geometry_detector_panel_2.html">
+            detector_panel_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_multiblade_detector.html">
+            multiblade_detec...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_geometry_mantle_detector.html">
+            mantle_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_3.html">
+            loki_detector_3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_ngem_detector.html">
+            ngem_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_dream_dream_read_detector_geometry_sans_detector.html">
+            sans_detector
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_4.html">
+            loki_detector_4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_orca_detector.html">
+            orca_detector
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_5.html">
+            loki_detector_5
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_detector_geometry_timepix3_detector.html">
+            timepix3_detecto...
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_6.html">
+            loki_detector_6
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_7.html">
+            loki_detector_7
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_detector_geometry_loki_detector_8.html">
+            loki_detector_8
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="5">
+           read monitor data
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_read_monitor_data_beam_monitor_m1.html">
+            beam_monitor_m1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_monitor_data_ElasticMonitor.html">
+            ElasticMonitor
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_monitor_data_BunkerMonitor.html">
+            BunkerMonitor
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_estia_estia_read_monitor_data_NOTSET.html">
+            NOTSET
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="nexusfiles-scipp_freia_freia_read_monitor_data_NOTSET.html">
+            NOTSET
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_loki_read_monitor_data_beam_monitor_m0.html">
+            beam_monitor_m0
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_magic_magic_read_monitor_data_beam_monitor_1.html">
+            beam_monitor_1
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_nmx_nmx_read_monitor_data_beam_monitor_1.html">
+            beam_monitor_1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_tbl_tbl_read_monitor_data_BeamMonitor1.html">
+            BeamMonitor1
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="success">
+           <a href="nexusfiles-scipp_beer_beer_read_monitor_data_beam_monitor_m2.html">
+            beam_monitor_m2
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_monitor_data_NormalizationMonitor.html">
+            NormalizationMon...
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_dream_dream_read_monitor_data_CaveMonitor.html">
+            CaveMonitor
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_loki_read_monitor_data_beam_monitor_m1.html">
+            beam_monitor_m1
+           </a>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_nmx_nmx_read_monitor_data_beam_monitor_2.html">
+            beam_monitor_2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td class="failed">
+           <a href="nexusfiles-scipp_beer_beer_read_monitor_data_beam_monitor_m3.html">
+            beam_monitor_m3
+           </a>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_monitor_data_OverlapMonitor.html">
+            OverlapMonitor
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_monitor_data_beam_monitor_m2.html">
+            beam_monitor_m2
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_bifrost_bifrost_read_monitor_data_PSCMonitor.html">
+            PSCMonitor
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="nexusfiles-scipp_loki_loki_read_monitor_data_beam_monitor_m3.html">
+            beam_monitor_m3
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="failed">
+           <a href="nexusfiles-scipp_loki_loki_read_monitor_data_beam_monitor_m4.html">
+            beam_monitor_m4
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            ingestor
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           dataset found is not old
+          </td>
+          <td class="success-new">
+           <a href="ingestor_beer_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_bifrost_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_dream_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_estia_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_freia_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_loki_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_magic_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_nmx_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_odin_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_tbl_dataset_found_is_not_old_.html">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           file found by scicat is consistent with manual
+          </td>
+          <td class="success">
+           <a href="ingestor_beer_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_bifrost_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_dream_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_estia_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_freia_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_loki_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_magic_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_nmx_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_odin_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td class="success">
+           <a href="ingestor_tbl_file_found_by_scicat_is_consistent_with_manual_.html">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="2">
+           file found is not old
+          </td>
+          <td class="success-new">
+           <a href="ingestor_beer_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_bifrost_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_dream_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_estia_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_freia_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_loki_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_magic_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_nmx_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_odin_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_tbl_file_found_is_not_old_manual.html">
+            manual
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="success-new">
+           <a href="ingestor_beer_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_bifrost_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_dream_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_estia_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_freia_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_loki_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_magic_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_nmx_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_odin_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+          <td class="success-new">
+           <a href="ingestor_tbl_file_found_is_not_old_scicat.html">
+            scicat
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            nexusjsontemplate-tests
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            scipp-analysis
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="5">
+           analyze reduced data
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_analyze_reduced_data_background_set.html">
+            background_set
+           </a>
+          </td>
+          <td class="error">
+           <a href="scipp-analysis_estia_analyze_reduced_data_fit_model_reasonable.html">
+            fit_model_reason...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_odin_analyze_reduced_data_easyimaging_bragg_edge_fit.html">
+            easyimaging_brag...
+           </a>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_analyze_reduced_data_data_size.html">
+            data_size
+           </a>
+          </td>
+          <td class="error">
+           <a href="scipp-analysis_estia_analyze_reduced_data_fit_model_success.html">
+            fit_model_succes...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_odin_analyze_reduced_data_pymuhrec.html">
+            pymuhrec
+           </a>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_analyze_reduced_data_fit_quality.html">
+            fit_quality
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_analyze_reduced_data_load_cif.html">
+            load_cif
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_analyze_reduced_data_phase_linked.html">
+            phase_linked
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="2">
+           package import
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_package_import_easydiffraction.html">
+            easydiffraction
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_package_import_easyreflectometry.html">
+            easyreflectometr...
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_freia_package_import_easyreflectometry.html">
+            easyreflectometr...
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_loki_package_import_sasview_and_bumps.html">
+            sasview_and_bump...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_package_import_essdiffraction.html">
+            essdiffraction
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_package_import_essreflectometry.html">
+            essreflectometry
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_freia_package_import_essreflectometry.html">
+            essreflectometry
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="3">
+           read reduced data
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_read_reduced_data_fetch_cif.html">
+            fetch_cif
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_read_reduced_data_check_structure.html">
+            check_structure
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_odin_read_reduced_data_easyimaging.html">
+            easyimaging
+           </a>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_read_reduced_data_gemmi_parse_cif.html">
+            gemmi_parse_cif
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_odin_read_reduced_data_pymuhrec.html">
+            pymuhrec
+           </a>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_read_reduced_data_py_read_cif.html">
+            py_read_cif
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           tests.scipp-analysis.freia.ort file test
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_freia_tests.scipp-analysis.freia.ort_file_test_.html">
+            &nbsp;
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="5">
+           validate meta data
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_meta_data_block_exists.html">
+            block_exists
+           </a>
+          </td>
+          <td class="skipped">
+           <a href="scipp-analysis_estia_validate_meta_data_required_meta_data.html">
+            required_meta_da...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_meta_data_d_to_tof_difc.html">
+            d_to_tof_difc
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_meta_data_d_to_tof_loop.html">
+            d_to_tof_loop
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_meta_data_data_loop_exists.html">
+            data_loop_exists
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_meta_data_diffrn_radiation.html">
+            diffrn_radiation
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="7">
+           validate physical data
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_data_size.html">
+            data_size
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_validate_physical_data_q_values_finite.html">
+            q_values_finite
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_intensity_su_values.html">
+            intensity_su_val...
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_validate_physical_data_q_values_non_negative.html">
+            q_values_non_neg...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_intensity_values.html">
+            intensity_values
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_validate_physical_data_q_values_ureal_positive.html">
+            q_values_ureal_p...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_point_id_type.html">
+            point_id_type
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_validate_physical_data_r_values_finite.html">
+            r_values_finite
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_tof_increasing.html">
+            tof_increasing
+           </a>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_estia_validate_physical_data_r_values_non_negative.html">
+            r_values_non_neg...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_tof_positive.html">
+            tof_positive
+           </a>
+          </td>
+          <td class="failed">
+           <a href="scipp-analysis_estia_validate_physical_data_r_values_ureal_positive.html">
+            r_values_ureal_p...
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="success">
+           <a href="scipp-analysis_dream_validate_physical_data_tof_range.html">
+            tof_range
+           </a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="group-header" colspan="11">
+           <b>
+            scitacean
+           </b>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           can create dataset
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_can_create_dataset_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           can download dataset with pid
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_can_download_dataset_with_pid_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           can find input datasets
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_can_find_input_datasets_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           can query for original datasets by proposal id
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_can_query_for_original_datasets_by_proposal_id_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           cannot create dataset without authentication
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_cannot_create_dataset_without_authentication_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           cannot get dataset without authentication
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_cannot_get_dataset_without_authentication_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td rowspan="1">
+           cannot query dataset without authentication
+          </td>
+          <td class="success" colspan="11">
+           <a href="scitacean_none_cannot_query_dataset_without_authentication_.html" style="text-decoration:none;display: block; width: 100%; height: 100%;">
+            &nbsp;
+           </a>
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+         <tr>
+          <td class="row-gap" colspan="11">
+           &nbsp;
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </td>
+      <td style="width: 40%; vertical-align: top; overflow-x: auto;">
+       <div id="history_chart" style="min-width: 800px;">
+       </div>
+       <div id="groups_chart" style="min-width: 800px;">
+       </div>
+       <div id="instruments_chart" style="min-width: 800px;">
+       </div>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <script>
+    historyChart(['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'], [101, 126, 105, 109, 80, 80, 80, 51, 91, 65, 64, 67, 67, 67, 67, 67, 89, 92, 62, 62, 62, 62, 0, 67, 64, 64, 63, 63, 63, 67, 75, 62, 61, 61, 61, 61, 61, 61, 61, 61, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60], [17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 15, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 0, 17, 17, 17, 17, 17, 17, 17, 8, 13, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 13, 18, 18, 18, 18, 18, 18], [226, 231, 252, 200, 228, 228, 228, 207, 217, 243, 234, 241, 241, 241, 241, 241, 219, 216, 246, 246, 246, 246, 0, 241, 244, 254, 255, 255, 255, 251, 167, 240, 255, 255, 255, 255, 255, 255, 255, 255, 256, 256, 256, 241, 256, 256, 256, 256, 256, 256]);var data_groups = [
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [70.0, 60.0, 60.0, 0.0, 0.0, 0.0, 0.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 0.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 75.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0, 70.0],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'chexus',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [59.401709401709404, 56.060606060606055, 64.01515151515152, 69.9074074074074, 70.23255813953489, 70.23255813953489, 70.23255813953489, 72.72727272727273, 73.0232558139535, 73.0232558139535, 72.1951219512195, 72.09302325581395, 72.09302325581395, 72.09302325581395, 72.09302325581395, 72.09302325581395, 74.4186046511628, 74.4186046511628, 74.4186046511628, 74.4186046511628, 74.4186046511628, 74.4186046511628, 0.0, 73.0232558139535, 74.4186046511628, 74.4186046511628, 74.4186046511628, 74.4186046511628, 74.4186046511628, 72.55813953488372, 57.432432432432435, 72.8643216080402, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.11737089201877, 75.5868544600939, 75.5868544600939, 75.5868544600939, 73.73737373737373, 75.5868544600939, 75.5868544600939, 75.5868544600939, 75.5868544600939, 75.5868544600939, 75.5868544600939],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'nexusfiles-scipp',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [100.0, 92.5, 92.5, 22.5, 92.5, 92.5, 92.5, 100.0, 32.5, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 32.5, 25.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'ingestor',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'nexusjsontemplate-tests',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 91.66666666666666, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 0.0, 83.33333333333334, 83.33333333333334, 83.33333333333334, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 69.6969696969697, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111, 86.11111111111111],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'scipp-analysis',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'scitacean',
+    },
+];
+groupsChart(data_groups);var data_instruments = [
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [44.0, 44.0, 44.0, 40.0, 55.00000000000001, 55.00000000000001, 55.00000000000001, 55.00000000000001, 40.0, 55.00000000000001, 55.00000000000001, 55.00000000000001, 55.00000000000001, 55.00000000000001, 55.00000000000001, 55.00000000000001, 50.0, 50.0, 65.0, 65.0, 65.0, 65.0, 0.0, 65.0, 65.0, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 35.294117647058826, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'beer',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [53.333333333333336, 63.33333333333333, 63.33333333333333, 41.66666666666667, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 41.66666666666667, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 41.66666666666667, 41.66666666666667, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 0.0, 54.166666666666664, 54.166666666666664, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 52.0, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'bifrost',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [75.80645161290323, 75.80645161290323, 83.87096774193549, 84.21052631578947, 89.47368421052632, 89.47368421052632, 89.47368421052632, 91.22807017543859, 85.96491228070175, 89.47368421052632, 89.47368421052632, 89.47368421052632, 89.47368421052632, 89.47368421052632, 89.47368421052632, 89.47368421052632, 84.21052631578947, 84.21052631578947, 89.47368421052632, 89.47368421052632, 89.47368421052632, 89.47368421052632, 0.0, 85.96491228070175, 85.96491228070175, 86.20689655172413, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 70.6896551724138, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862, 87.93103448275862],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'dream',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [77.77777777777779, 77.77777777777779, 81.48148148148148, 69.23076923076923, 80.76923076923077, 80.76923076923077, 80.76923076923077, 84.61538461538461, 73.07692307692307, 84.61538461538461, 81.25, 84.61538461538461, 84.61538461538461, 84.61538461538461, 84.61538461538461, 84.61538461538461, 88.46153846153845, 76.92307692307693, 88.46153846153845, 88.46153846153845, 88.46153846153845, 88.46153846153845, 0.0, 88.46153846153845, 88.46153846153845, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 85.18518518518519, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'estia',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [54.166666666666664, 54.166666666666664, 54.166666666666664, 56.25, 75.0, 75.0, 75.0, 81.25, 62.5, 81.25, 81.25, 81.25, 81.25, 81.25, 81.25, 81.25, 68.75, 68.75, 87.5, 87.5, 87.5, 87.5, 0.0, 87.5, 87.5, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 80.0, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706, 88.23529411764706],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'freia',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [67.74193548387096, 67.74193548387096, 83.87096774193549, 75.86206896551724, 81.03448275862068, 81.03448275862068, 81.03448275862068, 82.75862068965517, 77.58620689655173, 82.75862068965517, 82.75862068965517, 82.75862068965517, 82.75862068965517, 82.75862068965517, 82.75862068965517, 82.75862068965517, 77.58620689655173, 77.58620689655173, 82.75862068965517, 82.75862068965517, 82.75862068965517, 82.75862068965517, 0.0, 82.75862068965517, 82.75862068965517, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 63.793103448275865, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711, 83.05084745762711],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'loki',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [54.54545454545454, 54.54545454545454, 54.54545454545454, 50.0, 66.66666666666666, 66.66666666666666, 66.66666666666666, 61.111111111111114, 44.44444444444444, 61.111111111111114, 61.111111111111114, 61.111111111111114, 61.111111111111114, 61.111111111111114, 61.111111111111114, 61.111111111111114, 50.0, 50.0, 66.66666666666666, 66.66666666666666, 66.66666666666666, 66.66666666666666, 0.0, 66.66666666666666, 66.66666666666666, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 61.111111111111114, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895, 68.42105263157895],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'magic',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [92.0, 92.0, 92.0, 72.72727272727273, 86.36363636363636, 86.36363636363636, 86.36363636363636, 90.9090909090909, 77.27272727272727, 90.9090909090909, 90.9090909090909, 90.9090909090909, 90.9090909090909, 90.9090909090909, 90.9090909090909, 90.9090909090909, 77.27272727272727, 77.27272727272727, 90.9090909090909, 90.9090909090909, 90.9090909090909, 90.9090909090909, 0.0, 77.27272727272727, 90.9090909090909, 91.30434782608695, 91.30434782608695, 91.30434782608695, 91.30434782608695, 91.30434782608695, 100.0, 85.71428571428571, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'nmx',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [100.0, 20.0, 20.0, 24.0, 29.166666666666668, 29.166666666666668, 29.166666666666668, 100.0, 50.0, 62.5, 62.5, 62.5, 62.5, 62.5, 62.5, 62.5, 41.66666666666667, 41.66666666666667, 54.166666666666664, 54.166666666666664, 54.166666666666664, 54.166666666666664, 0.0, 54.166666666666664, 54.166666666666664, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 52.0, 100.0, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001, 56.00000000000001],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'odin',
+    },
+
+    {
+        x: ['2026-09-12 00:17:36', '2026-09-11 00:17:56', '2026-09-10 00:18:51', '2026-09-09 00:16:49', '2026-09-08 00:17:41', '2026-09-07 00:17:48', '2026-09-06 00:17:00', '2026-09-05 00:21:00', '2026-09-04 00:17:45', '2026-09-03 00:17:50', '2026-09-02 00:18:06', '2026-09-01 00:18:49', '2026-08-31 00:18:14', '2026-08-30 00:18:08', '2026-08-29 00:17:47', '2026-08-28 00:17:56', '2026-08-27 00:17:37', '2026-08-26 00:17:56', '2026-08-25 00:17:56', '2026-08-24 00:17:44', '2026-08-23 00:17:50', '2026-08-22 00:17:50', '2026-08-21 00:17:30', '2026-08-20 00:16:39', '2026-08-19 00:18:00', '2026-08-18 00:20:56', '2026-08-17 00:19:36', '2026-08-16 00:20:55', '2026-08-15 00:20:38', '2026-08-14 00:23:04', '2026-08-13 00:17:50', '2026-08-12 00:21:19', '2026-08-11 00:20:34', '2026-08-10 00:20:13', '2026-08-09 00:20:25', '2026-08-08 00:20:56', '2026-08-07 00:20:41', '2026-08-06 00:18:44', '2026-08-05 00:19:13', '2026-08-04 00:21:12', '2026-08-03 00:19:41', '2026-08-02 00:20:10', '2026-08-01 00:18:57', '2026-07-31 00:22:18', '2026-07-30 00:19:37', '2026-07-29 00:19:43', '2026-07-28 00:18:39', '2026-07-27 00:18:51', '2026-07-26 00:19:23', '2026-07-25 00:19:03'],
+        y: [76.31578947368422, 76.31578947368422, 89.47368421052632, 69.44444444444444, 77.77777777777779, 77.77777777777779, 77.77777777777779, 100.0, 88.88888888888889, 88.88888888888889, 88.88888888888889, 83.33333333333334, 83.33333333333334, 83.33333333333334, 83.33333333333334, 83.33333333333334, 80.55555555555556, 80.55555555555556, 88.88888888888889, 88.88888888888889, 88.88888888888889, 88.88888888888889, 0.0, 88.88888888888889, 88.88888888888889, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 81.08108108108108, 100.0, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 89.1891891891892, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919, 91.8918918918919],
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'tbl',
+    },
+];
+instrumentsChart(data_instruments);
+   </script>
+  </main>
+ </body>
+</html>
