@@ -1,0 +1,4493 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 19, 2026 07:42:53
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|odin|odin_read_detector_data|timepix3
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130399" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f6643c09bb0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021561.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f6645c1cfe0="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f6643a21460="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f6643a21460="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-18 16:26:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21398/builds">
+      21398
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130294" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f05919d7bc0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021511.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f0593c41120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f0591a4c740="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f0591a4c740="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130181" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f4365887140="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021411.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f43673a5120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f43658869c0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f43658869c0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130102" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f0812fd4950="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021271.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f0815a11120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f081302f860="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f081302f860="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130026" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f31c481bbc0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021131.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f31c6899120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f31c4825a00="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f31c4825a00="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-14 11:34:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21340/builds">
+      21340
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129795" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f69fdedd070="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020911.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f69ffe19120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f69fde6ba40="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f69fde6ba40="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-14 11:02:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21337/builds">
+      21337
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129770" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7efcdf187bc0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020911.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7efce14d9120="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7efcdf5fac00="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7efcdf5fac00="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-11 23:08:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21331/builds">
+      21331
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129419" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f0f3341f7a0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020561.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f0f3584b380="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f0f3341f3b0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f0f3341f3b0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f83a1e7d730="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020415.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f83a411b240="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f83a1e7c080="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f83a1e7c080="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129030" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f4fc32f5520="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020275.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f4fc3d29260="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f4fc32919a0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f4fc32919a0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-09 13:46:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21269/builds">
+      21269
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128932" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fd194534e60="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fd197fc2980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fd194713b90="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fd194713b90="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128863" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fecda38b9e0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fecdde02980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fecda4a47d0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fecda4a47d0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-08 18:27:10 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21262/builds">
+      21262
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128810" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f70fabd60f0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f70fb61d260="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f70fa9875f0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f70fa9875f0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-08 10:56:31 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21236/builds">
+      21236
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128621" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f9879e5fef0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f987ab2d260="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f987a0a9820="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f987a0a9820="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-08 10:52:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21235/builds">
+      21235
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128568" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f72023317c0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f7202e21260="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f720215a270="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f720215a270="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-08 09:41:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21232/builds">
+      21232
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128510" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f7dfbb58380="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f7dff5f6980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:67:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f7dfbd2d4f0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f7dfbd2d4f0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-08 09:25:21 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21231/builds">
+      21231
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128457" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f9563d50c20="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f95677ce980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:67:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f9563d4f560="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f9563d4f560="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-08 09:18:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21230/builds">
+      21230
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128404" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fca8654efc0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fca89fe2980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:67:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fca86603b90="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fca86603b90="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-08 00:17:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21229/builds">
+      21229
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128351" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fbacbad9130="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fbacf30e980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fbacca423f0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fbacca423f0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-07 14:30:15 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21223/builds">
+      21223
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128284" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fe7c6d52f60="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020191.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fe7ca802980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:66:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fe7c6eee2d0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fe7c6eee2d0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--failed-bg);">
+     2026-09-07 00:17:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21211/builds">
+      21211
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128104" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f3a814a72c0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020114.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f3a84c9e980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f3a811e13d0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f3a811e13d0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--failed-bg);">
+     2026-09-06 00:17:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21210/builds">
+      21210
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128052" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f9e22eba1b0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019971.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f9e2680a980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f9e22c27c20="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f9e22c27c20="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--failed-bg);">
+     2026-09-04 00:17:45 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21200/builds">
+      21200
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127826" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fb17c0c5b50="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019453.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fb17f9c6980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fb178144bf0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fb178144bf0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--failed-bg);">
+     2026-09-03 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21196/builds">
+      21196
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127767" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f9bb6339340="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019453.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f9bb9f0e980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f9bb64d5790="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f9bb64d5790="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--failed-bg);">
+     2026-09-02 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21194/builds">
+      21194
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127714" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fbdc585af60="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019373.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fbdc810e980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fbdc47ef470="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fbdc47ef470="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--failed-bg);">
+     2026-09-01 00:18:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21192/builds">
+      21192
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127661" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fa639c91d00="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019227.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fa63d4be980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fa6399f7d10="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fa6399f7d10="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--failed-bg);">
+     2026-08-31 00:18:14 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21190/builds">
+      21190
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127608" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f21a24e59d0="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019096.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f21a7f12980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f21a44bed80="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f21a44bed80="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--failed-bg);">
+     2026-08-30 00:18:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21189/builds">
+      21189
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127556" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f4e4c165820="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018956.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f4e55be2980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f4e4774f320="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f4e4774f320="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--failed-bg);">
+     2026-08-29 00:17:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21188/builds">
+      21188
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127504" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7f8f56ee3c20="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018816.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7f8f5a4a6980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7f8f56eb3b60="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7f8f56eb3b60="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--failed-bg);">
+     2026-08-28 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21156/builds">
+      21156
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127269" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      workflow =
+      <sciline.pipeline.pipeline 0x7fce1014c680="" at="" object="">
+       <br/>
+       coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018676.hdf')
+       <br/>
+       check_detector_events =
+       <function 0x7fce175c2980="" _check_detector_events="" at="">
+        <br/>
+        <br/>
+        def test_odin_read_detector_data__timepix3(
+        <br/>
+        workflow: sciline.Pipeline,
+        <br/>
+        coda_nexus_file_path: Path,
+        <br/>
+        check_detector_events: Callable,
+        <br/>
+        ) -&gt; None:
+        <br/>
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        <br/>
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+        <br/>
+        <br/>
+        result = workflow.compute(NeXusData[NXdetector, SampleRun])
+        <br/>
+        <br/>
+        &gt;       check_detector_events(result)
+        <br/>
+        <br/>
+        tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:65:
+        <br/>
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        <br/>
+        <br/>
+        da =
+        <scipp.dataarray>
+         <br/>
+         Dimensions: Sizes[event_time_zero:0, ]
+         <br/>
+         Coordinates:
+         <br/>
+         * event_time_zero         datetime64            ... dims=(event: 0),
+         <br/>
+         data=float32[counts],
+         <br/>
+         coords={'event_time_offset':int32[ns], 'event_id':int32})
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         def _check_detector_events(da: sc.DataArray) -&gt; None:
+         <br/>
+         assert "event_time_offset" in da.bins.coords
+         <br/>
+         assert "event_id" in da.bins.coords
+         <br/>
+         assert "event_time_zero" in da.coords
+         <br/>
+         &gt;       assert da.bins.size().sum().value &gt; 0
+         <br/>
+         E       AssertionError: assert np.int64(0) &gt; 0
+         <br/>
+         E        +  where np.int64(0) =
+         <scipp.dataarray>
+          \nDimensions: Sizes[]\nData:\n                              int64
+          <no unit="">
+           ()  0\n\n.value
+           <br/>
+           E        +    where
+           <scipp.dataarray>
+            \nDimensions: Sizes[]\nData:\n                              int64
+            <no unit="">
+             ()  0\n\n = sum()
+             <br/>
+             E        +      where sum =
+             <scipp.dataarray>
+              \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+              <no unit="">
+               (event_time_zero)  []\n\n.sum
+               <br/>
+               E        +        where
+               <scipp.dataarray>
+                \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                              int64
+                <no unit="">
+                 (event_time_zero)  []\n\n = size()
+                 <br/>
+                 E        +          where size =
+                 <scipp.core.bins.bins 0x7fce13f681d0="" at="" object="">
+                  .size
+                  <br/>
+                  E        +            where
+                  <scipp.core.bins.bins 0x7fce13f681d0="" at="" object="">
+                   =
+                   <scipp.dataarray>
+                    \nDimensions: Sizes[event_time_zero:0, ]\nCoordinates:\n* event_time_zero         datetime64             [ns]  (event_time_zero)  []\nData:\n                          DataArrayView
+                    <no unit="">
+                     (event_time_zero)  binned data: dim='event', content=DataArray(\n          dims=(event: 0),\n          data=float32[counts],\n          coords={'event_time_offset':int32[ns], 'event_id':int32})\n\n.bins
+                     <br/>
+                     <br/>
+                     .tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:25: AssertionError
+                    </no>
+                   </scipp.dataarray>
+                  </scipp.core.bins.bins>
+                 </scipp.core.bins.bins>
+                </no>
+               </scipp.dataarray>
+              </no>
+             </scipp.dataarray>
+            </no>
+           </scipp.dataarray>
+          </no>
+         </scipp.dataarray>
+        </scipp.dataarray>
+       </function>
+      </sciline.pipeline.pipeline>
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--success-bg);">
+     2026-08-27 00:17:37 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21102/builds">
+      21102
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127014" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--success-bg);">
+     2026-08-26 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21064/builds">
+      21064
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126861" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--success-bg);">
+     2026-08-25 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21042/builds">
+      21042
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126730" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--success-bg);">
+     2026-08-24 09:58:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21020/builds">
+      21020
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126598" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--success-bg);">
+     2026-08-24 00:17:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21019/builds">
+      21019
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126545" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--success-bg);">
+     2026-08-23 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21018/builds">
+      21018
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126493" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-37" name="tab-group-1" type="radio"/>
+    <label for="tab-37" style="color: var(--success-bg);">
+     2026-08-22 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21017/builds">
+      21017
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-38" name="tab-group-1" type="radio"/>
+    <label for="tab-38" style="color: var(--success-bg);">
+     2026-08-20 00:16:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20932/builds">
+      20932
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125965" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-39" name="tab-group-1" type="radio"/>
+    <label for="tab-39" style="color: var(--success-bg);">
+     2026-08-19 00:18:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20866/builds">
+      20866
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125568" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-40" name="tab-group-1" type="radio"/>
+    <label for="tab-40" style="color: var(--success-bg);">
+     2026-08-18 14:11:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20857/builds">
+      20857
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125488" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <p>
+      None
+     </p>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
