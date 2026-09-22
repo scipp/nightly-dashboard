@@ -4,3 +4,6 @@
 
 render/rendered.html
 
+# local API cache (render.py --cache)
+.cache/
+
