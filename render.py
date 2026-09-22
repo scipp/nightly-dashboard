@@ -66,6 +66,7 @@ GROUPS = [
     "ingestor",
     "scipp-analysis",
     "scitacean",
+    "codeshelf",
 ]
 
 
@@ -194,12 +195,12 @@ def test_html(test_history, test_name, last_updated):
         "error": "var(--failed-bg)",
     }
     no_output_lines = {
-        "success":     "Test passed, nothing to report",
+        "success": "Test passed, nothing to report",
         "success-new": "Test passed, nothing to report",
-        "skipped":     "Test skipped, nothing was run",
-        "failed":      "Test failed but produced no output, see the job log",
-        "failed-new":  "Test failed but produced no output, see the job log",
-        "error":       "Test error without output, see the job log",
+        "skipped": "Test skipped, nothing was run",
+        "failed": "Test failed but produced no output, see the job log",
+        "failed-new": "Test failed but produced no output, see the job log",
+        "error": "Test error without output, see the job log",
     }
 
     test_results = ""
