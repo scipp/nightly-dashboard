@@ -1,5 +1,10 @@
+import hashlib
+import html
+import json
 import logging
 import os
+import re
+import textwrap
 import pytz
 from datetime import datetime, UTC
 from dataclasses import dataclass
@@ -22,6 +27,8 @@ GITLAB_API_URL = "https://git.esss.dk/api/v4"
 DMSC_NIGHTLY_PROJECT_ID = 301
 TIMEZONE = pytz.timezone("Europe/Copenhagen")
 TOKEN = os.getenv("GITLAB_PRIVATE_TOKEN")
+# Directory for cached API responses (set via --cache); None disables caching.
+CACHE_DIR = None
 ALL_INSTRUMENTS = [
     "beer",
     "bifrost",
@@ -63,14 +70,33 @@ GROUPS = [
 
 
 # API Functions
+def get_api_json(url):
+    """GET a GitLab API URL as JSON, through the on-disk cache if enabled."""
+    # Return the cached response if caching is on and the URL was fetched before
+    cache_file = None
+    if CACHE_DIR is not None:
+        cache_file = CACHE_DIR / f"{hashlib.sha1(url.encode()).hexdigest()}.json"
+        if cache_file.exists():
+            logging.info(f"... cache hit for {url}")
+            return json.loads(cache_file.read_text())
+    # Fetch from GitLab with the private token and fail on an HTTP error
+    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    # Store the parsed response so the next run is a cache hit
+    if cache_file is not None:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        cache_file.write_text(json.dumps(data))
+    # Return the parsed JSON either way
+    return data
+
+
 def get_pipelines(project_id, build_type, n):
     source_spec = "source=schedule&" if build_type == "nightly" else ""
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines?{source_spec}per_page={n}"
     logging.info(f"Fetching pipelines from URL: {url}")
-    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    pipelines = response.json()
+    pipelines = get_api_json(url)
     # Get the last n pipeline ids
     last_n_pipelines = {
         pipeline["id"]: {
@@ -87,19 +113,13 @@ def get_pipelines(project_id, build_type, n):
 def get_test_report(project_id, pipeline_id):
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/test_report"
     logging.info(f"Fetching test report for pipeline {pipeline_id} from URL: {url}")
-    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
+    return get_api_json(url)
 
 
 def get_job_list(project_id, pipeline_id):
     url = f"{GITLAB_API_URL}/projects/{project_id}/pipelines/{pipeline_id}/jobs?per_page=100"
     logging.info(f"Fetching job list for pipeline {pipeline_id} from URL: {url}")
-    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    job_list = response.json()
+    job_list = get_api_json(url)
     return {job["name"]: job for job in job_list}
 
 
@@ -113,6 +133,55 @@ def prettify_html(html_string):
     return soup.prettify(formatter="html")
 
 
+def is_error_line(line):
+    return line == "E" or line.startswith("E ")
+
+
+def split_pytest_output(text):
+    """Split test output into (summary, details).
+
+    Pytest reports a failure as a traceback whose explanation lines start
+    with the letter E, for example::
+
+        >       assert compute() == 3
+        E       assert 2 == 3
+        E        +  where 2 = compute()
+
+        tests/test_x.py:5: AssertionError
+
+    The summary is the last such group of lines, with the ``E`` prefix
+    stripped, followed by the ``path:line: ExceptionType`` line that closes
+    the traceback. The details is the complete, unmodified output. Output
+    with no such lines is summarised by its last few lines.
+    """
+    # Number of trailing lines shown when the output has no pytest "E" block.
+    fallback_lines = 15
+    # Find every line that pytest marked as part of a failure explanation
+    lines = text.rstrip().splitlines()
+    error_lines = [k for k, line in enumerate(lines) if is_error_line(line)]
+    # No E lines: fall back to the tail of the output
+    if not error_lines:
+        return "\n".join(lines[-fallback_lines:]), text
+    # Walk back from the last E line to the start of its group
+    last = error_lines[-1]
+    first = last
+    while first > 0 and is_error_line(lines[first - 1]):
+        first -= 1
+    # Strip the E prefix and the common indentation from that group
+    summary = textwrap.dedent("\n".join(line[1:] for line in lines[first : last + 1]))
+    # Skip blank lines to the line that follows the group
+    following = last + 1
+    while following < len(lines) and not lines[following].strip():
+        following += 1
+    # Closing line of a pytest traceback, e.g. "pkg/workflow.py:308: ValueError".
+    location_re = re.compile(r"^\S+:\d+: \w+")
+    # Append the closing path:line: ExceptionType line if that is what follows
+    if following < len(lines) and location_re.match(lines[following]):
+        summary += "\n\n" + lines[following]
+    # Return the summary alongside the untouched full output
+    return summary, text
+
+
 def test_html(test_history, test_name, last_updated):
     out_html = load_template("test.html")
 
@@ -123,6 +192,14 @@ def test_html(test_history, test_name, last_updated):
         "failed-new": "var(--failed-new-bg)",
         "skipped": "var(--skipped-bg)",
         "error": "var(--failed-bg)",
+    }
+    no_output_lines = {
+        "success":     "Test passed, nothing to report",
+        "success-new": "Test passed, nothing to report",
+        "skipped":     "Test skipped, nothing was run",
+        "failed":      "Test failed but produced no output, see the job log",
+        "failed-new":  "Test failed but produced no output, see the job log",
+        "error":       "Test error without output, see the job log",
     }
 
     test_results = ""
@@ -145,8 +222,22 @@ def test_html(test_history, test_name, last_updated):
         <p style="color: #8ADEFF;"><b><u><a href="{url}" style="color: #8ADEFF;">View job log here</a></u></b></p>
         <hr>
 """
+        # Tests without output get a one-line placeholder that matches their status
+        if not report:
+            summary, details = no_output_lines.get(status, "No output"), ""
+        else:
+            summary, details = split_pytest_output(report)
         test_results += f"""
-        <p>{report}</p>
+        <pre class="output-summary {status}">{html.escape(summary)}</pre>
+"""
+        if details:
+            test_results += f"""
+        <details class="output-details">
+            <summary>Full output</summary>
+            <pre>{html.escape(details)}</pre>
+        </details>
+"""
+        test_results += """
     </div>
 </div>
 """
@@ -336,7 +427,7 @@ class Test:
     status: str
     suite_name: str
     test_name: str
-    output: str
+    output: str | None
     group: str
     classname: str
     raw_name: str = ""
@@ -414,7 +505,7 @@ def main(build_type, npipelines):
                     status=test["status"],
                     suite_name=suite["name"],
                     test_name=test["name"],
-                    output=str(test["system_output"]).replace("\n", "<br>"),
+                    output=test["system_output"],
                     group=test_group,
                     classname=classname,
                 )
@@ -575,6 +666,12 @@ if __name__ == "__main__":
         default=50,
         help="Number of pipelines to fetch (default: 50).",
     )
+    parser.add_argument(
+        "--cache",
+        metavar="DIR",
+        help="Cache GitLab API responses in DIR and reuse them on later runs.",
+    )
     args = parser.parse_args()
+    CACHE_DIR = Path(args.cache) if args.cache else None
 
     main(build_type=args.build_type, npipelines=args.number)
