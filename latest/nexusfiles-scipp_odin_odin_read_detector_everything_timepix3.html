@@ -1,0 +1,3331 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:03:41
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|odin|odin_read_detector_everything|timepix3
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132217" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdf5941fd10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022515.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fdf5ac118a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fdf52fc5490&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131922" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f81522819d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022385.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f8153b95760&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f814b9f11c0&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 10:10:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21461/builds">
+      21461
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131828" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa126510920&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022305.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fa12857d760&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fa124217b60&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131772" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7a92f1b950&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022255.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f7a948f9760&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f7a90d39a90&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-23 16:26:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21457/builds">
+      21457
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131719" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd918b763f0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022205.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fd91a4818a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fd91690fb00&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-23 16:14:27 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21456/builds">
+      21456
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131666" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fbe3f0e6b70&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022205.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fbe408798a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fbe3c6f0350&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-23 13:44:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21452/builds">
+      21452
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131602" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd2385eb0b0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022195.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fd239ec1760&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fd235f9bb00&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131555" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f005f919610&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022115.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f0064059940&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f0061bfb320&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-22 16:48:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21447/builds">
+      21447
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131497" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f699670c080&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f6998f3d8a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f699684f350&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-22 16:05:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21446/builds">
+      21446
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131444" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f671dd18ad0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f672082d8a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f671dd0f770&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-22 15:53:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21445/builds">
+      21445
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131391" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0b55c0e0f0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f0b583558a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f0b55c01df0&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-22 12:13:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21443/builds">
+      21443
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131344" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6e12eca120&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022045.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f6e14f79800&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f6e12fc98b0&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-22 12:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21442/builds">
+      21442
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131292" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc9e7c58200&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022035.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fc9e9cb1580&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fc9e7c4c5f0&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-22 12:10:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21441/builds">
+      21441
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131239" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fcb6fc61550&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022035.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fcb7405d580&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fcb71d4a000&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-22 10:30:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21437/builds">
+      21437
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131174" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f278b7f8fe0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f278dee1580&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f278b7eaa50&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-22 10:04:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21436/builds">
+      21436
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131121" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ffa4a879d90&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7ffa4e05d440&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7ffa4badfa10&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-22 09:31:52 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21435/builds">
+      21435
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131068" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f28cfaf8b90&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f28d1a31580&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f28cfae8f80&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130994" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7bb7c91d60&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021975.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f7bba40d4e0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f7bb7c86570&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-21 12:42:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21409/builds">
+      21409
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130706" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8fda993c50&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021911.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f8fdc8c93a0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f8fd871b650&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-21 12:32:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21408/builds">
+      21408
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130663" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'event_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f112aa182c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021911.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f112de414e0&gt;
+
+    def test_odin_read_detector_everything__timepix3(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "event_mode_detectors/timepix3"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f112ab2a5d0&gt;
+sel = 'event_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'event_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--success-bg);">
+     2026-09-21 10:53:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21405/builds">
+      21405
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130534" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--success-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--success-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130399" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--success-bg);">
+     2026-09-18 16:26:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21398/builds">
+      21398
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130294" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--success-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130181" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--success-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130102" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--success-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130026" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--success-bg);">
+     2026-09-14 11:34:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21340/builds">
+      21340
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129795" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--success-bg);">
+     2026-09-14 11:02:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21337/builds">
+      21337
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129770" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--success-bg);">
+     2026-09-11 23:08:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21331/builds">
+      21331
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129419" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--success-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--success-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129030" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--success-bg);">
+     2026-09-09 13:46:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21269/builds">
+      21269
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128932" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--success-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128863" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--success-bg);">
+     2026-09-08 18:27:10 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21262/builds">
+      21262
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128810" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--success-bg);">
+     2026-09-08 10:56:31 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21236/builds">
+      21236
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128621" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

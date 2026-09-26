@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:01:19
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|magic|magic_read_choppers_to_disk_choppers|bandwidth_chopper
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132215" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f871d4a05c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00022513.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f87780d45e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f87205ad940&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:30: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131920" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6a11131370&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00022383.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f6a6bd045e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f6a14265800&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:30: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131770" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fb2c5ec85c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00022253.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7fb320ae45e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7fb2c8c71800&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:30: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131553" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7ff89bd24d10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00022113.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7ff8efff6e80&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7ff89c2358a0&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130992" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f97626ec170&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021973.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f97648dd4e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f9762ded580&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-21 00:17:57 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21403/builds">
+      21403
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130485" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f5faf814bc0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021839.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f5fb17994e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f5faff21440&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130439" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f3c92fa43e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021699.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f3c951f54e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f3c937d1580&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130397" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fee0a635160&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021559.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7fee0c6f54e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7fee0b059440&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130179" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8e5580fb00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021419.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f8e578c14e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f8e56029440&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130100" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f2dcdf26ab0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021269.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f2dcfb314e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f2dce069580&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130024" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd5e6484890&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00021129.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7fd5e87354e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7fd5e6d3d440&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-15 00:18:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21359/builds">
+      21359
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129969" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f32a7db6a50&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00020989.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f32a9d314e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f32a7ed9440&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-13 00:20:24 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21333/builds">
+      21333
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129521" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f91a6492300&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00020699.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f91d090e3e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f91a6e977e0&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-12 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21332/builds">
+      21332
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129469" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fee8af9ee70&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00020569.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7feeb5bea3e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7fee8ba237e0&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129238" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7c7e2b4680&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00020413.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7f7ca8fce3e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7f7c7ea9b6a0&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:352: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:686: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129028" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:676: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>chopper_name = 'bandwidth_chopper'
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa130284830&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00020273.hdf')
+to_disk_choppers = &lt;function _to_disk_choppers at 0x7fa1612e23e0&gt;
+check_disk_chopper = &lt;function _check_disk_chopper at 0x7fa1307f56c0&gt;
+
+    @pytest.mark.parametrize(
+        "chopper_name",
+        [
+            "bandwidth_chopper",
+            "overlap_chopper",
+            "pulse_shape_chopper_1",
+            "pulse_shape_chopper_2",
+        ],
+    )
+    def test_magic_read_choppers_to_disk_choppers(
+        chopper_name: str,
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        to_disk_choppers: Callable,
+        check_disk_chopper: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        choppers = workflow.compute(RawChoppers[SampleRun])
+    
+&gt;       disk_choppers = to_disk_choppers({chopper_name: choppers[chopper_name]})
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/conftest.py:89: in _to_disk_choppers
+    key: DiskChopper.from_nexus(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:343: in from_nexus
+    frequency = _get_0d_variable(chopper, 'rotation_speed_setpoint')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dg = {'beam_position': &lt;scipp.Variable&gt; ()    float64            [deg]  0, 'type': &lt;DiskChopperType.single: 'Chopper type s...             [m]  (0, 0, -14.5), 'transform': &lt;scipp.Variable&gt; ()  translation3              [m]  (-0, -0, -14.5), ...}
+name = 'rotation_speed_setpoint'
+
+    def _get_0d_variable(
+        dg: Mapping[str, sc.Variable | sc.DataArray], name: str
+    ) -&gt; sc.Variable:
+        if (val := dg.get(name)) is None:
+            raise ValueError(f"Chopper field '{name}' is missing")
+    
+        msg = (
+            "Chopper field '{name}' must be a scalar variable, {got}. "
+            "See the chopper user-guide for more information: "
+            "https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html"
+        )
+    
+        if isinstance(val, sc.DataArray):
+            val = val.data
+        if not isinstance(val, sc.Variable):
+            raise TypeError(msg.format(name=name, got=f'got a {type(val)}'))
+        val = val.squeeze()
+        if val.ndim != 0:
+&gt;           raise sc.DimensionError(
+                msg.format(name=name, got=f'got a {val.ndim}d variable')
+            )
+E           scipp._scipp.core.DimensionError: Chopper field 'rotation_speed_setpoint' must be a scalar variable, got a 1d variable. See the chopper user-guide for more information: https://scipp.github.io/scippneutron/user-guide/chopper/processing-nexus-choppers.html
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippneutron/chopper/disk_chopper.py:676: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

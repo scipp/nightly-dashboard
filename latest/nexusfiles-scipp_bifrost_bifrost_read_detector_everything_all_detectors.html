@@ -1,0 +1,3936 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:03:41
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|bifrost_read_detector_everything|all_detectors
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132210" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f9fd87222d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022518.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f9fe6f39bc0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f9fd87222d0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131915" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f399075baa0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022378.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f399d491bc0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f399075baa0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 10:10:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21461/builds">
+      21461
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131821" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc25c35d160&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022308.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fc260f45d00&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fc25c35d160&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131765" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fb624661520&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022248.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fb638b45bc0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fb624661520&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-23 16:26:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21457/builds">
+      21457
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131712" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0aac0861e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022208.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f0ab2339d00&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f0aac0861e0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-23 16:14:27 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21456/builds">
+      21456
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131659" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdd1052a390&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022208.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fdd1604dd00&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fdd1052a390&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-23 13:44:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21452/builds">
+      21452
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131595" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f82fc0bb650&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022198.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f833a1f9bc0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f82fc0bb650&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131548" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc9bb27c770&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022118.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fc9c5a0dda0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fc9bb27c770&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-22 16:48:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21447/builds">
+      21447
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131490" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f1a02b42930&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022068.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f1a0cf75e40&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f1a02b42930&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-22 16:05:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21446/builds">
+      21446
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131437" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f25f11a3d10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022068.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f25f3451e40&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f25f11a3d10&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-22 15:53:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21445/builds">
+      21445
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131384" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7f821cc440&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022068.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f7f84011d00&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f7f821cc440&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-22 12:13:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21443/builds">
+      21443
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131337" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ff418384170&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022038.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7ff41ff69da0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7ff418384170&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-22 12:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21442/builds">
+      21442
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131285" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7dacdb5670&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022038.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f7dda7298a0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f7dacdb5670&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-22 12:10:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21441/builds">
+      21441
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131232" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f63c41abfe0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022038.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f63fc1798a0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f63c41abfe0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-22 10:30:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21437/builds">
+      21437
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131167" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f5b14007d10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022028.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f5b6b4a99e0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f5b14007d10&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-22 10:04:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21436/builds">
+      21436
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131114" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f58a1f54b00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022028.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f58a3afd9e0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f58a1f54b00&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-22 09:31:52 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21435/builds">
+      21435
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131061" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7084295fd0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00022028.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f70d34559e0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7f7084295fd0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130987" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7efee03bb6e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021978.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7efee60f9940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7efee03bb6e0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-21 12:42:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21409/builds">
+      21409
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130699" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fe0d12929c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021904.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fe0d4b89940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fe0d12929c0&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-21 12:32:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21408/builds">
+      21408
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130656" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ff454103f80&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021904.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7ff493ebd940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7ff454103f80&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--failed-bg);">
+     2026-09-21 10:53:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21405/builds">
+      21405
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130527" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc898b83e30&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021904.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fc8e3491940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fc898b83e30&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--failed-bg);">
+     2026-09-21 00:17:57 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21403/builds">
+      21403
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130480" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f64687433b0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021834.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f64a5731800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f649a32eb70&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--failed-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130434" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0b342b5e80&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021704.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f0b9e439800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f0b342b6ae0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--failed-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130392" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa4734dd910&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021554.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fa475739940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7fa469a209b0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--failed-bg);">
+     2026-09-18 16:26:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21398/builds">
+      21398
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130287" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fe1611cab40&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021514.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fe1a3635940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fe1611cab40&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--failed-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130174" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f5a6c0eaf00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021414.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f5aa5d45940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f5a6016c2c0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--failed-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130095" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f4030096990&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021274.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f40776bd800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f4070f62060&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--failed-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130019" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f07742d6e10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00021124.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f077bebd800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f077a454050&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--failed-bg);">
+     2026-09-15 00:18:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21359/builds">
+      21359
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129964" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f36c8711a60&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020984.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f371505d940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f36e0519be0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--failed-bg);">
+     2026-09-14 11:34:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21340/builds">
+      21340
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129788" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f89b8518fb0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020914.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f8a147bd940&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f8a0441bce0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--failed-bg);">
+     2026-09-14 11:02:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21337/builds">
+      21337
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129727" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f830441fe00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020894.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f83692c1800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f836587e9c0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--failed-bg);">
+     2026-09-14 09:49:37 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21336/builds">
+      21336
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129674" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f57c40d5010&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020894.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f57eb4f5800&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f57bbf13d10&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--failed-bg);">
+     2026-09-14 09:39:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21335/builds">
+      21335
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129621" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8626ef6e70&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020894.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f8633267ba0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f860837fec0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--failed-bg);">
+     2026-09-13 00:20:24 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21333/builds">
+      21333
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129516" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7faf1f2f65d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020704.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7faf22943ba0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7faef405b350&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--failed-bg);">
+     2026-09-12 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21332/builds">
+      21332
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129464" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6ba0c097c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00020564.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7f6ba2fc7a60&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:466: in compute_mapped
+    results = pipeline.compute(key_series)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:119: in compute
+    results = self._scheduler.get(self._graph, list(targets), reporter=reporter)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = &lt;scippnexus.base.Group object at 0x7f6b6c30eae0&gt;
+nx_class = &lt;class 'scippnexus.nexus_classes.NXmoderator'&gt;, name = None
+
+    def _unique_child_group(
+        group: snx.Group, nx_class: type[snx.NXobject], name: str | None
+    ) -&gt; snx.Group:
+        if name is not None:
+            child = group[name]
+            if isinstance(child, snx.Field):
+                raise ValueError(
+                    f"Expected a NeXus group as item '{name}' but got a field."
+                )
+            if child.nx_class != nx_class:
+                raise ValueError(
+                    f"The NeXus group '{name}' was expected to be a "
+                    f'{nx_class} but is a {child.nx_class}.'
+                )
+            return child
+    
+        children = group[nx_class]
+        if len(children) != 1:
+&gt;           raise ValueError(
+                f"Expected exactly one {nx_class.__name__} group '{group.name}', "
+                f"got {len(children)}"
+            )
+E           ValueError: Expected exactly one NXmoderator group '/entry/instrument', got 0
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nexus_classes.NXsource],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:384: ValueError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--success-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129233" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-37" name="tab-group-1" type="radio"/>
+    <label for="tab-37" style="color: var(--success-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129023" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-38" name="tab-group-1" type="radio"/>
+    <label for="tab-38" style="color: var(--success-bg);">
+     2026-09-09 13:46:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21269/builds">
+      21269
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128925" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-39" name="tab-group-1" type="radio"/>
+    <label for="tab-39" style="color: var(--success-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128856" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-40" name="tab-group-1" type="radio"/>
+    <label for="tab-40" style="color: var(--success-bg);">
+     2026-09-08 18:27:10 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21262/builds">
+      21262
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128803" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-41" name="tab-group-1" type="radio"/>
+    <label for="tab-41" style="color: var(--success-bg);">
+     2026-09-08 10:56:31 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21236/builds">
+      21236
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128614" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

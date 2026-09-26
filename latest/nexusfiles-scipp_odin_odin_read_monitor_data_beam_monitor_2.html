@@ -1,0 +1,2851 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:03:41
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|odin|odin_read_monitor_data|beam_monitor_2
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132217" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdf52f2f920&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022515.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fdf5ac11620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131922" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8152300800&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022385.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f8153b954e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 10:10:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21461/builds">
+      21461
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131828" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa126398950&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022305.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fa12857d4e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131772" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7a90d86f30&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022255.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f7a948f94e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-23 16:26:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21457/builds">
+      21457
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131719" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd91692a960&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022205.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fd91a481620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-23 16:14:27 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21456/builds">
+      21456
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131666" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fbe3c66fbf0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022205.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fbe40879620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-23 13:44:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21452/builds">
+      21452
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131602" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd235ee6c00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022195.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fd239ec14e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131555" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0061c32240&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022115.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f00640596c0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-22 16:48:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21447/builds">
+      21447
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131497" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6996e5a390&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f6998f3d620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-22 16:05:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21446/builds">
+      21446
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131444" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f671e411130&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f672082d620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-22 15:53:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21445/builds">
+      21445
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131391" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0b55e3deb0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022065.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f0b58355620&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-22 12:13:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21443/builds">
+      21443
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131344" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6e13108a10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022045.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f6e14f79580&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-22 12:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21442/builds">
+      21442
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131292" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc9e7c91f10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022035.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fc9e9cb1300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-22 12:10:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21441/builds">
+      21441
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131239" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fcb71da5f40&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022035.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fcb7405d300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-22 10:30:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21437/builds">
+      21437
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131174" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f278b825f70&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f278dee1300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-22 10:04:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21436/builds">
+      21436
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131121" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ffa4bb19be0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7ffa4e05d1c0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-22 09:31:52 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21435/builds">
+      21435
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131068" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f28d01e1160&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022025.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f28d1a31300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130994" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7bb7cb8470&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021975.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f7bba40d260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-21 12:42:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21409/builds">
+      21409
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130706" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8fd878c0e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021911.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f8fdc8c9120&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-21 12:32:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21408/builds">
+      21408
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130663" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f112c468c80&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021911.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f112de41260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:714, ]
+Coordinates:
+* frame_time                  int32        ...4             [ns]  (time)  []
+Data:
+                            float64  [dimensionless]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:714, ]\nCoordinates:\n* frame_time                  int32             [ns]  (frame_time [bin-edge])  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -41.255)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64  [dimensionless]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--failed-bg);">
+     2026-09-21 10:53:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21405/builds">
+      21405
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130534" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f368c2e18e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021901.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f368e739260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--failed-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f3c616e1550&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021701.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f3c6376d120&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--failed-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130399" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f6643804ad0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021561.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f6645c1d120&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--failed-bg);">
+     2026-09-18 16:26:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21398/builds">
+      21398
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130294" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f05918f07d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021511.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f0593c41260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--failed-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130181" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f43650e0920&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021411.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f43673a5260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--failed-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130102" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0812de0800&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021271.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f0815a11260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--failed-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130026" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f31c470a750&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021131.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f31c6899260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--failed-bg);">
+     2026-09-14 11:34:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21340/builds">
+      21340
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129795" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f69fdc4e9c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020911.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f69ffe19260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--failed-bg);">
+     2026-09-14 11:02:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21337/builds">
+      21337
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129770" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7efcdefcdee0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020911.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7efce14d9260&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--failed-bg);">
+     2026-09-11 23:08:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21331/builds">
+      21331
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129419" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0f332b1790&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020561.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f0f3584b4c0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--failed-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f83a02656d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020415.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f83a411b380&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--failed-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129030" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f4fc2e4e780&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020275.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f4fc3d293a0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--failed-bg);">
+     2026-09-09 13:46:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21269/builds">
+      21269
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128932" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd190221c10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fd197e29300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--failed-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128863" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fecd02b5520&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7fecddc6d300&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--failed-bg);">
+     2026-09-08 18:27:10 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21262/builds">
+      21262
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128810" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f70f8160620&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f70fb61d3a0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--failed-bg);">
+     2026-09-08 10:56:31 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21236/builds">
+      21236
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128621" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f9879c84b60&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+monitor_name = 'beam_monitor_2'
+check_monitor_data = &lt;function _check_monitor_data at 0x7f987ab2d3a0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor_name", ["beam_monitor_1", "beam_monitor_2", "beam_monitor_3"]
+    )
+    def test_odin_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor_name: str,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusName[OdinMonitor]] = monitor_name
+    
+        monitor = workflow.compute(RawMonitor[SampleRun, OdinMonitor])
+    
+&gt;       check_monitor_data(monitor)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, frame_time:7000, ]
+Coordinates:
+* frame_time                  int32       ...4             [ns]  (time)  []
+Data:
+                            float64             [au]  (time, frame_time)  []  []
+
+
+
+    def _check_monitor_data(da: sc.DataArray) -&gt; None:
+        if da.bins is not None:
+            assert da.dims == ("event_time_zero",)
+            assert "event_time_offset" in da.bins.coords
+            assert da.bins.size().sum().value &gt; 0
+        else:
+            assert set(da.dims) == {"time", "frame_time"}
+            assert "time" in da.coords
+            assert "frame_time" in da.coords
+&gt;           assert da.size &gt; 0
+E           assert 0 &gt; 0
+E            +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, frame_time:7000, ]\nCoordinates:\n* frame_time                  int32            [&micro;s]  (frame_time)  [0, 0, ..., 0, 0]\n* position                  vector3              [m]  ()  (0, 0, -2)\n* time                    datetime64             [ns]  (time)  []\nData:\n                            float64             [au]  (time, frame_time)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:43: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

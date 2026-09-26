@@ -1,0 +1,5041 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:03:41
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: chexus|magic|run_chexus|
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132205" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022513.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f6b2c5719e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022513.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131910" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022383.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fd9440499e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022383.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 10:10:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21461/builds">
+      21461
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131816" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022303.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f82725e99e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022303.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131760" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022253.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fb5cf8059e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022253.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-23 16:26:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21457/builds">
+      21457
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131707" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022203.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f1eaeec59e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022203.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-09-23 16:14:27 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21456/builds">
+      21456
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131654" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022203.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f32c80959e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022203.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-09-23 13:44:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21452/builds">
+      21452
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131590" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022193.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbe6fb0d9e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022193.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131543" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022113.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fab36061940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022113.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-09-22 16:48:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21447/builds">
+      21447
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131485" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022073.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fc9502459e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022073.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-09-22 16:05:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21446/builds">
+      21446
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131432" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022063.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fec4a5a19e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022063.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-22 15:53:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21445/builds">
+      21445
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131379" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022063.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fdc023a19e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022063.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-22 12:13:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21443/builds">
+      21443
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131332" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7ffb1980d940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-22 12:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21442/builds">
+      21442
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131280" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f97239119e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-22 12:10:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21441/builds">
+      21441
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131227" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fe3bb8359e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022043.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-22 10:30:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21437/builds">
+      21437
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131162" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fd0372c19e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-22 10:04:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21436/builds">
+      21436
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131109" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f4e879759e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-22 09:31:52 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21435/builds">
+      21435
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131056" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7ff643e9d9e0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00022023.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130982" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021973.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f595f1bd940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021973.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-21 12:42:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21409/builds">
+      21409
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130694" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021909.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fb31b7e9940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021909.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-21 12:32:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21408/builds">
+      21408
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130651" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021909.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/344
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fc3c989d940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021909.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/344
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5243
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--failed-bg);">
+     2026-09-21 10:53:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21405/builds">
+      21405
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130522" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021899.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f28040bd940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021899.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--failed-bg);">
+     2026-09-21 00:17:57 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21403/builds">
+      21403
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130475" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021839.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f9cc3111940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021839.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--failed-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130429" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021699.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f63deae1940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021699.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--failed-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130387" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021559.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbaab2bd940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021559.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--failed-bg);">
+     2026-09-18 16:26:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21398/builds">
+      21398
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130282" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021519.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f62f93b9940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021519.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--failed-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130169" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021419.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fefe8041940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021419.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--failed-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130090" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021269.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7faafb175940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021269.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--failed-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130014" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021129.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f94a08b9940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00021129.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--failed-bg);">
+     2026-09-15 00:18:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21359/builds">
+      21359
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129959" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020989.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7ff9c6fa9940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020989.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--failed-bg);">
+     2026-09-14 11:34:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21340/builds">
+      21340
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129783" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020909.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f76efebd940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020909.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--failed-bg);">
+     2026-09-14 11:02:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21337/builds">
+      21337
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129722" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020899.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f112cc01940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020899.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--failed-bg);">
+     2026-09-14 09:49:37 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21336/builds">
+      21336
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129669" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020889.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7effcbf09940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020889.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--failed-bg);">
+     2026-09-14 09:39:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21335/builds">
+      21335
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129616" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020889.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fed5cd75940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020889.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--failed-bg);">
+     2026-09-13 00:20:24 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21333/builds">
+      21333
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129511" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020699.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fcbe81b1940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020699.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--failed-bg);">
+     2026-09-12 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21332/builds">
+      21332
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129459" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020569.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fe8af705940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020569.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--failed-bg);">
+     2026-09-11 23:08:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21331/builds">
+      21331
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129407" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020559.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/48
+depends_on_target_missing: 0/76
+float_dataset_units_missing: 0/624
+group_has_units: 0/258
+index_has_units: 0/184
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/345
+NX_class_attr_missing: 0/258
+NX_class_invalid: 0/258
+NX_class_is_legacy: 0/258
+transformation_depends_on_missing: 0/10
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1353
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/10
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1353
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/28
+
+Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f0ae8f11940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020559.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/48
+E           depends_on_target_missing: 0/76
+E           float_dataset_units_missing: 0/624
+E           group_has_units: 0/258
+E           index_has_units: 0/184
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/345
+E           NX_class_attr_missing: 0/258
+E           NX_class_invalid: 0/258
+E           NX_class_is_legacy: 0/258
+E           transformation_depends_on_missing: 0/10
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1353
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/10
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1353
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/28
+E           
+E           Total: 1/5244
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-37" name="tab-group-1" type="radio"/>
+    <label for="tab-37" style="color: var(--failed-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129228" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020413.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/49
+depends_on_target_missing: 0/79
+float_dataset_units_missing: 0/563
+group_has_units: 0/240
+index_has_units: 0/164
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/322
+NX_class_attr_missing: 0/240
+NX_class_invalid: 0/240
+NX_class_is_legacy: 0/240
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1195
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1195
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f2f861dd940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020413.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/49
+E           depends_on_target_missing: 0/79
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/240
+E           index_has_units: 0/164
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/322
+E           NX_class_attr_missing: 0/240
+E           NX_class_invalid: 0/240
+E           NX_class_is_legacy: 0/240
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1195
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1195
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-38" name="tab-group-1" type="radio"/>
+    <label for="tab-38" style="color: var(--failed-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129018" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020273.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/49
+depends_on_target_missing: 0/79
+float_dataset_units_missing: 0/563
+group_has_units: 0/240
+index_has_units: 0/164
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/322
+NX_class_attr_missing: 0/240
+NX_class_invalid: 0/240
+NX_class_is_legacy: 0/240
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1195
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1195
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f2a67661940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020273.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/49
+E           depends_on_target_missing: 0/79
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/240
+E           index_has_units: 0/164
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/322
+E           NX_class_attr_missing: 0/240
+E           NX_class_invalid: 0/240
+E           NX_class_is_legacy: 0/240
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1195
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1195
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-39" name="tab-group-1" type="radio"/>
+    <label for="tab-39" style="color: var(--failed-bg);">
+     2026-09-09 13:46:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21269/builds">
+      21269
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128920" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+Violations
+----------
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/49
+depends_on_target_missing: 0/79
+float_dataset_units_missing: 0/563
+group_has_units: 0/240
+index_has_units: 0/164
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/322
+NX_class_attr_missing: 0/240
+NX_class_invalid: 0/240
+NX_class_is_legacy: 0/240
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1195
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/3
+event_data_has_event_datasets: 0/3
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1195
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f481a27d940&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+E           Violations
+E           ----------
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/49
+E           depends_on_target_missing: 0/79
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/240
+E           index_has_units: 0/164
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/322
+E           NX_class_attr_missing: 0/240
+E           NX_class_invalid: 0/240
+E           NX_class_is_legacy: 0/240
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1195
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/3
+E           event_data_has_event_datasets: 0/3
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1195
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 1/4742
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-40" name="tab-group-1" type="radio"/>
+    <label for="tab-40" style="color: var(--failed-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128851" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+Violations
+----------
+NX_class_attr_missing @ /entry/.ESS_monitor
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/50
+depends_on_target_missing: 0/80
+float_dataset_units_missing: 0/563
+group_has_units: 0/244
+index_has_units: 0/167
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/327
+NX_class_attr_missing: 1/244
+NX_class_invalid: 0/243
+NX_class_is_legacy: 0/243
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1198
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/4
+event_data_has_event_datasets: 0/4
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1198
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7f98e8d116c0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(group, validators=validators)
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+E           Violations
+E           ----------
+E           NX_class_attr_missing @ /entry/.ESS_monitor
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/50
+E           depends_on_target_missing: 0/80
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/244
+E           index_has_units: 0/167
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/327
+E           NX_class_attr_missing: 1/244
+E           NX_class_invalid: 0/243
+E           NX_class_is_legacy: 0/243
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1198
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/4
+E           event_data_has_event_datasets: 0/4
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1198
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-41" name="tab-group-1" type="radio"/>
+    <label for="tab-41" style="color: var(--failed-bg);">
+     2026-09-08 18:27:10 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21262/builds">
+      21262
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128798" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+Violations
+----------
+NX_class_attr_missing @ /entry/.ESS_monitor
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/50
+depends_on_target_missing: 0/80
+float_dataset_units_missing: 0/563
+group_has_units: 0/244
+index_has_units: 0/167
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/327
+NX_class_attr_missing: 1/244
+NX_class_invalid: 0/243
+NX_class_is_legacy: 0/243
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1198
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/4
+event_data_has_event_datasets: 0/4
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1198
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fb67c8f56c0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(group, validators=validators)
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+E           Violations
+E           ----------
+E           NX_class_attr_missing @ /entry/.ESS_monitor
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/50
+E           depends_on_target_missing: 0/80
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/244
+E           index_has_units: 0/167
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/327
+E           NX_class_attr_missing: 1/244
+E           NX_class_invalid: 0/243
+E           NX_class_is_legacy: 0/243
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1198
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/4
+E           event_data_has_event_datasets: 0/4
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1198
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-42" name="tab-group-1" type="radio"/>
+    <label for="tab-42" style="color: var(--failed-bg);">
+     2026-09-08 10:56:31 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21236/builds">
+      21236
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128609" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+Violations
+----------
+NX_class_attr_missing @ /entry/.ESS_monitor
+event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+
+
+Summary
+-------
+depends_on_missing: 0/50
+depends_on_target_missing: 0/80
+float_dataset_units_missing: 0/563
+group_has_units: 0/244
+index_has_units: 0/167
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/327
+NX_class_attr_missing: 1/244
+NX_class_invalid: 0/243
+NX_class_is_legacy: 0/243
+transformation_depends_on_missing: 0/12
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1198
+NXlog_has_value: 0/147
+detector_numbers are not unique: 0/2
+event_id is not subset of associated detector_numbers: 1/2
+Shape of pixel offsets does not correspond to detector_number: 0/0
+event_index_too_small: 0/4
+event_data_has_event_datasets: 0/4
+NXtransformations_child_not_NX_NUMBER: 0/12
+chopper_frequency_unit_invalid: 0/4
+dataset_units_check: 0/1198
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/30
+
+Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'magic', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7fd7d26b56c0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(group, validators=validators)
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_magic_999999_00020200.hdf: 
+E           Violations
+E           ----------
+E           NX_class_attr_missing @ /entry/.ESS_monitor
+E           event_id is not subset of associated detector_numbers @ /entry/instrument/magic_detector_b/magic_detector_b_event_data (event_id:s that are not in detector_number: [245761 245762 245763 ... 376602 376603 376604])
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/50
+E           depends_on_target_missing: 0/80
+E           float_dataset_units_missing: 0/563
+E           group_has_units: 0/244
+E           index_has_units: 0/167
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/327
+E           NX_class_attr_missing: 1/244
+E           NX_class_invalid: 0/243
+E           NX_class_is_legacy: 0/243
+E           transformation_depends_on_missing: 0/12
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1198
+E           NXlog_has_value: 0/147
+E           detector_numbers are not unique: 0/2
+E           event_id is not subset of associated detector_numbers: 1/2
+E           Shape of pixel offsets does not correspond to detector_number: 0/0
+E           event_index_too_small: 0/4
+E           event_data_has_event_datasets: 0/4
+E           NXtransformations_child_not_NX_NUMBER: 0/12
+E           chopper_frequency_unit_invalid: 0/4
+E           dataset_units_check: 0/1198
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/30
+E           
+E           Total: 2/4774
+
+tests/chexus/chexus_test.py:25: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

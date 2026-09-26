@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:01:19
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|loki|run_notebooks|loki-direct-beam
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--success-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132245" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--success-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131950" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131800" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.DeadKernelError: Kernel died
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1009: DeadKernelError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-460/codeshelf/src/loki/notebooks/loki-direct-beam.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f718a0e80e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-460/test_run_notebooks_loki_direct1')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f7189a47b60&gt;
+cell = {'cell_type': 'code', 'execution_count': 7, 'id': '13', 'metadata': {'execution': {'iopub.status.busy': '2026-09-23T22...= results[-1]['iofq_full']\niofq_bands = results[-1]['iofq_bands']\ndirect_beam_function = results[-1]['direct_beam']"}
+cell_index = 13, execution_count = None, store_history = True
+
+    async def async_execute_cell(
+        self,
+        cell: NotebookNode,
+        cell_index: int,
+        execution_count: int | None = None,
+        store_history: bool = True,
+    ) -&gt; NotebookNode:
+        """
+        Executes a single code cell.
+    
+        To execute all cells see :meth:`execute`.
+    
+        Parameters
+        ----------
+        cell : nbformat.NotebookNode
+            The cell which is currently being processed.
+        cell_index : int
+            The position of the cell within the notebook object.
+        execution_count : int
+            The execution count to be assigned to the cell (default: Use kernel response)
+        store_history : bool
+            Determines if history should be stored in the kernel (default: False).
+            Specific to ipython kernels, which can store command histories.
+    
+        Returns
+        -------
+        output : dict
+            The execution output payload (or None for no output).
+    
+        Raises
+        ------
+        CellExecutionError
+            If execution failed and should raise an exception, this will be raised
+            with defaults about the failure.
+    
+        Returns
+        -------
+        cell : NotebookNode
+            The cell which was just processed.
+        """
+        assert self.kc is not None
+    
+        await run_hook(self.on_cell_start, cell=cell, cell_index=cell_index)
+    
+        if cell.cell_type != "code" or not cell.source.strip():
+            self.log.debug("Skipping non-executing cell %s", cell_index)
+            return cell
+    
+        if self.skip_cells_with_tag in cell.metadata.get("tags", []):
+            self.log.debug("Skipping tagged cell %s", cell_index)
+            return cell
+    
+        if self.record_timing:  # clear execution metadata prior to execution
+            cell["metadata"]["execution"] = {}
+    
+        self.log.debug("Executing cell:\n%s", cell.source)
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors or "raises-exception" in cell.metadata.get("tags", [])
+        )
+    
+        await run_hook(self.on_cell_execute, cell=cell, cell_index=cell_index)
+        parent_msg_id = await ensure_async(
+            self.kc.execute(
+                cell.source, store_history=store_history, stop_on_error=not cell_allows_errors
+            )
+        )
+        await run_hook(self.on_cell_complete, cell=cell, cell_index=cell_index)
+        # We launched a code cell to execute
+        self.code_cells_executed += 1
+        exec_timeout = self._get_timeout(cell)
+    
+        cell.outputs = []
+        self.clear_before_next_output = False
+    
+        task_poll_kernel_alive = asyncio.ensure_future(self._async_poll_kernel_alive())
+        task_poll_output_msg = asyncio.ensure_future(
+            self._async_poll_output_msg(parent_msg_id, cell, cell_index)
+        )
+        self.task_poll_for_reply = asyncio.ensure_future(
+            self._async_poll_for_reply(
+                parent_msg_id, cell, exec_timeout, task_poll_output_msg, task_poll_kernel_alive
+            )
+        )
+        try:
+            exec_reply = await self.task_poll_for_reply
+        except asyncio.CancelledError:
+            # can only be cancelled by task_poll_kernel_alive when the kernel is dead
+            task_poll_output_msg.cancel()
+&gt;           raise DeadKernelError("Kernel died") from None
+E           nbclient.exceptions.DeadKernelError: Kernel died
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1009: DeadKernelError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

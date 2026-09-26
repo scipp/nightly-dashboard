@@ -1,0 +1,3113 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:01:19
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|odin|odin_read_detector_everything|orca
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132217" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'histogram_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdf52fa43e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022515.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fdf5ac11940&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fdf52f0c5c0&gt;
+sel = 'histogram_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'histogram_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131922" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'histogram_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8152170dd0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022385.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f8153b95800&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f814b9d8320&gt;
+sel = 'histogram_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'histogram_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131772" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'histogram_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7a90ca3590&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022255.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f7a948f9800&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:242: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f7a90d75b20&gt;
+sel = 'histogram_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'histogram_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[scippnexus.nxdetector.NXdetector],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-09-23 00:17:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21450/builds">
+      21450
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131555" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'histogram_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f0061ba5550&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00022115.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f00640599e0&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f0061c87110&gt;
+sel = 'histogram_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'histogram_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-09-22 00:17:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21424/builds">
+      21424
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130994" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'histogram_mode_detectors'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7bb7c86420&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00021975.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f7bba40d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/scheduler.py:140: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:279: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:367: in __getitem__
+    return self[grp][sel_path.relative_to(grp).as_posix()]
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f7bb7d94740&gt;
+sel = 'histogram_mode_detectors'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'histogram_mode_detectors'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-09-20 00:18:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21401/builds">
+      21401
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--success-bg);">
+     2026-09-19 00:17:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21400/builds">
+      21400
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130399" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-09-18 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21379/builds">
+      21379
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130181" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--success-bg);">
+     2026-09-17 00:17:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21370/builds">
+      21370
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130102" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--success-bg);">
+     2026-09-16 00:19:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21361/builds">
+      21361
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/130026" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--failed-bg);">
+     2026-09-11 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21313/builds">
+      21313
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f83a1c36930&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020415.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f83a411b6a0&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:79: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--failed-bg);">
+     2026-09-10 00:18:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21280/builds">
+      21280
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/129030" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f4fc2f225d0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020275.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f4fc3d296c0&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:79: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--failed-bg);">
+     2026-09-09 00:16:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21264/builds">
+      21264
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128863" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fecda15b260&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fecddc6d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--failed-bg);">
+     2026-09-08 00:17:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21229/builds">
+      21229
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128351" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fbacb5a2060&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020202.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fbacf179580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--failed-bg);">
+     2026-09-07 00:17:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21211/builds">
+      21211
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128104" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f3a8104e150&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00020114.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f3a84cf5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-06 00:17:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21210/builds">
+      21210
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/128052" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f9e22b5a480&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019971.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f9e26675580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--failed-bg);">
+     2026-09-04 00:17:45 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21200/builds">
+      21200
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127826" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fb17be2d430&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019453.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fb17f841580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--failed-bg);">
+     2026-09-03 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21196/builds">
+      21196
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127767" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f9bb62aeba0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019453.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f9bb9d79580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--failed-bg);">
+     2026-09-02 00:18:06 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21194/builds">
+      21194
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127714" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fbdc4c78770&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019373.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fbdc7f79580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--failed-bg);">
+     2026-09-01 00:18:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21192/builds">
+      21192
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127661" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa63a072480&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019227.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fa63d325580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--failed-bg);">
+     2026-08-31 00:18:14 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21190/builds">
+      21190
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127608" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f21a49a3740&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00019096.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f21a7d7d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--failed-bg);">
+     2026-08-30 00:18:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21189/builds">
+      21189
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127556" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f4e527c75f0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018956.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f4e55c3d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--failed-bg);">
+     2026-08-29 00:17:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21188/builds">
+      21188
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127504" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8f5743e2a0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018816.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f8f5a4d9580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--failed-bg);">
+     2026-08-28 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21156/builds">
+      21156
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127269" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fce1409a660&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018676.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fce17439580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--failed-bg);">
+     2026-08-27 00:17:37 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21102/builds">
+      21102
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/127014" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd2e1bb1d60&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018332.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fd2e50f5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--failed-bg);">
+     2026-08-26 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21064/builds">
+      21064
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126861" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f99e5aacc20&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018332.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f99e8e7d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--failed-bg);">
+     2026-08-25 00:17:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21042/builds">
+      21042
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126730" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f4dd1e7ba10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018332.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f4dd54f5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--failed-bg);">
+     2026-08-24 00:17:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21019/builds">
+      21019
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126545" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8d9dcac680&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018252.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f8da1035580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--failed-bg);">
+     2026-08-23 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21018/builds">
+      21018
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126493" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ffa53dcd8e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00018122.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7ffa57125580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--failed-bg);">
+     2026-08-22 00:17:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21017/builds">
+      21017
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/126441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fe2d60c4e30&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017982.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fe2d96c5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--failed-bg);">
+     2026-08-20 00:16:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20932/builds">
+      20932
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125965" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f5be20ab200&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017745.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f5be702d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-32" name="tab-group-1" type="radio"/>
+    <label for="tab-32" style="color: var(--failed-bg);">
+     2026-08-19 00:18:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20866/builds">
+      20866
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125568" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f627a2875c0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017657.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f627d725580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-33" name="tab-group-1" type="radio"/>
+    <label for="tab-33" style="color: var(--failed-bg);">
+     2026-08-18 00:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20839/builds">
+      20839
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125297" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7faa027b4e90&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017547.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7faa05c3d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-34" name="tab-group-1" type="radio"/>
+    <label for="tab-34" style="color: var(--failed-bg);">
+     2026-08-17 00:19:36 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20811/builds">
+      20811
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125140" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fa55e6ad2e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017397.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7fa561875580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-35" name="tab-group-1" type="radio"/>
+    <label for="tab-35" style="color: var(--failed-bg);">
+     2026-08-16 00:20:55 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20810/builds">
+      20810
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125088" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f830147deb0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017257.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f8304ac5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-36" name="tab-group-1" type="radio"/>
+    <label for="tab-36" style="color: var(--failed-bg);">
+     2026-08-15 00:20:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20809/builds">
+      20809
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/125036" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f617d2ac1a0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00017127.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f61808f5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-37" name="tab-group-1" type="radio"/>
+    <label for="tab-37" style="color: var(--failed-bg);">
+     2026-08-14 00:23:04 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20785/builds">
+      20785
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/124855" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f97a1919550&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016977.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f97a518d580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-38" name="tab-group-1" type="radio"/>
+    <label for="tab-38" style="color: var(--failed-bg);">
+     2026-08-12 00:21:19 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20712/builds">
+      20712
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/124218" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f76b4fab260&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016707.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f76cc439580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-39" name="tab-group-1" type="radio"/>
+    <label for="tab-39" style="color: var(--failed-bg);">
+     2026-08-11 00:20:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20692/builds">
+      20692
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/124103" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f27cc620410&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016557.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f27cfcf5580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-40" name="tab-group-1" type="radio"/>
+    <label for="tab-40" style="color: var(--failed-bg);">
+     2026-08-10 00:20:13 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20639/builds">
+      20639
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/123851" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f2eca9a4e30&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016427.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f2ecdd25580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-41" name="tab-group-1" type="radio"/>
+    <label for="tab-41" style="color: var(--failed-bg);">
+     2026-08-09 00:20:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20638/builds">
+      20638
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/123799" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f34f437ecc0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016287.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f34f7835580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-42" name="tab-group-1" type="radio"/>
+    <label for="tab-42" style="color: var(--failed-bg);">
+     2026-08-08 00:20:56 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/20637/builds">
+      20637
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/123747" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">assert 0 &gt; 0
+ +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f037e6d3800&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00016137.hdf')
+check_everything_histogram = &lt;function _check_everything_histogram at 0x7f0381b89580&gt;
+
+    def test_odin_read_detector_everything__orca(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_histogram: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = "histogram_mode_detectors/orca"
+    
+        result = workflow.compute(RawDetector[SampleRun])
+    
+&gt;       check_everything_histogram(result)
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:71: in _check_everything_histogram
+    _check_detector_histogram(da)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]
+Coordinates:
+* position       ...2, 6.6528]
+Data:
+                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []
+
+
+
+    def _check_detector_histogram(da: sc.DataArray) -&gt; None:
+        assert "time" in da.dims
+        assert da.ndim &gt; 1
+&gt;       assert da.size &gt; 0
+E       assert 0 &gt; 0
+E        +  where 0 = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:0, x_pixel_offset:2048, y_pixel_offset:2048, ]\nCoordinates:\n* position                  vector3              [m]  (x_pixel_offset, y_pixel_offset)  [(-6.6528, -6.6528, 1), (-6.6528, -6.6462, 1), ..., (6.6528, 6.6462, 1), (6.6528, 6.6528, 1)]\n* time                    datetime64             [ns]  (time)  []\n* x_pixel_offset            float32              [m]  (x_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\n* y_pixel_offset            float32              [m]  (y_pixel_offset)  [-6.6528, -6.6462, ..., 6.6462, 6.6528]\nData:\n                            float64  [dimensionless]  (time, x_pixel_offset, y_pixel_offset)  []  []\n\n.size
+
+.tox/nexusfiles-scipp-odin/lib/python3.12/site-packages/dmsc_nightly/testing/nexusfiles/validation_fixtures.py:31: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: September 26, 2026 08:03:41
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|beer|run_notebooks|commissioning_BEER-TOF
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--success-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131945" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['chop_index = 0', "select_chop = widgets.Dropdown(options=list(f'{chop.name}' for chop in beer.modes[index].choppers),", "                               value=f'{beer.modes[index].choppers[chop_index].name}', ", "                               description='Chopper: ')", "save_chop_button = widgets.Button(description='Save to PDF')"]
+...
+["show_blocked.observe(show_blocked_on_change, names='value')", 'save_chop_button.on_click(save_chop_on_click)', 'dat_chop_button.on_click(dat_chop_on_click)', 'for check in c_pulses:', "    check.observe(c_pulses_on_change, names='value')"]
+-------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f2922897020&gt;
+msg_id = 'a2543fcc-3912d78a58079685f3e659db_1530967_20'
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '19', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'ch...op_button.on_click(dat_chop_on_click)\nfor check in c_pulses:\n    check.observe(c_pulses_on_change, names=\'value\')'}
+timeout = 120
+task_poll_output_msg = &lt;Task pending name='Task-56' coro=&lt;NotebookClient._async_poll_output_msg() running at /home/gitlab-runner/builds/sr_sr.../7/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/zmq/_future.py:416, Task.task_wakeup()]&gt;&gt;
+task_poll_kernel_alive = &lt;Task cancelled name='Task-55' coro=&lt;NotebookClient._async_poll_kernel_alive() done, defined at /home/gitlab-runner/builds/sr_srNBdt/7/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:821&gt;&gt;
+
+    async def _async_poll_for_reply(
+        self,
+        msg_id: str,
+        cell: NotebookNode,
+        timeout: int | None,
+        task_poll_output_msg: asyncio.Future[t.Any],
+        task_poll_kernel_alive: asyncio.Future[t.Any],
+    ) -&gt; dict[str, t.Any]:
+        msg: dict[str, t.Any]
+        assert self.kc is not None
+        new_timeout: float | None = None
+        if timeout is not None:
+            deadline = monotonic() + timeout
+            new_timeout = float(timeout)
+        error_on_timeout_execute_reply = None
+        while True:
+            try:
+                if error_on_timeout_execute_reply:
+                    msg = error_on_timeout_execute_reply
+                    msg["parent_header"] = {"msg_id": msg_id}
+                else:
+&gt;                   msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:782: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:214: in ensure_async
+    result = await obj
+             ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;jupyter_client.channels.AsyncZMQSocketChannel object at 0x7f2922893800&gt;
+timeout = 120.0
+
+    async def get_msg(  # type:ignore[override]
+        self, timeout: float | None = None
+    ) -&gt; t.Dict[str, t.Any]:
+        """Gets a message if there is one that is ready."""
+        assert self.socket is not None
+        timeout_ms = None if timeout is None else int(timeout * 1000)  # seconds to ms
+        ready = await self.socket.poll(timeout_ms)
+        if ready:
+            res = await self._recv()
+            return res
+        else:
+&gt;           raise Empty
+E           _queue.Empty
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_client/channels.py:330: Empty
+
+During handling of the above exception, another exception occurred:
+
+notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-476/codeshelf/src/beer/notebooks/commissioning/BEER-TOF.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f29228e40e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-476/test_run_notebooks_commissioni0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:1005: in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:806: in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f2922897020&gt;
+timeout = 120
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '19', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'ch...op_button.on_click(dat_chop_on_click)\nfor check in c_pulses:\n    check.observe(c_pulses_on_change, names=\'value\')'}
+
+    async def _async_handle_timeout(
+        self, timeout: int, cell: NotebookNode | None = None
+    ) -&gt; None | dict[str, t.Any]:
+        self.log.error("Timeout waiting for execute reply (%is)." % timeout)
+        if self.interrupt_on_timeout:
+            self.log.error("Interrupting kernel")
+            assert self.km is not None
+            await ensure_async(self.km.interrupt_kernel())
+            if self.error_on_timeout:
+                execute_reply = {"content": {**self.error_on_timeout, "status": "error"}}
+                return execute_reply
+            return None
+        else:
+            assert cell is not None
+&gt;           raise CellTimeoutError.error_from_timeout_and_cell(
+                "Cell execution timed out", timeout, cell
+            )
+E           nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+E           The message was: Cell execution timed out.
+E           Here is a preview of the cell contents:
+E           -------------------
+E           ['chop_index = 0', "select_chop = widgets.Dropdown(options=list(f'{chop.name}' for chop in beer.modes[index].choppers),", "                               value=f'{beer.modes[index].choppers[chop_index].name}', ", "                               description='Chopper: ')", "save_chop_button = widgets.Button(description='Save to PDF')"]
+E           ...
+E           ["show_blocked.observe(show_blocked_on_change, names='value')", 'save_chop_button.on_click(save_chop_on_click)', 'dat_chop_button.on_click(dat_chop_on_click)', 'for check in c_pulses:', "    check.observe(c_pulses_on_change, names='value')"]
+E           -------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--success-bg);">
+     2026-09-24 10:10:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21461/builds">
+      21461
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131851" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--success-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131795" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--success-bg);">
+     2026-09-23 16:26:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21457/builds">
+      21457
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131742" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-09-23 16:14:27 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21456/builds">
+      21456
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131689" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--success-bg);">
+     2026-09-23 13:44:08 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21452/builds">
+      21452
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131625" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-09-22 16:48:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21447/builds">
+      21447
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131520" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
