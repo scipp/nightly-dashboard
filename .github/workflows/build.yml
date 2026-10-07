@@ -2,7 +2,8 @@ name: Generate Dashboard
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 3 * * *"
+      timezone: "Europe/Copenhagen"
 
 jobs:
   build:
