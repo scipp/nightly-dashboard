@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 10, 2026 08:48:19
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|beer|run_notebooks|commissioning_BEER-TOF
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--success-bg);">
+     2026-10-10 00:26:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21778/builds">
+      21778
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134038" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--success-bg);">
+     2026-10-09 00:29:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21765/builds">
+      21765
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133840" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--success-bg);">
+     2026-10-08 00:29:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21752/builds">
+      21752
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133751" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-10-07 00:20:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21728/builds">
+      21728
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133644" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 180 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+beer.print_modes_info('all')
+-------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f0099adeff0&gt;
+msg_id = 'e9bf7baf-66bac8856e45132910e10dab_3057152_8'
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '5', 'metadata': {'execution': {}}, 'outputs': [], 'source': "beer.print_modes_info('all')"}
+timeout = 180
+task_poll_output_msg = &lt;Task pending name='Task-18' coro=&lt;NotebookClient._async_poll_output_msg() running at /home/gitlab-runner/builds/sr_sr.../4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/zmq/_future.py:416, Task.task_wakeup()]&gt;&gt;
+task_poll_kernel_alive = &lt;Task cancelled name='Task-17' coro=&lt;NotebookClient._async_poll_kernel_alive() done, defined at /home/gitlab-runner/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:821&gt;&gt;
+
+    async def _async_poll_for_reply(
+        self,
+        msg_id: str,
+        cell: NotebookNode,
+        timeout: int | None,
+        task_poll_output_msg: asyncio.Future[t.Any],
+        task_poll_kernel_alive: asyncio.Future[t.Any],
+    ) -&gt; dict[str, t.Any]:
+        msg: dict[str, t.Any]
+        assert self.kc is not None
+        new_timeout: float | None = None
+        if timeout is not None:
+            deadline = monotonic() + timeout
+            new_timeout = float(timeout)
+        error_on_timeout_execute_reply = None
+        while True:
+            try:
+                if error_on_timeout_execute_reply:
+                    msg = error_on_timeout_execute_reply
+                    msg["parent_header"] = {"msg_id": msg_id}
+                else:
+&gt;                   msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:782: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:214: in ensure_async
+    result = await obj
+             ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;jupyter_client.channels.AsyncZMQSocketChannel object at 0x7f0099a04560&gt;
+timeout = 180.0
+
+    async def get_msg(  # type:ignore[override]
+        self, timeout: float | None = None
+    ) -&gt; t.Dict[str, t.Any]:
+        """Gets a message if there is one that is ready."""
+        assert self.socket is not None
+        timeout_ms = None if timeout is None else int(timeout * 1000)  # seconds to ms
+        ready = await self.socket.poll(timeout_ms)
+        if ready:
+            res = await self._recv()
+            return res
+        else:
+&gt;           raise Empty
+E           _queue.Empty
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_client/channels.py:330: Empty
+
+During handling of the above exception, another exception occurred:
+
+notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-661/codeshelf/src/beer/notebooks/commissioning/BEER-TOF.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f0099c800e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-661/test_run_notebooks_commissioni0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:1005: in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:806: in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f0099adeff0&gt;
+timeout = 180
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '5', 'metadata': {'execution': {}}, 'outputs': [], 'source': "beer.print_modes_info('all')"}
+
+    async def _async_handle_timeout(
+        self, timeout: int, cell: NotebookNode | None = None
+    ) -&gt; None | dict[str, t.Any]:
+        self.log.error("Timeout waiting for execute reply (%is)." % timeout)
+        if self.interrupt_on_timeout:
+            self.log.error("Interrupting kernel")
+            assert self.km is not None
+            await ensure_async(self.km.interrupt_kernel())
+            if self.error_on_timeout:
+                execute_reply = {"content": {**self.error_on_timeout, "status": "error"}}
+                return execute_reply
+            return None
+        else:
+            assert cell is not None
+&gt;           raise CellTimeoutError.error_from_timeout_and_cell(
+                "Cell execution timed out", timeout, cell
+            )
+E           nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 180 seconds.
+E           The message was: Cell execution timed out.
+E           Here is a preview of the cell contents:
+E           -------------------
+E           beer.print_modes_info('all')
+E           -------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--success-bg);">
+     2026-10-06 00:29:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21676/builds">
+      21676
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133479" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-10-05 00:29:43 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21624/builds">
+      21624
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133214" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-10-04 00:23:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21623/builds">
+      21623
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133162" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 180 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['d_index = -1 # print the last detector (sample position) as default', "select_det = widgets.Dropdown(options=list(f'{det.name}' for det in beer.detectors),", "                              value=f'{beer.detectors[d_index].name}', description='Detector: ')", "save_det_button = widgets.Button(description='Save to PDF')", "dat_det_button = widgets.Button(description='Save data')"]
+...
+["select_det.observe(select_det_on_change, names='index')", 'save_det_button.on_click(save_det_on_click)', 'dat_det_button.on_click(dat_det_on_click)', 'for check in d_pulses:', "    check.observe(d_pulses_on_change, names='value')"]
+-------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fd4d23b5a30&gt;
+msg_id = 'e1bfec4c-8b8bc76f80a43e479211713a_2538768_26'
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '17', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'd_...det_button.on_click(dat_det_on_click)\nfor check in d_pulses:\n    check.observe(d_pulses_on_change, names=\'value\')'}
+timeout = 180
+task_poll_output_msg = &lt;Task pending name='Task-51' coro=&lt;NotebookClient._async_poll_output_msg() running at /home/gitlab-runner/builds/sr_sr.../5/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/zmq/_future.py:416, Task.task_wakeup()]&gt;&gt;
+task_poll_kernel_alive = &lt;Task cancelled name='Task-50' coro=&lt;NotebookClient._async_poll_kernel_alive() done, defined at /home/gitlab-runner/builds/sr_srNBdt/5/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:821&gt;&gt;
+
+    async def _async_poll_for_reply(
+        self,
+        msg_id: str,
+        cell: NotebookNode,
+        timeout: int | None,
+        task_poll_output_msg: asyncio.Future[t.Any],
+        task_poll_kernel_alive: asyncio.Future[t.Any],
+    ) -&gt; dict[str, t.Any]:
+        msg: dict[str, t.Any]
+        assert self.kc is not None
+        new_timeout: float | None = None
+        if timeout is not None:
+            deadline = monotonic() + timeout
+            new_timeout = float(timeout)
+        error_on_timeout_execute_reply = None
+        while True:
+            try:
+                if error_on_timeout_execute_reply:
+                    msg = error_on_timeout_execute_reply
+                    msg["parent_header"] = {"msg_id": msg_id}
+                else:
+&gt;                   msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:782: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:214: in ensure_async
+    result = await obj
+             ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;jupyter_client.channels.AsyncZMQSocketChannel object at 0x7fd4d15db590&gt;
+timeout = 180.0
+
+    async def get_msg(  # type:ignore[override]
+        self, timeout: float | None = None
+    ) -&gt; t.Dict[str, t.Any]:
+        """Gets a message if there is one that is ready."""
+        assert self.socket is not None
+        timeout_ms = None if timeout is None else int(timeout * 1000)  # seconds to ms
+        ready = await self.socket.poll(timeout_ms)
+        if ready:
+            res = await self._recv()
+            return res
+        else:
+&gt;           raise Empty
+E           _queue.Empty
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_client/channels.py:330: Empty
+
+During handling of the above exception, another exception occurred:
+
+notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-601/codeshelf/src/beer/notebooks/commissioning/BEER-TOF.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fd4d162c0e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-601/test_run_notebooks_commissioni0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:1005: in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:806: in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fd4d23b5a30&gt;
+timeout = 180
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '17', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'd_...det_button.on_click(dat_det_on_click)\nfor check in d_pulses:\n    check.observe(d_pulses_on_change, names=\'value\')'}
+
+    async def _async_handle_timeout(
+        self, timeout: int, cell: NotebookNode | None = None
+    ) -&gt; None | dict[str, t.Any]:
+        self.log.error("Timeout waiting for execute reply (%is)." % timeout)
+        if self.interrupt_on_timeout:
+            self.log.error("Interrupting kernel")
+            assert self.km is not None
+            await ensure_async(self.km.interrupt_kernel())
+            if self.error_on_timeout:
+                execute_reply = {"content": {**self.error_on_timeout, "status": "error"}}
+                return execute_reply
+            return None
+        else:
+            assert cell is not None
+&gt;           raise CellTimeoutError.error_from_timeout_and_cell(
+                "Cell execution timed out", timeout, cell
+            )
+E           nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 180 seconds.
+E           The message was: Cell execution timed out.
+E           Here is a preview of the cell contents:
+E           -------------------
+E           ['d_index = -1 # print the last detector (sample position) as default', "select_det = widgets.Dropdown(options=list(f'{det.name}' for det in beer.detectors),", "                              value=f'{beer.detectors[d_index].name}', description='Detector: ')", "save_det_button = widgets.Button(description='Save to PDF')", "dat_det_button = widgets.Button(description='Save data')"]
+E           ...
+E           ["select_det.observe(select_det_on_change, names='index')", 'save_det_button.on_click(save_det_on_click)', 'dat_det_button.on_click(dat_det_on_click)', 'for check in d_pulses:', "    check.observe(d_pulses_on_change, names='value')"]
+E           -------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-10-03 00:29:57 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21619/builds">
+      21619
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133098" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--success-bg);">
+     2026-10-02 00:23:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21601/builds">
+      21601
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132869" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-10-01 00:25:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21590/builds">
+      21590
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132780" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+waves = beer.get_wave_for_all_modes(neutrons=500_000, pulses=2, wmax=20.0)
+-------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7ff65f4b2300&gt;
+msg_id = 'cd470c6f-aabca40edcc22935d75e5fbe_2196573_21'
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '21', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'waves = beer.get_wave_for_all_modes(neutrons=500_000, pulses=2, wmax=20.0)'}
+timeout = 120
+task_poll_output_msg = &lt;Task pending name='Task-61' coro=&lt;NotebookClient._async_poll_output_msg() running at /home/gitlab-runner/builds/sr_sr.../3/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/zmq/_future.py:416, Task.task_wakeup()]&gt;&gt;
+task_poll_kernel_alive = &lt;Task cancelled name='Task-60' coro=&lt;NotebookClient._async_poll_kernel_alive() done, defined at /home/gitlab-runner/builds/sr_srNBdt/3/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:821&gt;&gt;
+
+    async def _async_poll_for_reply(
+        self,
+        msg_id: str,
+        cell: NotebookNode,
+        timeout: int | None,
+        task_poll_output_msg: asyncio.Future[t.Any],
+        task_poll_kernel_alive: asyncio.Future[t.Any],
+    ) -&gt; dict[str, t.Any]:
+        msg: dict[str, t.Any]
+        assert self.kc is not None
+        new_timeout: float | None = None
+        if timeout is not None:
+            deadline = monotonic() + timeout
+            new_timeout = float(timeout)
+        error_on_timeout_execute_reply = None
+        while True:
+            try:
+                if error_on_timeout_execute_reply:
+                    msg = error_on_timeout_execute_reply
+                    msg["parent_header"] = {"msg_id": msg_id}
+                else:
+&gt;                   msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:782: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:214: in ensure_async
+    result = await obj
+             ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;jupyter_client.channels.AsyncZMQSocketChannel object at 0x7ff65f611550&gt;
+timeout = 120.0
+
+    async def get_msg(  # type:ignore[override]
+        self, timeout: float | None = None
+    ) -&gt; t.Dict[str, t.Any]:
+        """Gets a message if there is one that is ready."""
+        assert self.socket is not None
+        timeout_ms = None if timeout is None else int(timeout * 1000)  # seconds to ms
+        ready = await self.socket.poll(timeout_ms)
+        if ready:
+            res = await self._recv()
+            return res
+        else:
+&gt;           raise Empty
+E           _queue.Empty
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_client/channels.py:330: Empty
+
+During handling of the above exception, another exception occurred:
+
+notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-553/codeshelf/src/beer/notebooks/commissioning/BEER-TOF.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7ff65f6540e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-553/test_run_notebooks_commissioni0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:1005: in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:806: in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7ff65f4b2300&gt;
+timeout = 120
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '21', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'waves = beer.get_wave_for_all_modes(neutrons=500_000, pulses=2, wmax=20.0)'}
+
+    async def _async_handle_timeout(
+        self, timeout: int, cell: NotebookNode | None = None
+    ) -&gt; None | dict[str, t.Any]:
+        self.log.error("Timeout waiting for execute reply (%is)." % timeout)
+        if self.interrupt_on_timeout:
+            self.log.error("Interrupting kernel")
+            assert self.km is not None
+            await ensure_async(self.km.interrupt_kernel())
+            if self.error_on_timeout:
+                execute_reply = {"content": {**self.error_on_timeout, "status": "error"}}
+                return execute_reply
+            return None
+        else:
+            assert cell is not None
+&gt;           raise CellTimeoutError.error_from_timeout_and_cell(
+                "Cell execution timed out", timeout, cell
+            )
+E           nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+E           The message was: Cell execution timed out.
+E           Here is a preview of the cell contents:
+E           -------------------
+E           waves = beer.get_wave_for_all_modes(neutrons=500_000, pulses=2, wmax=20.0)
+E           -------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--success-bg);">
+     2026-09-30 00:25:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21548/builds">
+      21548
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132579" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--success-bg);">
+     2026-09-29 00:25:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21539/builds">
+      21539
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132441" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--success-bg);">
+     2026-09-28 00:23:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21526/builds">
+      21526
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132344" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--success-bg);">
+     2026-09-27 00:25:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21525/builds">
+      21525
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132292" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--success-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132240" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--failed-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131945" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['chop_index = 0', "select_chop = widgets.Dropdown(options=list(f'{chop.name}' for chop in beer.modes[index].choppers),", "                               value=f'{beer.modes[index].choppers[chop_index].name}', ", "                               description='Chopper: ')", "save_chop_button = widgets.Button(description='Save to PDF')"]
+...
+["show_blocked.observe(show_blocked_on_change, names='value')", 'save_chop_button.on_click(save_chop_on_click)', 'dat_chop_button.on_click(dat_chop_on_click)', 'for check in c_pulses:', "    check.observe(c_pulses_on_change, names='value')"]
+-------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f2922897020&gt;
+msg_id = 'a2543fcc-3912d78a58079685f3e659db_1530967_20'
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '19', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'ch...op_button.on_click(dat_chop_on_click)\nfor check in c_pulses:\n    check.observe(c_pulses_on_change, names=\'value\')'}
+timeout = 120
+task_poll_output_msg = &lt;Task pending name='Task-56' coro=&lt;NotebookClient._async_poll_output_msg() running at /home/gitlab-runner/builds/sr_sr.../7/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/zmq/_future.py:416, Task.task_wakeup()]&gt;&gt;
+task_poll_kernel_alive = &lt;Task cancelled name='Task-55' coro=&lt;NotebookClient._async_poll_kernel_alive() done, defined at /home/gitlab-runner/builds/sr_srNBdt/7/dmsc-nightly/dmsc-nightly/.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:821&gt;&gt;
+
+    async def _async_poll_for_reply(
+        self,
+        msg_id: str,
+        cell: NotebookNode,
+        timeout: int | None,
+        task_poll_output_msg: asyncio.Future[t.Any],
+        task_poll_kernel_alive: asyncio.Future[t.Any],
+    ) -&gt; dict[str, t.Any]:
+        msg: dict[str, t.Any]
+        assert self.kc is not None
+        new_timeout: float | None = None
+        if timeout is not None:
+            deadline = monotonic() + timeout
+            new_timeout = float(timeout)
+        error_on_timeout_execute_reply = None
+        while True:
+            try:
+                if error_on_timeout_execute_reply:
+                    msg = error_on_timeout_execute_reply
+                    msg["parent_header"] = {"msg_id": msg_id}
+                else:
+&gt;                   msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:782: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:214: in ensure_async
+    result = await obj
+             ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;jupyter_client.channels.AsyncZMQSocketChannel object at 0x7f2922893800&gt;
+timeout = 120.0
+
+    async def get_msg(  # type:ignore[override]
+        self, timeout: float | None = None
+    ) -&gt; t.Dict[str, t.Any]:
+        """Gets a message if there is one that is ready."""
+        assert self.socket is not None
+        timeout_ms = None if timeout is None else int(timeout * 1000)  # seconds to ms
+        ready = await self.socket.poll(timeout_ms)
+        if ready:
+            res = await self._recv()
+            return res
+        else:
+&gt;           raise Empty
+E           _queue.Empty
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_client/channels.py:330: Empty
+
+During handling of the above exception, another exception occurred:
+
+notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-476/codeshelf/src/beer/notebooks/commissioning/BEER-TOF.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f29228e40e0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-476/test_run_notebooks_commissioni0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:1005: in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:806: in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f2922897020&gt;
+timeout = 120
+cell = {'cell_type': 'code', 'execution_count': None, 'id': '19', 'metadata': {'execution': {}}, 'outputs': [], 'source': 'ch...op_button.on_click(dat_chop_on_click)\nfor check in c_pulses:\n    check.observe(c_pulses_on_change, names=\'value\')'}
+
+    async def _async_handle_timeout(
+        self, timeout: int, cell: NotebookNode | None = None
+    ) -&gt; None | dict[str, t.Any]:
+        self.log.error("Timeout waiting for execute reply (%is)." % timeout)
+        if self.interrupt_on_timeout:
+            self.log.error("Interrupting kernel")
+            assert self.km is not None
+            await ensure_async(self.km.interrupt_kernel())
+            if self.error_on_timeout:
+                execute_reply = {"content": {**self.error_on_timeout, "status": "error"}}
+                return execute_reply
+            return None
+        else:
+            assert cell is not None
+&gt;           raise CellTimeoutError.error_from_timeout_and_cell(
+                "Cell execution timed out", timeout, cell
+            )
+E           nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 120 seconds.
+E           The message was: Cell execution timed out.
+E           Here is a preview of the cell contents:
+E           -------------------
+E           ['chop_index = 0', "select_chop = widgets.Dropdown(options=list(f'{chop.name}' for chop in beer.modes[index].choppers),", "                               value=f'{beer.modes[index].choppers[chop_index].name}', ", "                               description='Chopper: ')", "save_chop_button = widgets.Button(description='Save to PDF')"]
+E           ...
+E           ["show_blocked.observe(show_blocked_on_change, names='value')", 'save_chop_button.on_click(save_chop_on_click)', 'dat_chop_button.on_click(dat_chop_on_click)', 'for check in c_pulses:', "    check.observe(c_pulses_on_change, names='value')"]
+E           -------------------
+
+.tox/codeshelf-beer/lib/python3.12/site-packages/nbclient/client.py:856: CellTimeoutError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--success-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131795" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
