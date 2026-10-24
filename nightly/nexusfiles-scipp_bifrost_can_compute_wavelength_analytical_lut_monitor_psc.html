@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:16:56
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|can_compute_wavelength_analytical_lut|monitor_psc
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136451" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: assert 'wavelength' in &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 162)  datetime64             [ns]  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n
+ +  where &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 162)  datetime64             [ns]  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:162, incident_wavelength:393, ]\nCoordinates:\n* Ltotal                    float64              [m]  ()  6.79106\n* incident_wavelength       float64             [&Aring;]  (incident_wavelength [bin-edge])  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n* position                  vector3              [m]  ()  (0.0986327, 0, -155.208)\n* time                    datetime64             [ns]  (time)  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\nData:\n                            float64  [dimensionless]  (time, incident_wavelength)  [10, 4, ..., 28.9507, 20.1841]  [10, 4, ..., 28.9507, 20.1841]\n\n.coords
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:45: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026562.hdf')
+monitor_type = ess.spectroscopy.types.PSCMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_analytical_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7fd893f34650&gt;
+filename = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026562.hdf')
+target = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor]
+
+    def run_workflow_and_check_result(
+        workflow: sciline.Pipeline, filename: Path, target: type
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = filename
+        result = workflow.compute(target)
+        if result.is_binned:
+            assert "wavelength" in result.bins.coords
+        else:
+&gt;           assert "wavelength" in result.coords
+E           AssertionError: assert 'wavelength' in &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 162)  datetime64             [ns]  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n
+E            +  where &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 162)  datetime64             [ns]  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:162, incident_wavelength:393, ]\nCoordinates:\n* Ltotal                    float64              [m]  ()  6.79106\n* incident_wavelength       float64             [&Aring;]  (incident_wavelength [bin-edge])  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n* position                  vector3              [m]  ()  (0.0986327, 0, -155.208)\n* time                    datetime64             [ns]  (time)  [2026-10-23T21:59:45.033209075, 2026-10-23T21:59:46.016719946, ..., 2026-10-23T22:12:19.919756153, 2026-10-23T22:12:20.936961764]\nData:\n                            float64  [dimensionless]  (time, incident_wavelength)  [10, 4, ..., 28.9507, 20.1841]  [10, 4, ..., 28.9507, 20.1841]\n\n.coords
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:45: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136011" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: assert 'wavelength' in &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 100)  datetime64             [ns]  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n
+ +  where &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 100)  datetime64             [ns]  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:100, incident_wavelength:393, ]\nCoordinates:\n* Ltotal                    float64              [m]  ()  6.79106\n* incident_wavelength       float64             [&Aring;]  (incident_wavelength [bin-edge])  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n* position                  vector3              [m]  ()  (0.0986327, 0, -155.208)\n* time                    datetime64             [ns]  (time)  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\nData:\n                            float64  [dimensionless]  (time, incident_wavelength)  [6, 1, ..., 149.151, 103.986]  [6, 1, ..., 149.151, 103.986]\n\n.coords
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:45: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026422.hdf')
+monitor_type = ess.spectroscopy.types.PSCMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_analytical_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+workflow = &lt;sciline.pipeline.Pipeline object at 0x7f3e48132870&gt;
+filename = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026422.hdf')
+target = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor]
+
+    def run_workflow_and_check_result(
+        workflow: sciline.Pipeline, filename: Path, target: type
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = filename
+        result = workflow.compute(target)
+        if result.is_binned:
+            assert "wavelength" in result.bins.coords
+        else:
+&gt;           assert "wavelength" in result.coords
+E           AssertionError: assert 'wavelength' in &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 100)  datetime64             [ns]  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n
+E            +  where &lt;scipp.Dict&gt;\n  time: &lt;scipp.Variable&gt; (time: 100)  datetime64             [ns]  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\n  position: &lt;scipp.Variable&gt; ()    vector3              [m]  (0.0986327, 0, -155.208)\n  Ltotal: &lt;scipp.Variable&gt; ()    float64              [m]  6.79106\n  incident_wavelength: &lt;scipp.Variable&gt; (incident_wavelength: 394)    float64             [&Aring;]  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n = &lt;scipp.DataArray&gt;\nDimensions: Sizes[time:100, incident_wavelength:393, ]\nCoordinates:\n* Ltotal                    float64              [m]  ()  6.79106\n* incident_wavelength       float64             [&Aring;]  (incident_wavelength [bin-edge])  [0.0879687, 0.12491, ..., 14.5688, 14.6058]\n* position                  vector3              [m]  ()  (0.0986327, 0, -155.208)\n* time                    datetime64             [ns]  (time)  [2026-10-22T21:53:05.069387879, 2026-10-22T21:53:06.085484606, ..., 2026-10-22T22:02:09.579622581, 2026-10-22T22:02:10.602413383]\nData:\n                            float64  [dimensionless]  (time, incident_wavelength)  [6, 1, ..., 149.151, 103.986]  [6, 1, ..., 149.151, 103.986]\n\n.coords
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:45: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135855" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026282.hdf')
+monitor_type = ess.spectroscopy.types.PSCMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_analytical_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+        run_workflow_and_check_result(
+&gt;           workflow=make_workflow("analytical"),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wavelength_from = 'analytical'
+
+    def make_workflow(wavelength_from: str) -&gt; sciline.Pipeline:
+&gt;       wf = bifrost.BifrostWorkflow(wavelength_from=wavelength_from)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

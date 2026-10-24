@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:19:02
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|freia|can_compute_wavelength_file_lut|wbc3_monitor
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 01:05:03 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21963/builds">
+      21963
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136506" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026555.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f6e34411700&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136454" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026555.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f9ebc4909b0&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-23 20:56:14 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21960/builds">
+      21960
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136339" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026535.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f57d8566c60&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-10-23 20:02:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21959/builds">
+      21959
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136286" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026535.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7fba3c154290&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-10-23 17:46:32 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21958/builds">
+      21958
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136233" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026515.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7fe3b852d0d0&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-10-23 17:12:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21957/builds">
+      21957
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136180" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026515.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f0ac4182d80&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136014" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026415.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7fc0e434cfe0&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-10-22 16:50:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21933/builds">
+      21933
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135956" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. NeXusName[WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+2. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+3. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+4. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+5. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+6. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026375.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7fb218157ce0&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. NeXusName[WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           2. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           3. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           4. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           5. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           6. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135858" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026285.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f546428a210&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'LookupTableFilename[SampleRun, WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. LookupTableFilename[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.lut.load_lookup_table_from_file) &rarr; LookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-10-21 19:29:54 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21916/builds">
+      21916
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135805" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+1. NeXusName[WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+2. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+3. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+4. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+5. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+6. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026245.hdf')
+monitor = ess.freia.types.WBC3Monitor
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path,
+        monitor: type,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor],
+        )
+
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/freia/freia_reduction_test.py:32: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f78e4775ca0&gt;
+keys = ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.WBC3Monitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[WBC3Monitor]'. Affects requested targets (via providers given in parentheses):
+E           1. NeXusName[WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut) &rarr; ErrorLimitedLookupTable[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           2. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           3. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           4. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           5. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+E           6. NeXusName[WBC3Monitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[WBC3Monitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_ltotal_from_straight_line_approximation) &rarr; MonitorLtotal[SampleRun, WBC3Monitor] &rarr; (ess.reduce.unwrap.to_wavelength.monitor_wavelength_data) &rarr; WavelengthMonitor[SampleRun, WBC3Monitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:16:56
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|loki|run_notebooks|loki-detector-diagnostics
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136486" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from ess.loki.diagnostics import InstrumentView
+
+InstrumentView(dhist, dim='event_time_offset')
+------------------
+
+----- stderr -----
+/tmp/ipykernel_1154954/2676037128.py:3: DeprecationWarning: ess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.
+  InstrumentView(dhist, dim='event_time_offset')
+------------------
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mValueError#x1B[39m                                Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[6]#x1B[39m#x1B[32m, line 3#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m ess.loki.diagnostics #x1B[38;5;28;01mimport#x1B[39;00m InstrumentView
+#x1B[32m      2#x1B[39m 
+#x1B[32m----&gt; #x1B[39m#x1B[32m3#x1B[39m InstrumentView(dhist, dim=#x1B[33m'event_time_offset'#x1B[39m)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/loki/diagnostics/instrument_view.py:30#x1B[39m, in #x1B[36mInstrumentView#x1B[39m#x1B[34m(data, dim, pixel_size, **kwargs)#x1B[39m
+#x1B[32m     18#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Deprecated alias for :func:`ess.loki.instrument_view`.#x1B[39;00m
+#x1B[32m     19#x1B[39m 
+#x1B[32m     20#x1B[39m #x1B[33;03m.. deprecated:: 26.10.0#x1B[39;00m
+#x1B[32m   (...)#x1B[39m#x1B[32m     23#x1B[39m #x1B[33;03mAdditional arguments are forwarded to :func:`scippneutron.instrument_view`.#x1B[39;00m
+#x1B[32m     24#x1B[39m #x1B[33;03m"""#x1B[39;00m
+#x1B[32m     25#x1B[39m warnings.warn(
+#x1B[32m     26#x1B[39m     #x1B[33m'#x1B[39m#x1B[33mess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.#x1B[39m#x1B[33m'#x1B[39m,
+#x1B[32m     27#x1B[39m     #x1B[38;5;167;01mDeprecationWarning#x1B[39;00m,
+#x1B[32m     28#x1B[39m     stacklevel=#x1B[32m2#x1B[39m,
+#x1B[32m     29#x1B[39m )
+#x1B[32m---&gt; #x1B[39m#x1B[32m30#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43minstrument_view#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:93#x1B[39m, in #x1B[36minstrument_view#x1B[39m#x1B[34m(data, dim, pos, size, pixel_size, autoscale, operation, **kwargs)#x1B[39m
+#x1B[32m     90#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m DimensionSlicer
+#x1B[32m     91#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[34;01m.#x1B[39;00m#x1B[34;01mwidgets#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m ClippingManager, ToggleTool, VBar
+#x1B[32m---&gt; #x1B[39m#x1B[32m93#x1B[39m data = #x1B[30;43m_to_data_array#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m     95#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m dim #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;28;01mNone#x1B[39;00m:
+#x1B[32m     96#x1B[39m     slicer = DimensionSlicer(
+#x1B[32m     97#x1B[39m         pp.Node(data), keep=#x1B[38;5;28mset#x1B[39m(data.dims) - {dim}, operation=operation
+#x1B[32m     98#x1B[39m     )
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:25#x1B[39m, in #x1B[36m_to_data_array#x1B[39m#x1B[34m(data, dim, pos)#x1B[39m
+#x1B[32m     23#x1B[39m     dim_coord = da.coords[dim]
+#x1B[32m     24#x1B[39m #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m sc.identical(dim_coord, da.coords[dim]):
+#x1B[32m---&gt; #x1B[39m#x1B[32m25#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mValueError#x1B[39;00m(
+#x1B[32m     26#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mAll inputs must have the same coordinate along the slider#x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m     27#x1B[39m         #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[33m dimension #x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00mdim#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m'#x1B[39m#x1B[33m.#x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m     28#x1B[39m     )
+#x1B[32m     29#x1B[39m #x1B[38;5;66;03m# Ensure that the dims to be flattened are contiguous, and place them at#x1B[39;00m
+#x1B[32m     30#x1B[39m #x1B[38;5;66;03m# the end so that slicing the first (outer) dim with the slider is#x1B[39;00m
+#x1B[32m     31#x1B[39m #x1B[38;5;66;03m# efficient.#x1B[39;00m
+#x1B[32m     32#x1B[39m other_dims = #x1B[38;5;28mtuple#x1B[39m(d #x1B[38;5;28;01mfor#x1B[39;00m d #x1B[38;5;129;01min#x1B[39;00m da.dims #x1B[38;5;28;01mif#x1B[39;00m d #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;129;01min#x1B[39;00m position_dims)
+
+#x1B[31mValueError#x1B[39m: All inputs must have the same coordinate along the slider dimension 'event_time_offset'.
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1018/codeshelf/src/loki/notebooks/loki-detector-diagnostics.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f269ad72c00&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1018/test_run_notebooks_loki_detect0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f269aa4d6d0&gt;
+cell = {'cell_type': 'code', 'execution_count': 6, 'id': '9', 'metadata': {'execution': {'iopub.status.busy': '2026-10-23T22:...t'."]}], 'source': "from ess.loki.diagnostics import InstrumentView\n\nInstrumentView(dhist, dim='event_time_offset')"}
+cell_index = 9
+exec_reply = {'header': {'msg_id': 'a21d924f-35d0f818a2b1916eb9b01726_1154954_1061', 'msg_type': 'execute_reply', 'username': 'user...5_7', 'msg_type': 'execute_request', 'username': 'username', 'session': 'b61b3706-230b62585a7394fc6d470f4e', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           from ess.loki.diagnostics import InstrumentView
+E           
+E           InstrumentView(dhist, dim='event_time_offset')
+E           ------------------
+E           
+E           ----- stderr -----
+E           /tmp/ipykernel_1154954/2676037128.py:3: DeprecationWarning: ess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.
+E             InstrumentView(dhist, dim='event_time_offset')
+E           ------------------
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mValueError#x1B[39m                                Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[6]#x1B[39m#x1B[32m, line 3#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m ess.loki.diagnostics #x1B[38;5;28;01mimport#x1B[39;00m InstrumentView
+E           #x1B[32m      2#x1B[39m 
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m3#x1B[39m InstrumentView(dhist, dim=#x1B[33m'event_time_offset'#x1B[39m)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/loki/diagnostics/instrument_view.py:30#x1B[39m, in #x1B[36mInstrumentView#x1B[39m#x1B[34m(data, dim, pixel_size, **kwargs)#x1B[39m
+E           #x1B[32m     18#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Deprecated alias for :func:`ess.loki.instrument_view`.#x1B[39;00m
+E           #x1B[32m     19#x1B[39m 
+E           #x1B[32m     20#x1B[39m #x1B[33;03m.. deprecated:: 26.10.0#x1B[39;00m
+E           #x1B[32m   (...)#x1B[39m#x1B[32m     23#x1B[39m #x1B[33;03mAdditional arguments are forwarded to :func:`scippneutron.instrument_view`.#x1B[39;00m
+E           #x1B[32m     24#x1B[39m #x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m     25#x1B[39m warnings.warn(
+E           #x1B[32m     26#x1B[39m     #x1B[33m'#x1B[39m#x1B[33mess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.#x1B[39m#x1B[33m'#x1B[39m,
+E           #x1B[32m     27#x1B[39m     #x1B[38;5;167;01mDeprecationWarning#x1B[39;00m,
+E           #x1B[32m     28#x1B[39m     stacklevel=#x1B[32m2#x1B[39m,
+E           #x1B[32m     29#x1B[39m )
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m30#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43minstrument_view#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:93#x1B[39m, in #x1B[36minstrument_view#x1B[39m#x1B[34m(data, dim, pos, size, pixel_size, autoscale, operation, **kwargs)#x1B[39m
+E           #x1B[32m     90#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m DimensionSlicer
+E           #x1B[32m     91#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[34;01m.#x1B[39;00m#x1B[34;01mwidgets#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m ClippingManager, ToggleTool, VBar
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m93#x1B[39m data = #x1B[30;43m_to_data_array#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m     95#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m dim #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;28;01mNone#x1B[39;00m:
+E           #x1B[32m     96#x1B[39m     slicer = DimensionSlicer(
+E           #x1B[32m     97#x1B[39m         pp.Node(data), keep=#x1B[38;5;28mset#x1B[39m(data.dims) - {dim}, operation=operation
+E           #x1B[32m     98#x1B[39m     )
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/4/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:25#x1B[39m, in #x1B[36m_to_data_array#x1B[39m#x1B[34m(data, dim, pos)#x1B[39m
+E           #x1B[32m     23#x1B[39m     dim_coord = da.coords[dim]
+E           #x1B[32m     24#x1B[39m #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m sc.identical(dim_coord, da.coords[dim]):
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m25#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mValueError#x1B[39;00m(
+E           #x1B[32m     26#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mAll inputs must have the same coordinate along the slider#x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m     27#x1B[39m         #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[33m dimension #x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00mdim#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m'#x1B[39m#x1B[33m.#x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m     28#x1B[39m     )
+E           #x1B[32m     29#x1B[39m #x1B[38;5;66;03m# Ensure that the dims to be flattened are contiguous, and place them at#x1B[39;00m
+E           #x1B[32m     30#x1B[39m #x1B[38;5;66;03m# the end so that slicing the first (outer) dim with the slider is#x1B[39;00m
+E           #x1B[32m     31#x1B[39m #x1B[38;5;66;03m# efficient.#x1B[39;00m
+E           #x1B[32m     32#x1B[39m other_dims = #x1B[38;5;28mtuple#x1B[39m(d #x1B[38;5;28;01mfor#x1B[39;00m d #x1B[38;5;129;01min#x1B[39;00m da.dims #x1B[38;5;28;01mif#x1B[39;00m d #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;129;01min#x1B[39;00m position_dims)
+E           
+E           #x1B[31mValueError#x1B[39m: All inputs must have the same coordinate along the slider dimension 'event_time_offset'.
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136046" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from ess.loki.diagnostics import InstrumentView
+
+InstrumentView(dhist, dim='event_time_offset')
+------------------
+
+----- stderr -----
+/tmp/ipykernel_899904/2676037128.py:3: DeprecationWarning: ess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.
+  InstrumentView(dhist, dim='event_time_offset')
+------------------
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mValueError#x1B[39m                                Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[6]#x1B[39m#x1B[32m, line 3#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m ess.loki.diagnostics #x1B[38;5;28;01mimport#x1B[39;00m InstrumentView
+#x1B[32m      2#x1B[39m 
+#x1B[32m----&gt; #x1B[39m#x1B[32m3#x1B[39m InstrumentView(dhist, dim=#x1B[33m'event_time_offset'#x1B[39m)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/loki/diagnostics/instrument_view.py:30#x1B[39m, in #x1B[36mInstrumentView#x1B[39m#x1B[34m(data, dim, pixel_size, **kwargs)#x1B[39m
+#x1B[32m     18#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Deprecated alias for :func:`ess.loki.instrument_view`.#x1B[39;00m
+#x1B[32m     19#x1B[39m 
+#x1B[32m     20#x1B[39m #x1B[33;03m.. deprecated:: 26.10.0#x1B[39;00m
+#x1B[32m   (...)#x1B[39m#x1B[32m     23#x1B[39m #x1B[33;03mAdditional arguments are forwarded to :func:`scippneutron.instrument_view`.#x1B[39;00m
+#x1B[32m     24#x1B[39m #x1B[33;03m"""#x1B[39;00m
+#x1B[32m     25#x1B[39m warnings.warn(
+#x1B[32m     26#x1B[39m     #x1B[33m'#x1B[39m#x1B[33mess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.#x1B[39m#x1B[33m'#x1B[39m,
+#x1B[32m     27#x1B[39m     #x1B[38;5;167;01mDeprecationWarning#x1B[39;00m,
+#x1B[32m     28#x1B[39m     stacklevel=#x1B[32m2#x1B[39m,
+#x1B[32m     29#x1B[39m )
+#x1B[32m---&gt; #x1B[39m#x1B[32m30#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43minstrument_view#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:93#x1B[39m, in #x1B[36minstrument_view#x1B[39m#x1B[34m(data, dim, pos, size, pixel_size, autoscale, operation, **kwargs)#x1B[39m
+#x1B[32m     90#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m DimensionSlicer
+#x1B[32m     91#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[34;01m.#x1B[39;00m#x1B[34;01mwidgets#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m ClippingManager, ToggleTool, VBar
+#x1B[32m---&gt; #x1B[39m#x1B[32m93#x1B[39m data = #x1B[30;43m_to_data_array#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m     95#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m dim #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;28;01mNone#x1B[39;00m:
+#x1B[32m     96#x1B[39m     slicer = DimensionSlicer(
+#x1B[32m     97#x1B[39m         pp.Node(data), keep=#x1B[38;5;28mset#x1B[39m(data.dims) - {dim}, operation=operation
+#x1B[32m     98#x1B[39m     )
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:25#x1B[39m, in #x1B[36m_to_data_array#x1B[39m#x1B[34m(data, dim, pos)#x1B[39m
+#x1B[32m     23#x1B[39m     dim_coord = da.coords[dim]
+#x1B[32m     24#x1B[39m #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m sc.identical(dim_coord, da.coords[dim]):
+#x1B[32m---&gt; #x1B[39m#x1B[32m25#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mValueError#x1B[39;00m(
+#x1B[32m     26#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mAll inputs must have the same coordinate along the slider#x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m     27#x1B[39m         #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[33m dimension #x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00mdim#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m'#x1B[39m#x1B[33m.#x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m     28#x1B[39m     )
+#x1B[32m     29#x1B[39m #x1B[38;5;66;03m# Ensure that the dims to be flattened are contiguous, and place them at#x1B[39;00m
+#x1B[32m     30#x1B[39m #x1B[38;5;66;03m# the end so that slicing the first (outer) dim with the slider is#x1B[39;00m
+#x1B[32m     31#x1B[39m #x1B[38;5;66;03m# efficient.#x1B[39;00m
+#x1B[32m     32#x1B[39m other_dims = #x1B[38;5;28mtuple#x1B[39m(d #x1B[38;5;28;01mfor#x1B[39;00m d #x1B[38;5;129;01min#x1B[39;00m da.dims #x1B[38;5;28;01mif#x1B[39;00m d #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;129;01min#x1B[39;00m position_dims)
+
+#x1B[31mValueError#x1B[39m: All inputs must have the same coordinate along the slider dimension 'event_time_offset'.
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-963/codeshelf/src/loki/notebooks/loki-detector-diagnostics.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f3e08c4ec00&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-963/test_run_notebooks_loki_detect0')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:131: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f3e089354c0&gt;
+cell = {'cell_type': 'code', 'execution_count': 6, 'id': '9', 'metadata': {'execution': {'iopub.status.busy': '2026-10-22T22:...t'."]}], 'source': "from ess.loki.diagnostics import InstrumentView\n\nInstrumentView(dhist, dim='event_time_offset')"}
+cell_index = 9
+exec_reply = {'header': {'msg_id': 'c18abab6-0f126308e94c83117e66cbb1_899904_1061', 'msg_type': 'execute_reply', 'username': 'usern...1_7', 'msg_type': 'execute_request', 'username': 'username', 'session': '63ba6db4-776063343d1e265246d157f2', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           from ess.loki.diagnostics import InstrumentView
+E           
+E           InstrumentView(dhist, dim='event_time_offset')
+E           ------------------
+E           
+E           ----- stderr -----
+E           /tmp/ipykernel_899904/2676037128.py:3: DeprecationWarning: ess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.
+E             InstrumentView(dhist, dim='event_time_offset')
+E           ------------------
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mValueError#x1B[39m                                Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[6]#x1B[39m#x1B[32m, line 3#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m ess.loki.diagnostics #x1B[38;5;28;01mimport#x1B[39;00m InstrumentView
+E           #x1B[32m      2#x1B[39m 
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m3#x1B[39m InstrumentView(dhist, dim=#x1B[33m'event_time_offset'#x1B[39m)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/loki/diagnostics/instrument_view.py:30#x1B[39m, in #x1B[36mInstrumentView#x1B[39m#x1B[34m(data, dim, pixel_size, **kwargs)#x1B[39m
+E           #x1B[32m     18#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Deprecated alias for :func:`ess.loki.instrument_view`.#x1B[39;00m
+E           #x1B[32m     19#x1B[39m 
+E           #x1B[32m     20#x1B[39m #x1B[33;03m.. deprecated:: 26.10.0#x1B[39;00m
+E           #x1B[32m   (...)#x1B[39m#x1B[32m     23#x1B[39m #x1B[33;03mAdditional arguments are forwarded to :func:`scippneutron.instrument_view`.#x1B[39;00m
+E           #x1B[32m     24#x1B[39m #x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m     25#x1B[39m warnings.warn(
+E           #x1B[32m     26#x1B[39m     #x1B[33m'#x1B[39m#x1B[33mess.loki.InstrumentView is deprecated; use ess.loki.instrument_view instead.#x1B[39m#x1B[33m'#x1B[39m,
+E           #x1B[32m     27#x1B[39m     #x1B[38;5;167;01mDeprecationWarning#x1B[39;00m,
+E           #x1B[32m     28#x1B[39m     stacklevel=#x1B[32m2#x1B[39m,
+E           #x1B[32m     29#x1B[39m )
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m30#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43minstrument_view#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpixel_size#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:93#x1B[39m, in #x1B[36minstrument_view#x1B[39m#x1B[34m(data, dim, pos, size, pixel_size, autoscale, operation, **kwargs)#x1B[39m
+E           #x1B[32m     90#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m DimensionSlicer
+E           #x1B[32m     91#x1B[39m #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34;01mplopp#x1B[39;00m#x1B[34;01m.#x1B[39;00m#x1B[34;01mwidgets#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mimport#x1B[39;00m ClippingManager, ToggleTool, VBar
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m93#x1B[39m data = #x1B[30;43m_to_data_array#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mdim#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpos#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m     95#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m dim #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;28;01mNone#x1B[39;00m:
+E           #x1B[32m     96#x1B[39m     slicer = DimensionSlicer(
+E           #x1B[32m     97#x1B[39m         pp.Node(data), keep=#x1B[38;5;28mset#x1B[39m(data.dims) - {dim}, operation=operation
+E           #x1B[32m     98#x1B[39m     )
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/1/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/scippneutron/instrument_view.py:25#x1B[39m, in #x1B[36m_to_data_array#x1B[39m#x1B[34m(data, dim, pos)#x1B[39m
+E           #x1B[32m     23#x1B[39m     dim_coord = da.coords[dim]
+E           #x1B[32m     24#x1B[39m #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m sc.identical(dim_coord, da.coords[dim]):
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m25#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mValueError#x1B[39;00m(
+E           #x1B[32m     26#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mAll inputs must have the same coordinate along the slider#x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m     27#x1B[39m         #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[33m dimension #x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00mdim#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m'#x1B[39m#x1B[33m.#x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m     28#x1B[39m     )
+E           #x1B[32m     29#x1B[39m #x1B[38;5;66;03m# Ensure that the dims to be flattened are contiguous, and place them at#x1B[39;00m
+E           #x1B[32m     30#x1B[39m #x1B[38;5;66;03m# the end so that slicing the first (outer) dim with the slider is#x1B[39;00m
+E           #x1B[32m     31#x1B[39m #x1B[38;5;66;03m# efficient.#x1B[39;00m
+E           #x1B[32m     32#x1B[39m other_dims = #x1B[38;5;28mtuple#x1B[39m(d #x1B[38;5;28;01mfor#x1B[39;00m d #x1B[38;5;129;01min#x1B[39;00m da.dims #x1B[38;5;28;01mif#x1B[39;00m d #x1B[38;5;129;01mnot#x1B[39;00m #x1B[38;5;129;01min#x1B[39;00m position_dims)
+E           
+E           #x1B[31mValueError#x1B[39m: All inputs must have the same coordinate along the slider dimension 'event_time_offset'.
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--success-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135890" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--success-bg);">
+     2026-10-21 00:38:24 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21885/builds">
+      21885
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135328" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--success-bg);">
+     2026-10-20 00:32:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21857/builds">
+      21857
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135105" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-10-19 00:38:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21834/builds">
+      21834
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134800" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--success-bg);">
+     2026-10-18 00:38:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21833/builds">
+      21833
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134748" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-10-17 00:38:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21832/builds">
+      21832
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134696" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--success-bg);">
+     2026-10-16 00:37:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21819/builds">
+      21819
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134548" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--success-bg);">
+     2026-10-15 00:37:46 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21809/builds">
+      21809
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134479" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--success-bg);">
+     2026-10-14 00:37:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21797/builds">
+      21797
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134389" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--success-bg);">
+     2026-10-13 00:37:50 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21789/builds">
+      21789
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134319" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--success-bg);">
+     2026-10-12 00:30:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21781/builds">
+      21781
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134149" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--success-bg);">
+     2026-10-11 00:29:58 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21780/builds">
+      21780
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134097" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--success-bg);">
+     2026-10-10 00:26:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21778/builds">
+      21778
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/134043" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--success-bg);">
+     2026-10-09 00:29:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21765/builds">
+      21765
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133845" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--success-bg);">
+     2026-10-08 00:29:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21752/builds">
+      21752
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133756" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--success-bg);">
+     2026-10-07 00:20:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21728/builds">
+      21728
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133649" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--success-bg);">
+     2026-10-06 00:29:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21676/builds">
+      21676
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133484" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--success-bg);">
+     2026-10-05 00:29:43 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21624/builds">
+      21624
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133219" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--success-bg);">
+     2026-10-04 00:23:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21623/builds">
+      21623
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133167" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--success-bg);">
+     2026-10-03 00:29:57 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21619/builds">
+      21619
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/133103" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--success-bg);">
+     2026-10-02 00:23:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21601/builds">
+      21601
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132874" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--success-bg);">
+     2026-10-01 00:25:12 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21590/builds">
+      21590
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132785" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--success-bg);">
+     2026-09-30 00:25:51 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21548/builds">
+      21548
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132584" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-26" name="tab-group-1" type="radio"/>
+    <label for="tab-26" style="color: var(--success-bg);">
+     2026-09-29 00:25:53 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21539/builds">
+      21539
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132446" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-27" name="tab-group-1" type="radio"/>
+    <label for="tab-27" style="color: var(--success-bg);">
+     2026-09-28 00:23:49 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21526/builds">
+      21526
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132349" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-28" name="tab-group-1" type="radio"/>
+    <label for="tab-28" style="color: var(--success-bg);">
+     2026-09-27 00:25:42 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21525/builds">
+      21525
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132297" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-29" name="tab-group-1" type="radio"/>
+    <label for="tab-29" style="color: var(--success-bg);">
+     2026-09-26 00:25:38 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21524/builds">
+      21524
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/132245" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-30" name="tab-group-1" type="radio"/>
+    <label for="tab-30" style="color: var(--success-bg);">
+     2026-09-25 00:23:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21474/builds">
+      21474
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131950" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-31" name="tab-group-1" type="radio"/>
+    <label for="tab-31" style="color: var(--success-bg);">
+     2026-09-24 00:25:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21459/builds">
+      21459
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/131800" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

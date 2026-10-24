@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:16:56
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|tbl|can_compute_wavelength_file_lut|he3_detector_bank1
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136459" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'he3_detector_bank1'
+In provider ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut(
+    table: ess.reduce.unwrap.types.LookupTable[ess.imaging.types.SampleRun, scippnexus.nxdetector.NXdetector],
+    error_threshold: ess.reduce.unwrap.types.LookupTableRelativeErrorThreshold,
+    component_name: ess.reduce.nexus.types.NeXusName[scippnexus.nxdetector.NXdetector],
+) -&gt; ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.imaging.types.SampleRun, scippnexus.nxdetector.NXdetector]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/unwrap/to_wavelength.py:510: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_tbl_999999_00026560.hdf')
+detector_name = 'he3_detector_bank1'
+
+    @pytest.mark.parametrize(
+        "detector_name",
+        [
+            "he3_detector_bank0",
+            "he3_detector_bank1",
+            "multiblade_detector",
+            "ngem_detector",
+            "timepix3_detector",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path, detector_name: str
+    ) -&gt; None:
+        wf = make_workflow("file")
+        wf[NeXusDetectorName] = detector_name
+&gt;       run_workflow_and_check_result(
+            workflow=wf,
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:36: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+table = LookupTable(array=&lt;scipp.DataArray&gt;
+Dimensions: Sizes[distance:304, event_time_offset:287, ]
+Coordinates:
+* distance  ...  float64              [m]  0.1, time_resolution=&lt;scipp.Variable&gt; ()    float64            [&micro;s]  249.75, choppers=None)
+error_threshold = {'ngem': inf, 'he3_bank_0': inf, 'he3_bank_1': inf, 'multiblade': inf, ...}
+component_name = 'he3_detector_bank1'
+
+    def mask_large_uncertainty_in_lut(
+        table: LookupTable[RunType, Component],
+        error_threshold: LookupTableRelativeErrorThreshold,
+        component_name: NeXusName[Component],
+    ) -&gt; ErrorLimitedLookupTable[RunType, Component]:
+        """
+        Mask regions in the lookup table with large uncertainty using NaNs.
+    
+        Parameters
+        ----------
+        table:
+            Lookup table with time-of-flight as a function of distance and time-of-arrival.
+        error_threshold:
+            Threshold for the relative standard deviation (coefficient of variation) of the
+            projected time-of-flight above which values are masked.
+        component_name:
+            Name of the component for which to apply the error threshold. This is used to
+            get the correct error threshold from the dictionary of error thresholds.
+        """
+        da = table.array
+        relative_error = sc.stddevs(da.data) / sc.values(da.data)
+&gt;       mask = relative_error &gt; sc.scalar(error_threshold[component_name])
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'he3_detector_bank1'
+E       In provider ess.reduce.unwrap.to_wavelength.mask_large_uncertainty_in_lut(
+E           table: ess.reduce.unwrap.types.LookupTable[ess.imaging.types.SampleRun, scippnexus.nxdetector.NXdetector],
+E           error_threshold: ess.reduce.unwrap.types.LookupTableRelativeErrorThreshold,
+E           component_name: ess.reduce.nexus.types.NeXusName[scippnexus.nxdetector.NXdetector],
+E       ) -&gt; ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.imaging.types.SampleRun, scippnexus.nxdetector.NXdetector]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/unwrap/to_wavelength.py:510: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136019" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'he3_detector_bank1'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_tbl_999999_00026420.hdf')
+detector_name = 'he3_detector_bank1'
+
+    @pytest.mark.parametrize(
+        "detector_name",
+        [
+            "he3_detector_bank0",
+            "he3_detector_bank1",
+            "multiblade_detector",
+            "ngem_detector",
+            "timepix3_detector",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path, detector_name: str
+    ) -&gt; None:
+        wf = make_workflow("file")
+        wf[NeXusDetectorName] = detector_name
+&gt;       run_workflow_and_check_result(
+            workflow=wf,
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:36: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fb4668de5d0&gt;
+sel = 'he3_detector_bank1'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'he3_detector_bank1'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135863" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'he3_detector_bank1'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_tbl_999999_00026280.hdf')
+detector_name = 'he3_detector_bank1'
+
+    @pytest.mark.parametrize(
+        "detector_name",
+        [
+            "he3_detector_bank0",
+            "he3_detector_bank1",
+            "multiblade_detector",
+            "ngem_detector",
+            "timepix3_detector",
+        ],
+    )
+    def test_can_compute_wavelength_file_lut(
+        coda_nexus_file_path: Path, detector_name: str
+    ) -&gt; None:
+        wf = make_workflow("file")
+        wf[NeXusDetectorName] = detector_name
+&gt;       run_workflow_and_check_result(
+            workflow=wf,
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/tbl/tbl_reduction_test.py:36: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fba687ddca0&gt;
+sel = 'he3_detector_bank1'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'he3_detector_bank1'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[scippnexus.nxdetector.NXdetector, ess.imaging.types.SampleRun]
+
+.tox/nexusfiles-scipp-tbl/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

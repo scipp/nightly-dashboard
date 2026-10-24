@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:19:02
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|can_compute_wavelength_analytical_lut|all_detectors
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 01:05:03 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21963/builds">
+      21963
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136503" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=9),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026562.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=9),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136451" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=25),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026562.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=25),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-23 20:56:14 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21960/builds">
+      21960
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136336" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=36),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026532.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=36),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-10-23 20:02:23 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21959/builds">
+      21959
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136283" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=27),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026532.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=27),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-10-23 17:46:32 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21958/builds">
+      21958
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136230" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=16),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026522.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=16),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-10-23 17:12:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21957/builds">
+      21957
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136177" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=40),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026512.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=40),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136011" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+    detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=5),
+) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026422.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("analytical"),
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:111: in load_analyzer_for_detector
+    analyzer_group = _find_class_in_inputs(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/bifrost/io/nexus.py:145: in _find_class_in_inputs
+    for name in _get_inputs(element):
+                ^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/field.py:178: in __getitem__
+    index = to_plain_index(self.dims, select)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:107: in to_plain_index
+    select = to_canonical_select(dims, select)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:94: in to_canonical_select
+    check_1d()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_1d() -&gt; None:
+        if len(dims) != 1:
+&gt;           raise sc.DimensionError(
+                f"Dataset has multiple dimensions {dims}, "
+                "specify the dimension to index."
+            )
+E           scipp._scipp.core.DimensionError: Dataset has multiple dimensions (), specify the dimension to index.
+E           In provider ess.bifrost.io.nexus.load_analyzer_for_detector(
+E               detector_location: ess.reduce.nexus.types.NeXusComponentLocationSpec[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun](triplet=5),
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[scippnexus.nexus_classes.NXcrystal, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scippnexus/_common.py:73: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-10-22 16:50:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21933/builds">
+      21933
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135953" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026372.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+        run_workflow_and_check_result(
+&gt;           workflow=make_workflow("analytical"),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wavelength_from = 'analytical'
+
+    def make_workflow(wavelength_from: str) -&gt; sciline.Pipeline:
+&gt;       wf = bifrost.BifrostWorkflow(wavelength_from=wavelength_from)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135855" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026282.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+        run_workflow_and_check_result(
+&gt;           workflow=make_workflow("analytical"),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wavelength_from = 'analytical'
+
+    def make_workflow(wavelength_from: str) -&gt; sciline.Pipeline:
+&gt;       wf = bifrost.BifrostWorkflow(wavelength_from=wavelength_from)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-10-21 19:29:54 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21916/builds">
+      21916
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135802" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026252.hdf')
+
+    def test_can_compute_wavelength_analytical_lut__all_detectors(
+        coda_nexus_file_path: Path,
+    ) -&gt; None:
+        run_workflow_and_check_result(
+&gt;           workflow=make_workflow("analytical"),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            filename=coda_nexus_file_path,
+            target=WavelengthDetector[SampleRun],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wavelength_from = 'analytical'
+
+    def make_workflow(wavelength_from: str) -&gt; sciline.Pipeline:
+&gt;       wf = bifrost.BifrostWorkflow(wavelength_from=wavelength_from)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 24, 2026 04:16:56
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|can_compute_wavelength_file_lut|monitor_normalization
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136451" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Cannot rename dimension wavelength since it is not contained in the input dimensions ().
+In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+    monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:63: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026562.hdf')
+monitor_type = ess.spectroscopy.types.NormalizationMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_file_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/spectroscopy/indirect/time_of_flight.py:102: in monitor_wavelength_data
+    result = result.rename(wavelength='incident_wavelength')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:145: in _rename_data_array
+    out = da.rename_dims(renaming_dict)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[]
+Coordinates:
+* Ltotal                    float64              [m]  ()  161.436
+*...data=float32[counts],
+          coords={'event_id':int32, 'wavelength':float64[&Aring;], 'event_time_zero':datetime64[ns]})
+
+
+dims_dict = {'wavelength': 'incident_wavelength'}, names = {}
+
+    def _rename_dims(
+        self: _T, dims_dict: IntoStrDict[str] | None = None, /, **names: str
+    ) -&gt; _T:
+        """Rename dimensions.
+    
+        The renaming can be defined:
+    
+        - using a dict mapping the old to new names, e.g.
+          ``rename_dims({'x': 'a', 'y': 'b'})``
+        - using keyword arguments, e.g. ``rename_dims(x='a', y='b')``
+    
+        In both cases, x is renamed to a and y to b.
+    
+        Dimensions not specified in either input are unchanged.
+    
+        This function only renames dimensions.
+        See the ``rename`` method to also rename coordinates and attributes.
+    
+        Parameters
+        ----------
+        dims_dict:
+            Dictionary or items iterator mapping old to new names.
+        names:
+            Mapping of old to new names as keyword arguments.
+    
+        Returns
+        -------
+        :
+            A new object with renamed dimensions.
+    
+        Examples
+        --------
+    
+          &gt;&gt;&gt; import scipp as sc
+          &gt;&gt;&gt; var = sc.array(dims=['x', 'y'], values=[[1, 2], [3, 4]])
+          &gt;&gt;&gt; var.rename_dims({'x': 'row', 'y': 'col'}).sizes
+          {'row': 2, 'col': 2}
+    
+        Using keyword arguments:
+    
+          &gt;&gt;&gt; var.rename_dims(x='a', y='b').dims
+          ('a', 'b')
+    
+        Only specified dimensions are renamed:
+    
+          &gt;&gt;&gt; var.rename_dims(x='i').dims
+          ('i', 'y')
+        """
+&gt;       return self._rename_dims(combine_dict_args(dims_dict, names))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       scipp._scipp.core.DimensionError: Cannot rename dimension wavelength since it is not contained in the input dimensions ().
+E       In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+E           monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+E       ) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:63: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136011" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">scipp._scipp.core.DimensionError: Cannot rename dimension wavelength since it is not contained in the input dimensions ().
+In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+    monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+    pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:63: DimensionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026422.hdf')
+monitor_type = ess.spectroscopy.types.NormalizationMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_file_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/spectroscopy/indirect/time_of_flight.py:102: in monitor_wavelength_data
+    result = result.rename(wavelength='incident_wavelength')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:145: in _rename_data_array
+    out = da.rename_dims(renaming_dict)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[]
+Coordinates:
+* Ltotal                    float64              [m]  ()  161.436
+*...data=float32[counts],
+          coords={'event_id':int32, 'wavelength':float64[&Aring;], 'event_time_zero':datetime64[ns]})
+
+
+dims_dict = {'wavelength': 'incident_wavelength'}, names = {}
+
+    def _rename_dims(
+        self: _T, dims_dict: IntoStrDict[str] | None = None, /, **names: str
+    ) -&gt; _T:
+        """Rename dimensions.
+    
+        The renaming can be defined:
+    
+        - using a dict mapping the old to new names, e.g.
+          ``rename_dims({'x': 'a', 'y': 'b'})``
+        - using keyword arguments, e.g. ``rename_dims(x='a', y='b')``
+    
+        In both cases, x is renamed to a and y to b.
+    
+        Dimensions not specified in either input are unchanged.
+    
+        This function only renames dimensions.
+        See the ``rename`` method to also rename coordinates and attributes.
+    
+        Parameters
+        ----------
+        dims_dict:
+            Dictionary or items iterator mapping old to new names.
+        names:
+            Mapping of old to new names as keyword arguments.
+    
+        Returns
+        -------
+        :
+            A new object with renamed dimensions.
+    
+        Examples
+        --------
+    
+          &gt;&gt;&gt; import scipp as sc
+          &gt;&gt;&gt; var = sc.array(dims=['x', 'y'], values=[[1, 2], [3, 4]])
+          &gt;&gt;&gt; var.rename_dims({'x': 'row', 'y': 'col'}).sizes
+          {'row': 2, 'col': 2}
+    
+        Using keyword arguments:
+    
+          &gt;&gt;&gt; var.rename_dims(x='a', y='b').dims
+          ('a', 'b')
+    
+        Only specified dimensions are renamed:
+    
+          &gt;&gt;&gt; var.rename_dims(x='i').dims
+          ('i', 'y')
+        """
+&gt;       return self._rename_dims(combine_dict_args(dims_dict, names))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       scipp._scipp.core.DimensionError: Cannot rename dimension wavelength since it is not contained in the input dimensions ().
+E       In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+E           monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor],
+E           pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+E       ) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.NormalizationMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/scipp/core/dimensions.py:63: DimensionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135855" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00026282.hdf')
+monitor_type = ess.spectroscopy.types.NormalizationMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_file_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+        run_workflow_and_check_result(
+&gt;           workflow=make_workflow("file"),
+                     ^^^^^^^^^^^^^^^^^^^^^
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wavelength_from = 'file'
+
+    def make_workflow(wavelength_from: str) -&gt; sciline.Pipeline:
+&gt;       wf = bifrost.BifrostWorkflow(wavelength_from=wavelength_from)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BifrostWorkflow() got an unexpected keyword argument 'wavelength_from'
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:30: TypeError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
