@@ -284,13 +284,18 @@ def main_html(
                     if i >= len(instr_map["none"]):
                         tests_table += f'<td colspan="{len(INSTRUMENTS)}"></td></tr>'
                     else:
-                        text, status, url = instr_map["none"][i]
+                        text, status, url, summary = instr_map["none"][i]
+                        tooltip = (
+                            f' title="{html.escape(summary, quote=True)}"'
+                            if summary
+                            else ""
+                        )
                         if len(text) > 16:
                             text = text[:16] + "..."
                         if not text:
                             text = "&nbsp;"
                         tests_table += (
-                            f'<td colspan="{len(INSTRUMENTS)}" class="{status}">'
+                            f'<td colspan="{len(INSTRUMENTS)}" class="{status}"{tooltip}>'
                             f'<a href="{url}" style="text-decoration:none;display: block; width: 100%; height: 100%;">{text}</a></td></tr>'
                         )
             else:
@@ -304,13 +309,18 @@ def main_html(
                             if i >= len(instr_map[ins]):
                                 tests_table += "<td></td>"
                             else:
-                                text, status, url = instr_map[ins][i]
+                                text, status, url, summary = instr_map[ins][i]
+                                tooltip = (
+                                    f' title="{html.escape(summary, quote=True)}"'
+                                    if summary
+                                    else ""
+                                )
                                 if len(text) > 16:
                                     text = text[:16] + "..."
                                 if not text:
                                     text = "&nbsp;"
                                 tests_table += (
-                                    f'<td class="{status}">'
+                                    f'<td class="{status}"{tooltip}>'
                                     f'<a href="{url}">{text}</a></td>'
                                 )
                     tests_table += "</tr>"
@@ -606,8 +616,15 @@ def main(build_type, npipelines):
         if test.instrument not in table_map[test.group][name_root]:
             table_map[test.group][name_root][test.instrument] = []
         filename = f"{name.replace('|', '_')}.html"
+        summary = ""
+        if test.status in {"failed", "failed-new", "error"}:
+            summary = (
+                split_pytest_output(test.output)[0]
+                if test.output
+                else "No output, see the job log"
+            )
         table_map[test.group][name_root][test.instrument].append(
-            (test.subtest, test.status, filename)
+            (test.subtest, test.status, filename, summary)
         )
 
     # Compute percentage of success for each group
