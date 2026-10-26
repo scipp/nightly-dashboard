@@ -20,7 +20,7 @@ jobs:
         cache: true
 
     - run: pixi run render nightly
-    - run: pixi run render latest
+    - run: pixi run render latest -n 1
 
     - uses: JamesIves/github-pages-deploy-action@v4
       with:
