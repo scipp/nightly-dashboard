@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:25:35
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|freia|freia_read_monitor_data|shutter_monitor
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137616" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f2ace7ed670&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00027544.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7f2b2f2845e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f2ace777b60&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-10-30 00:37:48 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22071/builds">
+      22071
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137397" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f2e2422ce00&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00027414.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7f2e8053c720&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f2e2420edb0&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-10-29 00:37:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22051/builds">
+      22051
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137252" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[ess.freia.types.ShutterMonitor],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f7584134470&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00027264.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7f75e61b4720&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:236: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f758e60e1b0&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[ess.freia.types.ShutterMonitor],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-10-28 00:37:41 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22023/builds">
+      22023
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136982" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fb1fc0daba0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00027124.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7fb2567585e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fb1fee51f40&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--failed-bg);">
+     2026-10-27 00:32:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21991/builds">
+      21991
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136802" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_component(
+    location: ess.reduce.nexus.types.NeXusComponentLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+    nx_class: ess.reduce.nexus.types.NeXusClass[ess.freia.types.ShutterMonitor],
+) -&gt; ess.reduce.nexus.types.NeXusComponent[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7ff3840b8f80&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026984.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7ff3e00e8720&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:236: in load_nexus_component
+    nexus.load_component(location, nx_class=nx_class, definitions=definitions)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:99: in load_component
+    with open_component_group(
+/opt/miniforge/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:325: in open_component_group
+    yield _unique_child_group(parent, nx_class, group_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:370: in _unique_child_group
+    child = group[name]
+            ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7ff38860c5f0&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_component(
+E               location: ess.reduce.nexus.types.NeXusComponentLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E               nx_class: ess.reduce.nexus.types.NeXusClass[ess.freia.types.ShutterMonitor],
+E           ) -&gt; ess.reduce.nexus.types.NeXusComponent[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--failed-bg);">
+     2026-10-26 00:37:45 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21966/builds">
+      21966
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136663" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdd2438d550&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026845.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7fdd854b4720&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fdd2c178260&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--failed-bg);">
+     2026-10-25 00:36:43 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21965/builds">
+      21965
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136611" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc4381b9250&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026705.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7fc4924f85e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7fc43881e2d0&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--failed-bg);">
+     2026-10-24 00:37:22 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21962/builds">
+      21962
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136454" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: 'monitor_5'
+In provider ess.reduce.nexus.workflow.load_nexus_data(
+    location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f9ee827e7e0&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026555.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7f9f429505e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:273: in load_nexus_data
+    nexus.load_data(
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:560: in load_data
+    component = instrument[component_name]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scippnexus.base.Group object at 0x7f9eeabee960&gt;, sel = 'monitor_5'
+
+    def __getitem__(self, sel):
+        """
+        Get a child group or child dataset, a selection of child groups, or load and
+        return the current group.
+    
+        Three cases are supported:
+    
+        - String name: The child group or child dataset of that name is returned.
+        - Class such as ``NXdata`` or ``NXlog``: A dict containing all direct children
+          with a matching ``NX_class`` attribute are returned. Also accepts a tuple of
+          classes. ``Field`` selects all child fields, i.e., all datasets but not
+          groups.
+        - Scipp-style index: Load the specified slice of the current group, returning
+          a :class:`scipp.DataArray` or :class:`scipp.DataGroup`.
+    
+        Parameters
+        ----------
+        sel:
+            Child name, class, or index.
+    
+        Returns
+        -------
+        :
+            Field, group, dict of fields, or loaded data.
+        """
+        if isinstance(sel, str):
+            # We cannot get the child directly from the HDF5 group, since we need to
+            # create the parent group, to ensure that fields get the correct properties
+            # such as sizes and dtype.
+            if '/' in sel:
+                sel_path = PurePosixPath(sel)
+                if sel_path.is_absolute():
+                    return self.file[sel_path.relative_to('/').as_posix()]
+                # If the path is a single name, we can directly access the child
+                elif len(sel_path.parts) == 1:
+                    return self[sel_path.as_posix()]
+                else:
+                    grp = sel_path.parts[0]
+                    return self[grp][sel_path.relative_to(grp).as_posix()]
+            elif sel == '..':
+                return self.parent
+&gt;           child = self._children[sel]
+                    ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'monitor_5'
+E           In provider ess.reduce.nexus.workflow.load_nexus_data(
+E               location: ess.reduce.nexus.types.NeXusDataLocationSpec[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun],
+E           ) -&gt; ess.reduce.nexus.types.NeXusData[ess.freia.types.ShutterMonitor, ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/scippnexus/base.py:370: KeyError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--failed-bg);">
+     2026-10-23 00:37:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21937/builds">
+      21937
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/136014" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[ShutterMonitor]'. Affects requested targets (via providers given in parentheses):
+1. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+2. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+3. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fc0e4254d10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026415.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7fc144dd45e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7fc0e4254d10&gt;
+keys = ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.ShutterMonitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[ShutterMonitor]'. Affects requested targets (via providers given in parentheses):
+E           1. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+E           2. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+E           3. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--failed-bg);">
+     2026-10-22 00:37:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/21918/builds">
+      21918
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/135858" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[ShutterMonitor]'. Affects requested targets (via providers given in parentheses):
+1. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+2. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+3. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f548c1e8d10&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_freia_999999_00026285.hdf')
+monitor = ess.freia.types.ShutterMonitor
+check_monitor_data = &lt;function _check_monitor_data at 0x7f54ef4205e0&gt;
+
+    @pytest.mark.parametrize(
+        "monitor",
+        [
+            WBC1Monitor,
+            PSCMonitor,
+            WBC2Monitor,
+            WBC3Monitor,
+            ShutterMonitor,
+            NormalizationMonitor,
+        ],
+        ids=[
+            "wbc1_monitor",
+            "psc_monitor",
+            "wbc2_monitor",
+            "wbc3_monitor",
+            "shutter_monitor",
+            "norm_monitor",
+        ],
+    )
+    def test_freia_read_monitor_data(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        monitor: type,
+        check_monitor_data: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+    
+&gt;       result = workflow.compute(RawMonitor[SampleRun, monitor])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/freia/freia_load_nexus_test.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sciline.pipeline.Pipeline object at 0x7f548c1e8d10&gt;
+keys = ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.freia.types.ShutterMonitor]
+scheduler = None, handler = None, max_depth = 4
+
+    def get(
+        self,
+        keys: type | Iterable[type] | "UnionType" | str,  # noqa: UP037 (needed by Sphinx)
+        *,
+        scheduler: Scheduler | None = None,
+        handler: ErrorHandler | None = None,
+        max_depth: int = 4,
+    ) -&gt; TaskGraph:
+        """
+        Return a TaskGraph for the given keys.
+    
+        Parameters
+        ----------
+        keys:
+            Type to compute the result for.
+            Can be a single type or an iterable of types.
+        scheduler:
+            Optional scheduler to use for computing the result. If not given, a
+            :py:class:`NaiveScheduler` is used if `dask` is not installed,
+            otherwise dask's threaded scheduler is used.
+        handler:
+            Handler for unsatisfied requirements. If not provided,
+            :py:class:`HandleAsBuildTimeException` is used, which raises an exception.
+            During development and debugging it can be helpful to use a handler that
+            raises an exception only when the graph is computed. This can be achieved
+            by passing :py:class:`HandleAsComputeTimeException` as the handler.
+        max_depth:
+            Maximum depth to show in the dependency tree when reporting errors.
+        """
+        if multi := _is_multiple_keys(keys):
+            targets = tuple(keys)  # type: ignore[arg-type]
+        else:
+            targets = (keys,)
+        try:
+            graph = to_task_graph(self, targets=targets, handler=handler)  # type: ignore[arg-type]
+        except UnsatisfiedRequirement as e:
+            missing = e.args[1]
+            nx_graph = self.underlying_graph
+            if missing in nx_graph:
+                paths = _find_paths_to_targets(nx_graph, missing, targets)
+                info = _format_paths_msg(nx_graph, paths)
+            else:
+                nodes = ", ".join(map(key_name, nx_graph.nodes))
+                info = f'{e} Requested node not in graph. Did you mean one of: {nodes}?'
+            # Not raising `from e` because that includes noisy traceback of internals,
+            # which are not relevant to the user.
+&gt;           raise type(e)(f'{info}\n\n') from None
+E           sciline.handler.UnsatisfiedRequirement: Missing input node 'NeXusName[ShutterMonitor]'. Affects requested targets (via providers given in parentheses):
+E           1. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.data_by_name) &rarr; NeXusDataLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_data) &rarr; NeXusData[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+E           2. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+E           3. NeXusName[ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.component_spec_by_name) &rarr; NeXusComponentLocationSpec[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[ShutterMonitor, SampleRun] &rarr; (ess.reduce.nexus.workflow.get_calibrated_monitor) &rarr; EmptyMonitor[SampleRun, ShutterMonitor] &rarr; (ess.reduce.nexus.workflow.assemble_monitor_data) &rarr; RawMonitor[SampleRun, ShutterMonitor]
+
+.tox/nexusfiles-scipp-freia/lib/python3.12/site-packages/sciline/pipeline.py:281: UnsatisfiedRequirement</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

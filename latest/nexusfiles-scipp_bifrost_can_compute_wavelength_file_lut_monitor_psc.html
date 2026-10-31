@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|can_compute_wavelength_file_lut|monitor_psc
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137613" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: No strictly increasing sections found.
+In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+    monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+    lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+    ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+    pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/unwrap/resample.py:91: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00027541.hdf')
+monitor_type = ess.spectroscopy.types.PSCMonitor
+
+    @pytest.mark.parametrize(
+        "monitor_type",
+        [
+            ElasticMonitor,
+            NormalizationMonitor,
+            PSCMonitor,
+            OverlapMonitor,
+        ],
+        ids=["elastic", "normalization", "psc", "overlap"],
+    )
+    def test_can_compute_wavelength_file_lut__monitor_(
+        coda_nexus_file_path: Path, monitor_type: type
+    ) -&gt; None:
+&gt;       run_workflow_and_check_result(
+            workflow=make_workflow("file"),
+            filename=coda_nexus_file_path,
+            target=WavelengthMonitor[SampleRun, monitor_type],
+        )
+
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/nexusfiles-scipp/bifrost/bifrost_reduction_test.py:41: in run_workflow_and_check_result
+    result = workflow.compute(target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/dask/utils.py:81: in apply
+    return func(*args)
+           ^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/spectroscopy/indirect/time_of_flight.py:95: in monitor_wavelength_data
+    result = reduce_unwrap.to_wavelength.monitor_wavelength_data(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/unwrap/to_wavelength.py:621: in monitor_wavelength_data
+    _compute_wavelength_data(
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/unwrap/to_wavelength.py:531: in _compute_wavelength_data
+    out = rebin_strictly_increasing(data, dim='wavelength')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+da = &lt;scipp.DataArray&gt;
+Dimensions: Sizes[time:99, wavelength:746, ]
+Coordinates:
+* position                  vector3       ...
+Data:
+                            float64  [dimensionless]  (time, wavelength)  [0, 0, ..., 2, 0]  [0, 0, ..., 2, 0]
+
+
+dim = 'wavelength'
+
+    def rebin_strictly_increasing(da: sc.DataArray, dim: str) -&gt; sc.DataArray:
+        """
+        Find strictly monotonic sections in a coordinate dimension and rebin the data array
+        into a regular grid based on these sections.
+        """
+        # Ensure the dimension is named like the coordinate.
+        da = da.rename_dims({da.coords[dim].dim: dim})
+        slices = find_strictly_increasing_sections(da.coords[dim])
+        if len(slices) == 1:
+            # Slices refer to the indices in the coord, which are bin edges.
+            # For slicing data we need to stop at the last index minus one.
+            return da[dim, slices[0].start : slices[0].stop - 1]
+        if not slices:
+&gt;           raise ValueError("No strictly increasing sections found.")
+E           ValueError: No strictly increasing sections found.
+E           In provider ess.spectroscopy.indirect.time_of_flight.monitor_wavelength_data(
+E               monitor_data: ess.reduce.nexus.types.RawMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+E               lookup: ess.reduce.unwrap.types.ErrorLimitedLookupTable[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+E               ltotal: ess.reduce.unwrap.types.MonitorLtotal[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor],
+E               pulse_stride_offset: ess.reduce.unwrap.types.PulseStrideOffset,
+E           ) -&gt; ess.reduce.unwrap.types.WavelengthMonitor[ess.reduce.nexus.types.SampleRun, ess.spectroscopy.types.PSCMonitor]
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/ess/reduce/unwrap/resample.py:91: ValueError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

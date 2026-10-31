@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|magic|magic_read_detector_everything|magic_detector_a
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137618" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">KeyError: "Expected 'x_pixel_offset' in &lt;scipp.Dict.keys {detector_number}&gt;."
+In provider ess.reduce.nexus.workflow.get_calibrated_detector(
+    detector: ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    *,
+    transform: ess.reduce.nexus.types.NeXusTransformation[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+    offset: ess.reduce.nexus.types.DetectorPositionOffset[ess.reduce.nexus.types.SampleRun],
+    bank_sizes: ess.reduce.nexus.types.DetectorBankSizes,,
+) -&gt; ess.reduce.nexus.types.EmptyDetector[ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippnexus/nxtransformations.py:421: KeyError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7f8f4834e210&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_magic_999999_00027546.hdf')
+detector_name = 'magic_detector_a'
+check_everything_events = &lt;function _check_everything_events at 0x7f8f5566c9a0&gt;
+
+    @pytest.mark.parametrize("detector_name", DETECTOR_NAMES)
+    def test_magic_read_detector_everything(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        detector_name: str,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+        workflow[NeXusDetectorName] = detector_name
+    
+&gt;       result = workflow.compute(RawDetector[SampleRun])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/magic/magic_load_nexus_test.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/sciline/pipeline.py:191: in compute
+    return self.get(tp, **kwargs).compute(reporter=reporter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/sciline/task_graph.py:122: in compute
+    return self._scheduler.get(self._graph, [targets], reporter=reporter)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/sciline/scheduler.py:149: in get
+    return self._dask_get(dsk, list(map(_to_dask_key, keys)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/threaded.py:115: in get
+    results = get_async(
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/local.py:547: in get_async
+    raise_exception(exc, tb)
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/local.py:351: in reraise
+    raise exc
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/local.py:256: in execute_task
+    result = task(data)
+             ^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/_task_spec.py:768: in __call__
+    return self.func(*new_argspec)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/dask/utils.py:79: in apply
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/sciline/_provider.py:145: in __call__
+    return self._func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:445: in get_calibrated_detector
+    position = nexus.compute_detector_position(da, transform=transform, offset=offset)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/ess/reduce/nexus/_nexus_loader.py:493: in compute_detector_position
+    offsets = snx.zip_pixel_offsets(da.coords)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = &lt;scipp.Dict&gt;
+  detector_number: &lt;scipp.Variable&gt; (detector_number: 491520)      int32        &lt;no unit&gt;  [1, 2, ..., 491519, 491520]
+
+
+    def zip_pixel_offsets(x: dict[str, sc.Variable], /) -&gt; sc.Variable:
+        """
+        Zip the x_pixel_offset, y_pixel_offset, and z_pixel_offset fields into a vector.
+    
+        These fields originate from NXdetector groups. All but x_pixel_offset are optional,
+        e.g., for 2D detectors. Zero values for missing fields are assumed.
+    
+        Parameters
+        ----------
+        mapping:
+            Mapping (typically a data group, or data array coords) containing
+            x_pixel_offset, y_pixel_offset, and z_pixel_offset.
+    
+        Returns
+        -------
+        :
+            Vectors with pixel offsets.
+    
+        See Also
+        --------
+        compute_positions
+        """
+&gt;       zero = sc.scalar(0.0, unit=x['x_pixel_offset'].unit)
+                                   ^^^^^^^^^^^^^^^^^^^
+E       KeyError: "Expected 'x_pixel_offset' in &lt;scipp.Dict.keys {detector_number}&gt;."
+E       In provider ess.reduce.nexus.workflow.get_calibrated_detector(
+E           detector: ess.reduce.nexus.types.NeXusComponent[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           *,
+E           transform: ess.reduce.nexus.types.NeXusTransformation[scippnexus.nxdetector.NXdetector, ess.reduce.nexus.types.SampleRun],
+E           offset: ess.reduce.nexus.types.DetectorPositionOffset[ess.reduce.nexus.types.SampleRun],
+E           bank_sizes: ess.reduce.nexus.types.DetectorBankSizes,,
+E       ) -&gt; ess.reduce.nexus.types.EmptyDetector[ess.reduce.nexus.types.SampleRun]
+
+.tox/nexusfiles-scipp-magic/lib/python3.12/site-packages/scippnexus/nxtransformations.py:421: KeyError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

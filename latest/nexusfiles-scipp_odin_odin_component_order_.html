@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|odin|odin_component_order|
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137620" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: The order of components is not as expected.
+assert ['source', 'w..., 'bpc1', ...] == ['source', 'w..., 'foc2', ...]
+
+  At index 3 diff: 'beam_monitor_1' != 'foc1'
+
+  Full diff:
+    [
+        'source',
+        'wfm1',...
+
+  ...Full output truncated (18 lines hidden), use '-vv' to show
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:266: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_odin_999999_00027548.hdf')
+
+    def test_odin_component_order(coda_nexus_file_path: Path) -&gt; None:
+        wf = odin.OdinWorkflow()
+        wf[Filename[SampleRun]] = coda_nexus_file_path
+    
+        unit = "m"
+    
+        source_position = wf.compute(Position[NXsource, SampleRun])
+        positions = [("source", source_position.to(unit=unit))]
+    
+        # Load choppers
+        choppers = wf.compute(RawChoppers[SampleRun])
+        for name, chopper in choppers.items():
+            pos = chopper["position"].to(unit=unit)
+            if isinstance(pos, sc.DataArray):
+                pos = pos.data
+            positions.append((name, pos))
+    
+        # Load sample position
+        sample_position = wf.compute(Position[NXsample, SampleRun])
+        positions.append(("sample", sample_position.to(unit=unit)))
+    
+        # Load monitors
+        for m in range(1, 4):
+            name = f"beam_monitor_{m}"
+            wf[NeXusName[BeamMonitor1]] = name
+            pos = wf.compute(RawMonitor[SampleRun, BeamMonitor1]).coords["position"]
+            positions.append((name, pos.to(unit=unit)))
+    
+        # Load detectors:
+        for name in [odin.nexus_name("timepix"), odin.nexus_name("orca")]:
+            wf[NeXusDetectorName] = name
+            pos = wf.compute(RawDetector[SampleRun]).coords["position"]
+            positions.append((name.split("/")[-1], pos.to(unit=unit)))
+    
+        distances = [
+            (
+                name,
+                sc.norm(
+                    sample_position.to(unit=unit) - source_position.to(unit=unit)
+                ).mean(),
+            )
+            for name, sample_position in positions
+        ]
+    
+        sorted_distances = sorted(distances, key=lambda x: x[1])
+        names_in_order = [name for name, _ in sorted_distances]
+    
+        expected = [
+            "source",
+            "wfm1",
+            "wfm2",
+            "foc1",
+            "bpc1",
+            "foc2",
+            "bpc2",
+            "t0",
+            "foc3",
+            "foc4",
+            "foc5",
+            "beam_monitor_1",
+            "beam_monitor_2",
+            "beam_monitor_3",
+            "sample",
+            "orca",
+            "timepix3",
+        ]
+    
+        assert set(names_in_order) == set(expected), (
+            "Some components are missing; they could not be loaded."
+        )
+    
+&gt;       assert names_in_order == expected, "The order of components is not as expected."
+E       AssertionError: The order of components is not as expected.
+E       assert ['source', 'w..., 'bpc1', ...] == ['source', 'w..., 'foc2', ...]
+E         
+E         At index 3 diff: 'beam_monitor_1' != 'foc1'
+E         
+E         Full diff:
+E           [
+E               'source',
+E               'wfm1',...
+E         
+E         ...Full output truncated (18 lines hidden), use '-vv' to show
+
+tests/nexusfiles-scipp/odin/odin_load_nexus_test.py:266: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: nexusfiles-scipp|bifrost|bifrost_read_detector_everything|all_detectors
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137613" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>workflow = &lt;sciline.pipeline.Pipeline object at 0x7fdf543ef860&gt;
+coda_nexus_file_path = PosixPath('/ess/data/coda/999999/raw/coda_bifrost_999999_00027541.hdf')
+check_everything_events = &lt;function _check_everything_events at 0x7fdf621e4cc0&gt;
+
+    def test_bifrost_read_detector_everything__all_detectors(
+        workflow: sciline.Pipeline,
+        coda_nexus_file_path: Path,
+        check_everything_events: Callable,
+    ) -&gt; None:
+        workflow[Filename[SampleRun]] = coda_nexus_file_path
+&gt;       detectors = sciline.compute_mapped(workflow, RawDetector[SampleRun])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/nexusfiles-scipp/bifrost/bifrost_load_nexus_test.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:463: in compute_mapped
+    key_series = get_mapped_node_names(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+graph = &lt;sciline.pipeline.Pipeline object at 0x7fdf543ef860&gt;
+base_name = ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]
+index_names = None
+
+    def get_mapped_node_names(
+        graph: DataGraph, base_name: type, *, index_names: Sequence[Hashable] | None = None
+    ) -&gt; pandas.Series:
+        """
+        Given a graph with a mapped node with given base_name, return a series of
+        corresponding mapped names.
+    
+        This is meant to be used in combination with :py:func:`DataGraph.map`.
+        If the mapped node depends on multiple indices, the index of the returned series
+        will have a multi-index.
+    
+        Attention
+        ---------
+        This function requires `Pandas &lt;https://pandas.pydata.org/&gt;`_
+        which is not installed automatically as a dependency of Sciline.
+    
+        Parameters
+        ----------
+        graph:
+            The data graph to get the mapped node names from.
+        base_name:
+            The base name of the mapped node to get the names for.
+        index_names:
+            Specifies the names of the indices of the mapped node. If not given this is
+            inferred from the graph, but the argument may be required to disambiguate
+            multiple mapped nodes with the same name.
+    
+        Returns
+        -------
+        :
+            The series of node names corresponding to the mapped node.
+        """
+        pd = _import_pandas("sciline.get_mapped_node_names")
+        from cyclebane.graph import IndexValues, MappedNode, NodeName
+    
+        candidates = [
+            node
+            for node in graph.underlying_graph.nodes
+            if isinstance(node, MappedNode) and node.name == base_name
+        ]
+        if len(candidates) == 0:
+&gt;           raise ValueError(f"'{base_name}' is not a mapped node.")
+E           ValueError: 'ess.reduce.nexus.types.RawDetector[ess.reduce.nexus.types.SampleRun]' is not a mapped node.
+
+.tox/nexusfiles-scipp-bifrost/lib/python3.12/site-packages/sciline/pipeline.py:407: ValueError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

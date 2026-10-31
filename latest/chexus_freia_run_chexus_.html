@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: chexus|freia|run_chexus|
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137606" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_freia_999999_00027544.hdf: 
+Violations
+----------
+depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_4/depends_on (depends_on target /entry/instrument/monitor_4/transformations/translation is missing)
+depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_5/depends_on (depends_on target /entry/instrument/monitor_5/transformations/translation is missing)
+depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_6/depends_on (depends_on target /entry/instrument/monitor_6/transformations/translation is missing)
+
+
+Summary
+-------
+depends_on_missing: 0/22
+depends_on_target_missing: 3/51
+float_dataset_units_missing: 0/644
+group_has_units: 0/247
+index_has_units: 0/186
+mask_has_units: 0/0
+non_numeric_dataset_has_units: 0/329
+NX_class_attr_missing: 0/247
+NX_class_invalid: 0/247
+NX_class_is_legacy: 0/247
+transformation_depends_on_missing: 0/26
+transformation_offset_units_missing: 0/0
+units_invalid: 0/1368
+NXlog_has_value: 0/167
+detector_numbers are not unique: 0/1
+event_id is not subset of associated detector_numbers: 0/1
+Shape of pixel offsets does not correspond to detector_number: 0/1
+event_index_too_small: 0/7
+event_data_has_event_datasets: 0/7
+NXtransformations_child_not_NX_NUMBER: 0/29
+chopper_frequency_unit_invalid: 0/8
+dataset_units_check: 0/1368
+transformation_offset_units_invalid: 0/0
+transformation_value_units_invalid: 0/29
+
+Total: 3/5232
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>instrument = 'freia', coda_proposal_id = '999999'
+pathfinder = &lt;function pathfinder.&lt;locals&gt;.&lt;lambda&gt; at 0x7ff7aa574ea0&gt;
+
+    def test_run_chexus(
+        instrument: str,
+        coda_proposal_id: str | None,
+        pathfinder: Callable[..., Path],
+    ) -&gt; None:
+        path = pathfinder(proposal_id=coda_proposal_id, instrument=instrument)
+        reader = chexus.read_hdf5(path, locking=False)
+        group = next(reader)
+        validators = chexus.validators.base_validators(has_scipp=True)
+        results = chexus.validate(
+            group, validators=validators, skip_condition=skip_condition
+        )
+        report = chexus.report(results=results)
+        logging.info(report)
+        logging.info(chexus.make_fileinfo(path))
+        if chexus.has_violations(results):
+&gt;           raise AssertionError(f"Validation failed for {path}: \n" + report)
+E           AssertionError: Validation failed for /ess/data/coda/999999/raw/coda_freia_999999_00027544.hdf: 
+E           Violations
+E           ----------
+E           depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_4/depends_on (depends_on target /entry/instrument/monitor_4/transformations/translation is missing)
+E           depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_5/depends_on (depends_on target /entry/instrument/monitor_5/transformations/translation is missing)
+E           depends_on_target_missing @ /entry/instrument/MISSING_ESSCONFIG_monitor_6/depends_on (depends_on target /entry/instrument/monitor_6/transformations/translation is missing)
+E           
+E           
+E           Summary
+E           -------
+E           depends_on_missing: 0/22
+E           depends_on_target_missing: 3/51
+E           float_dataset_units_missing: 0/644
+E           group_has_units: 0/247
+E           index_has_units: 0/186
+E           mask_has_units: 0/0
+E           non_numeric_dataset_has_units: 0/329
+E           NX_class_attr_missing: 0/247
+E           NX_class_invalid: 0/247
+E           NX_class_is_legacy: 0/247
+E           transformation_depends_on_missing: 0/26
+E           transformation_offset_units_missing: 0/0
+E           units_invalid: 0/1368
+E           NXlog_has_value: 0/167
+E           detector_numbers are not unique: 0/1
+E           event_id is not subset of associated detector_numbers: 0/1
+E           Shape of pixel offsets does not correspond to detector_number: 0/1
+E           event_index_too_small: 0/7
+E           event_data_has_event_datasets: 0/7
+E           NXtransformations_child_not_NX_NUMBER: 0/29
+E           chopper_frequency_unit_invalid: 0/8
+E           dataset_units_check: 0/1368
+E           transformation_offset_units_invalid: 0/0
+E           transformation_value_units_invalid: 0/29
+E           
+E           Total: 3/5232
+
+tests/chexus/chexus_test.py:38: AssertionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

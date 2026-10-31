@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: October 31, 2026 07:27:40
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: scipp-analysis|estia|analyze_reduced_data|fit_model_reasonable
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-10-31 00:33:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22083/builds">
+      22083
+     </a>
+     ]: error
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/137636" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary error">UserWarning: Applied Mighell substitution to 11 zero-variance point(s) in reflectivity 0 during fitting.
+
+.tox/scipp-analysis-estia/lib/python3.12/site-packages/easyreflectometry/fitting.py:262: UserWarning</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>load_data = DataGroup(sizes={}, keys=[
+    data: {'R_0': &lt;scipp.Variable&gt; (Qz_0: 189)    float64        &lt;no unit&gt;  [0.927488, 0.95...ame': 'sQz', 'unit': '1/angstrom', 'physical_quantity': 'standard deviation of wavevector transfer resolution'}]}}},
+])
+
+    @pytest.fixture(scope="module")
+    def fit_model(load_data):
+        data = load_data
+        # Rescale data
+        reflectivity = data["data"]["R_0"].values
+        scale_factor = 1 / np.max(reflectivity)
+        data["data"]["R_0"].values *= scale_factor
+    
+        # Create a model for the sample
+    
+        si = Material(sld=2.07, isld=0.0, name="Si")
+        sio2 = Material(sld=3.47, isld=0.0, name="SiO2")
+        d2o = Material(sld=6.33, isld=0.0, name="D2O")
+        dlipids = Material(sld=5.0, isld=0.0, name="DLipids")
+    
+        superphase = Layer(material=si, thickness=0, roughness=0, name="Si superphase")
+        sio2_layer = Layer(material=sio2, thickness=20, roughness=4, name="SiO2 layer")
+        dlipids_layer = Layer(
+            material=dlipids, thickness=40, roughness=4, name="DLipids layer"
+        )
+        subphase = Layer(material=d2o, thickness=0, roughness=5, name="D2O subphase")
+    
+        multi_sample = Sample(
+            Multilayer(superphase),
+            Multilayer(sio2_layer),
+            Multilayer(dlipids_layer),
+            Multilayer(subphase),
+            name="Multilayer Structure",
+        )
+    
+        multi_layer_model = Model(
+            sample=multi_sample,
+            scale=1,
+            background=0.000001,
+            resolution_function=PercentageFwhm(0),
+            name="Multilayer Model",
+        )
+    
+        # Set the fitting parameters
+    
+        sio2_layer.roughness.bounds = (3, 12)
+        sio2_layer.material.sld.bounds = (3.47, 5)
+        sio2_layer.thickness.bounds = (10, 30)
+    
+        subphase.material.sld.bounds = (6, 6.35)
+        dlipids_layer.thickness.bounds = (30, 60)
+        dlipids_layer.roughness.bounds = (3, 10)
+        dlipids_layer.material.sld.bounds = (4, 6)
+        multi_layer_model.scale.bounds = (0.8, 1.2)
+        multi_layer_model.background.bounds = (1e-6, 1e-3)
+    
+        sio2_layer.roughness.free = True
+        sio2_layer.material.sld.free = True
+        sio2_layer.thickness.free = True
+        subphase.material.sld.free = True
+        dlipids_layer.thickness.free = True
+        dlipids_layer.roughness.free = True
+        dlipids_layer.material.sld.free = True
+        multi_layer_model.scale.free = True
+        multi_layer_model.background.free = True
+    
+        # Run the model and plot the results
+    
+        multi_layer_model.interface = CalculatorFactory()
+    
+        fitter1 = MultiFitter(multi_layer_model)
+        fitter1.switch_minimizer(AvailableMinimizers.Bumps_simplex)
+    
+&gt;       analysed = fitter1.fit(data)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/scipp-analysis/estia/ort_file_test.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tox/scipp-analysis-estia/lib/python3.12/site-packages/easyreflectometry/fitting.py:1045: in fit
+    prepared = self.prepare(inputs, objective=objective)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/scipp-analysis-estia/lib/python3.12/site-packages/easyreflectometry/fitting.py:887: in prepare
+    _emit_array_prep_warnings(item_stats, y_vals, item.label, action=action, extra=extra_warning)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+stats = {'valid': 178, 'mighell_substituted': 11, 'masked': 0, 'transformed_all_points': False}
+y_vals = array([9.27487850e-01, 9.52332638e-01, 9.23844445e-01, 9.27607868e-01,
+       9.45260107e-01, 9.48504316e-01, 9.374221...000e+00, 0.00000000e+00,
+       1.73206521e-03, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       0.00000000e+00])
+label = 'reflectivity 0', action = 'fitting', extra = ''
+
+    def _emit_array_prep_warnings(stats: dict, y_vals: np.ndarray, label: str, *, action: str = 'fitting', extra: str = '') -&gt; None:
+        """Warn about zero-variance handling applied by :func:`_prepare_fit_arrays`.
+    
+        Parameters
+        ----------
+        stats : dict
+            The ``stats`` dict returned by :func:`_prepare_fit_arrays`.
+        y_vals : np.ndarray
+            The original (pre-transform) y values, used for the "all points" count.
+        label : str
+            Identifies what was fitted/sampled, e.g. ``'reflectivity 1'`` or
+            ``'channel pp'``.
+        action : str, optional
+            Verb describing the operation, e.g. ``'fitting'`` or ``'sampling'``. By default, 'fitting'.
+        extra : str, optional
+            Extra sentence(s) appended to the Mighell-related warnings (e.g. a
+            likelihood-validity caveat for MCMC). By default, ''.
+        """
+        if stats['masked'] &gt; 0:
+            warnings.warn(
+                f'Masked {stats["masked"]} data point(s) in {label} due to zero variance during {action}.',
+                UserWarning,
+            )
+        if stats.get('transformed_all_points'):
+            warnings.warn(
+                f'Applied Mighell transform to all {len(y_vals)} point(s) in {label} during {action}.{extra}',
+                UserWarning,
+            )
+        elif stats['mighell_substituted'] &gt; 0:
+&gt;           warnings.warn(
+                f'Applied Mighell substitution to {stats["mighell_substituted"]} '
+                f'zero-variance point(s) in {label} during {action}.{extra}',
+                UserWarning,
+            )
+E           UserWarning: Applied Mighell substitution to 11 zero-variance point(s) in reflectivity 0 during fitting.
+
+.tox/scipp-analysis-estia/lib/python3.12/site-packages/easyreflectometry/fitting.py:262: UserWarning</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
