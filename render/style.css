@@ -302,6 +302,11 @@ Based on https://stackoverflow.com/a/19097013
     border-left-color: var(--failed-bg);
 }
 
+/* Disable hover color for output summary */
+.output-summary:hover {
+    background: var(--background-1);
+}
+
 .output-details {
     margin: 0.8em 1em 1em 0;
 }
