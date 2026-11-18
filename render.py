@@ -1,3 +1,4 @@
+import argparse
 import hashlib
 import html
 import json
@@ -5,17 +6,14 @@ import logging
 import os
 import re
 import textwrap
-import pytz
-from datetime import datetime, UTC
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import quote
 
-import argparse
+import pytz
 import requests
-
 from bs4 import BeautifulSoup
-
 
 # Configure logging
 logging.basicConfig(
@@ -81,8 +79,11 @@ def get_api_json(url):
             logging.info(f"... cache hit for {url}")
             return json.loads(cache_file.read_text())
     # Fetch from GitLab with the private token and fail on an HTTP error
-    headers = {"Authorization": f"PRIVATE-TOKEN {TOKEN}"}
-    response = requests.get(url, headers=headers)
+    if TOKEN:
+        headers = {"Authorization": f"Bearer {TOKEN}"}
+    else:
+        headers = {}
+    response = requests.get(url, headers=headers, timeout=30)
     response.raise_for_status()
     data = response.json()
     # Store the parsed response so the next run is a cache hit
@@ -384,7 +385,7 @@ def _get_overview_status(tests_history, key) -> str:
                 if tests_history[name]["status"][i] != "skipped":
                     found_at_least_one_test = True
     if found_at_least_one_test:
-        status_class = 'success' if history[0] else 'failed'
+        status_class = "success" if history[0] else "failed"
         message = ""
         for i in range(history_length):
             if history[i] is None:
@@ -410,7 +411,7 @@ def overview_html(tests_history, last_updated):
     overview_table = (
         '<thead><tr class="overview-table-header"><th>Instrument &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>'
         + "</th><th></th><th>".join(processing_steps)
-        + '</th></tr></thead><tbody>'
+        + "</th></tr></thead><tbody>"
     )
 
     for instr in ALL_INSTRUMENTS:
