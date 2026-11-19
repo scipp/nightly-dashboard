@@ -20,7 +20,11 @@ jobs:
         cache: true
 
     - run: pixi run render nightly
+      env:
+        GITLAB_PRIVATE_TOKEN: ${{ secrets.GITLAB_PRIVATE_TOKEN }}
     - run: pixi run render latest -n 1
+      env:
+        GITLAB_PRIVATE_TOKEN: ${{ secrets.GITLAB_PRIVATE_TOKEN }}
 
     - uses: JamesIves/github-pages-deploy-action@v4
       with:
