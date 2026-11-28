@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: November 28, 2026 09:29:52
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|loki|run_notebooks_commissioning|loki-direct-beam-larmor
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-11-28 00:43:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22643/builds">
+      22643
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/142265" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Initialize workflow
+workflow = loki.LokiAtLarmorWorkflow()
+
+# Set-up masks
+workflow = sans.with_pixel_mask_filenames(
+    workflow, masks=loki.data.loki_tutorial_mask_filenames()
+)
+
+# Binning parameters
+wavelength_min = sc.scalar(1.0, unit='angstrom')
+wavelength_max = sc.scalar(13.0, unit='angstrom')
+n_wavelength_bins = 50
+n_wavelength_bands = 50
+
+workflow[WavelengthBins] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+)
+workflow[WavelengthBands] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+)
+workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+
+# Other parameters
+workflow[CorrectForGravity] = True
+workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+workflow[ReturnEvents] = False
+workflow[NeXusDetectorName] = 'larmor_detector'
+
+# Compute per layer?
+workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+#x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+#x1B[32m      3#x1B[39m 
+#x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+#x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+#x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+#x1B[32m      7#x1B[39m )
+#x1B[32m      8#x1B[39m 
+
+#x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/codeshelf/src/loki/notebooks/commissioning/loki-direct-beam-larmor.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fc061882ca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/test_run_notebooks__commission3')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fc0611c0ef0&gt;
+cell = {'cell_type': 'code', 'execution_count': 2, 'id': '3', 'metadata': {'execution': {'iopub.status.busy': '2026-11-27T23:...s for a single direct beam for all layers\n# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer"}
+cell_index = 3
+exec_reply = {'header': {'msg_id': 'b150153e-bc74b47c29c3fa087734e744_2454295_15', 'msg_type': 'execute_reply', 'username': 'userna...6_3', 'msg_type': 'execute_request', 'username': 'username', 'session': 'f781f69c-482e70f0286a869d6c09a38a', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           # Initialize workflow
+E           workflow = loki.LokiAtLarmorWorkflow()
+E           
+E           # Set-up masks
+E           workflow = sans.with_pixel_mask_filenames(
+E               workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           )
+E           
+E           # Binning parameters
+E           wavelength_min = sc.scalar(1.0, unit='angstrom')
+E           wavelength_max = sc.scalar(13.0, unit='angstrom')
+E           n_wavelength_bins = 50
+E           n_wavelength_bands = 50
+E           
+E           workflow[WavelengthBins] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+E           )
+E           workflow[WavelengthBands] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+E           )
+E           workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+E           
+E           # Other parameters
+E           workflow[CorrectForGravity] = True
+E           workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+E           workflow[ReturnEvents] = False
+E           workflow[NeXusDetectorName] = 'larmor_detector'
+E           
+E           # Compute per layer?
+E           workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+E           # workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+E           #x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+E           #x1B[32m      3#x1B[39m 
+E           #x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+E           #x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           #x1B[32m      7#x1B[39m )
+E           #x1B[32m      8#x1B[39m 
+E           
+E           #x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

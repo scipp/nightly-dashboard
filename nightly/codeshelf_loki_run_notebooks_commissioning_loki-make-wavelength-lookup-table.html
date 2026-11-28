@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: November 28, 2026 09:27:29
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|loki|run_notebooks_commissioning|loki-make-wavelength-lookup-table
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-11-28 00:43:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22643/builds">
+      22643
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/142265" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+table.array
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+#x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+#x1B[32m      2#x1B[39m table.array
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+#x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+#x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+#x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+#x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+#x1B[32m    174#x1B[39m     **kwargs: Any,
+#x1B[32m    175#x1B[39m ) -&gt; Any:
+#x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+#x1B[32m    178#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+#x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+#x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+#x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+#x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+#x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+#x1B[32m    283#x1B[39m     graph=graph,
+#x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+#x1B[32m    285#x1B[39m     scheduler=scheduler,
+#x1B[32m    286#x1B[39m )
+
+#x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/codeshelf/src/loki/notebooks/commissioning/loki-make-wavelength-lookup-table.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fc061882ca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/test_run_notebooks__commission4')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fc061042900&gt;
+cell = {'cell_type': 'code', 'execution_count': 3, 'id': '5', 'metadata': {'execution': {'iopub.status.busy': '2026-11-27T23:...e[AnyRun, NXdetector]\n\n"]}], 'source': 'table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])\ntable.array'}
+cell_index = 5
+exec_reply = {'header': {'msg_id': '68813c72-37f8a335b95b30961b319bec_2454361_19', 'msg_type': 'execute_reply', 'username': 'userna...6_4', 'msg_type': 'execute_request', 'username': 'username', 'session': '4b7c1d9e-5292057c8d5c2a7bbf5bd405', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           table.array
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           #x1B[32m      2#x1B[39m table.array
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+E           #x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+E           #x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+E           #x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+E           #x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+E           #x1B[32m    174#x1B[39m     **kwargs: Any,
+E           #x1B[32m    175#x1B[39m ) -&gt; Any:
+E           #x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+E           #x1B[32m    178#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+E           #x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+E           #x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+E           #x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+E           #x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+E           #x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+E           #x1B[32m    283#x1B[39m     graph=graph,
+E           #x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+E           #x1B[32m    285#x1B[39m     scheduler=scheduler,
+E           #x1B[32m    286#x1B[39m )
+E           
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+E           1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-11-27 00:50:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22622/builds">
+      22622
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/142046" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+table.array
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+#x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+#x1B[32m      2#x1B[39m table.array
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+#x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+#x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+#x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+#x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+#x1B[32m    174#x1B[39m     **kwargs: Any,
+#x1B[32m    175#x1B[39m ) -&gt; Any:
+#x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+#x1B[32m    178#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+#x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+#x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+#x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+#x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+#x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+#x1B[32m    283#x1B[39m     graph=graph,
+#x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+#x1B[32m    285#x1B[39m     scheduler=scheduler,
+#x1B[32m    286#x1B[39m )
+
+#x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1590/codeshelf/src/loki/notebooks/commissioning/loki-make-wavelength-lookup-table.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f64c0f32ca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1590/test_run_notebooks__commission4')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f64c06fed50&gt;
+cell = {'cell_type': 'code', 'execution_count': 3, 'id': '5', 'metadata': {'execution': {'iopub.status.busy': '2026-11-26T23:...e[AnyRun, NXdetector]\n\n"]}], 'source': 'table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])\ntable.array'}
+cell_index = 5
+exec_reply = {'header': {'msg_id': '8c301b9d-a1246e8b1f04a89f7a4bf430_2323350_19', 'msg_type': 'execute_reply', 'username': 'userna...3_4', 'msg_type': 'execute_request', 'username': 'username', 'session': '330caeea-acdb9f627f0ffee060b003a1', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           table.array
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           #x1B[32m      2#x1B[39m table.array
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+E           #x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+E           #x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+E           #x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+E           #x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+E           #x1B[32m    174#x1B[39m     **kwargs: Any,
+E           #x1B[32m    175#x1B[39m ) -&gt; Any:
+E           #x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+E           #x1B[32m    178#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+E           #x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+E           #x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+E           #x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+E           #x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+E           #x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+E           #x1B[32m    283#x1B[39m     graph=graph,
+E           #x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+E           #x1B[32m    285#x1B[39m     scheduler=scheduler,
+E           #x1B[32m    286#x1B[39m )
+E           
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+E           1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-11-26 00:49:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22603/builds">
+      22603
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141925" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+table.array
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+#x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+#x1B[32m      2#x1B[39m table.array
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+#x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+#x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+#x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+#x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+#x1B[32m    174#x1B[39m     **kwargs: Any,
+#x1B[32m    175#x1B[39m ) -&gt; Any:
+#x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+#x1B[32m    178#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+#x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+#x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+#x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+#x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+#x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+#x1B[32m    283#x1B[39m     graph=graph,
+#x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+#x1B[32m    285#x1B[39m     scheduler=scheduler,
+#x1B[32m    286#x1B[39m )
+
+#x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1572/codeshelf/src/loki/notebooks/commissioning/loki-make-wavelength-lookup-table.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f68e0c8eca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1572/test_run_notebooks__commission4')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f68e08ea120&gt;
+cell = {'cell_type': 'code', 'execution_count': 3, 'id': '5', 'metadata': {'execution': {'iopub.status.busy': '2026-11-25T23:...e[AnyRun, NXdetector]\n\n"]}], 'source': 'table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])\ntable.array'}
+cell_index = 5
+exec_reply = {'header': {'msg_id': '5b75e5e3-f6b7140d44a1c67feb6b95b1_2211565_19', 'msg_type': 'execute_reply', 'username': 'userna...5_4', 'msg_type': 'execute_request', 'username': 'username', 'session': '52a48c9a-bea0d9639f5431c7e05e4d0a', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           table.array
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           #x1B[32m      2#x1B[39m table.array
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+E           #x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+E           #x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+E           #x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+E           #x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+E           #x1B[32m    174#x1B[39m     **kwargs: Any,
+E           #x1B[32m    175#x1B[39m ) -&gt; Any:
+E           #x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+E           #x1B[32m    178#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+E           #x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+E           #x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+E           #x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+E           #x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+E           #x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+E           #x1B[32m    283#x1B[39m     graph=graph,
+E           #x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+E           #x1B[32m    285#x1B[39m     scheduler=scheduler,
+E           #x1B[32m    286#x1B[39m )
+E           
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+E           1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-11-25 00:43:13 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22579/builds">
+      22579
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141719" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+table.array
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+#x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+#x1B[32m      2#x1B[39m table.array
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+#x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+#x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+#x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+#x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+#x1B[32m    174#x1B[39m     **kwargs: Any,
+#x1B[32m    175#x1B[39m ) -&gt; Any:
+#x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+#x1B[32m    178#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+#x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+#x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+#x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+#x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+#x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+#x1B[32m    283#x1B[39m     graph=graph,
+#x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+#x1B[32m    285#x1B[39m     scheduler=scheduler,
+#x1B[32m    286#x1B[39m )
+
+#x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1556/codeshelf/src/loki/notebooks/commissioning/loki-make-wavelength-lookup-table.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fadbf16aca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1556/test_run_notebooks__commission4')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fadbcfbf470&gt;
+cell = {'cell_type': 'code', 'execution_count': 3, 'id': '5', 'metadata': {'execution': {'iopub.status.busy': '2026-11-24T23:...e[AnyRun, NXdetector]\n\n"]}], 'source': 'table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])\ntable.array'}
+cell_index = 5
+exec_reply = {'header': {'msg_id': '54b9df86-e2690167f2c3758212631120_2050630_19', 'msg_type': 'execute_reply', 'username': 'userna...7_4', 'msg_type': 'execute_request', 'username': 'username', 'session': 'beb6a5bf-9e25bd475d82d31cbed20380', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           table.array
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m                    Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[3]#x1B[39m#x1B[32m, line 1#x1B[39m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m table = wf.compute(unwrap.LookupTable[AnyRun, snx.NXdetector])
+E           #x1B[32m      2#x1B[39m table.array
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+E           #x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+E           #x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+E           #x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+E           #x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+E           #x1B[32m    174#x1B[39m     **kwargs: Any,
+E           #x1B[32m    175#x1B[39m ) -&gt; Any:
+E           #x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+E           #x1B[32m    178#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+E           #x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m.compute(reporter=reporter)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:281#x1B[39m, in #x1B[36mPipeline.get#x1B[39m#x1B[34m(self, keys, scheduler, handler, max_depth)#x1B[39m
+E           #x1B[32m    278#x1B[39m         info = #x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00me#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m Requested node not in graph. Did you mean one of: #x1B[39m#x1B[38;5;132;01m{#x1B[39;00mnodes#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m?#x1B[39m#x1B[33m'#x1B[39m
+E           #x1B[32m    279#x1B[39m     #x1B[38;5;66;03m# Not raising `from e` because that includes noisy traceback of internals,#x1B[39;00m
+E           #x1B[32m    280#x1B[39m     #x1B[38;5;66;03m# which are not relevant to the user.#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m281#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;28mtype#x1B[39m(e)(#x1B[33mf#x1B[39m#x1B[33m'#x1B[39m#x1B[38;5;132;01m{#x1B[39;00minfo#x1B[38;5;132;01m}#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m'#x1B[39m) #x1B[38;5;28;01mfrom#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[38;5;28;01mNone#x1B[39;00m
+E           #x1B[32m    282#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m TaskGraph(
+E           #x1B[32m    283#x1B[39m     graph=graph,
+E           #x1B[32m    284#x1B[39m     targets=targets #x1B[38;5;28;01mif#x1B[39;00m multi #x1B[38;5;28;01melse#x1B[39;00m keys,  #x1B[38;5;66;03m# type: ignore[arg-type]#x1B[39;00m
+E           #x1B[32m    285#x1B[39m     scheduler=scheduler,
+E           #x1B[32m    286#x1B[39m )
+E           
+E           #x1B[31mUnsatisfiedRequirement#x1B[39m: Missing input node 'Filename[AnyRun]'. Affects requested targets (via providers given in parentheses):
+E           1. Filename[AnyRun] &rarr; (ess.reduce.nexus.workflow.file_path_to_file_spec) &rarr; NeXusFileSpec[AnyRun] &rarr; (ess.reduce.nexus.workflow.unique_component_spec) &rarr; NeXusComponentLocationSpec[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.load_nexus_component) &rarr; NeXusComponent[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.get_transformation_chain) &rarr; NeXusTransformationChain[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.to_transformation) &rarr; NeXusTransformation[NXmoderator, AnyRun] &rarr; (ess.reduce.nexus.workflow.compute_neutron_source_position) &rarr; NeutronSourcePosition[AnyRun] &rarr; (ess.reduce.unwrap.lut.simulate_chopper_cascade_using_tof) &rarr; SimulationResults[AnyRun] &rarr; (ess.reduce.unwrap.lut.make_wavelength_lut_from_simulation) &rarr; LookupTable[AnyRun, NXdetector]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--success-bg);">
+     2026-11-24 00:52:04 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22552/builds">
+      22552
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141427" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-11-23 00:50:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22528/builds">
+      22528
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141298" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--success-bg);">
+     2026-11-22 00:51:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22527/builds">
+      22527
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141246" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-11-21 00:51:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22526/builds">
+      22526
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141194" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--success-bg);">
+     2026-11-20 00:51:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22508/builds">
+      22508
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141050" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--success-bg);">
+     2026-11-19 00:46:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22484/builds">
+      22484
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140928" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--success-bg);">
+     2026-11-18 00:49:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22461/builds">
+      22461
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140748" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--success-bg);">
+     2026-11-17 00:49:32 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22443/builds">
+      22443
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140608" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--success-bg);">
+     2026-11-16 15:34:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22421/builds">
+      22421
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140351" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--success-bg);">
+     2026-11-15 00:49:40 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22418/builds">
+      22418
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140297" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--success-bg);">
+     2026-11-14 00:48:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22408/builds">
+      22408
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140236" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--success-bg);">
+     2026-11-13 00:49:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22376/builds">
+      22376
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140041" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--success-bg);">
+     2026-11-12 00:48:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22340/builds">
+      22340
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139880" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--success-bg);">
+     2026-11-11 00:49:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22297/builds">
+      22297
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139460" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--success-bg);">
+     2026-11-10 00:43:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22265/builds">
+      22265
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139245" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--success-bg);">
+     2026-11-09 00:48:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22234/builds">
+      22234
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139061" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--success-bg);">
+     2026-11-08 00:49:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22229/builds">
+      22229
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139004" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--success-bg);">
+     2026-11-07 00:49:13 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22226/builds">
+      22226
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138950" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--success-bg);">
+     2026-11-06 11:36:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22177/builds">
+      22177
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138684" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--success-bg);">
+     2026-11-05 00:43:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22136/builds">
+      22136
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138505" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--success-bg);">
+     2026-11-04 00:46:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22123/builds">
+      22123
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138409" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>

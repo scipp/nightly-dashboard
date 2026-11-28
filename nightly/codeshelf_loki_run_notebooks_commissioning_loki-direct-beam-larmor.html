@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="3600" http-equiv="refresh"/>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <title>
+   DMSC Integration Testing
+  </title>
+  <link href="../style.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+ </head>
+ <body style="font-family: Tahoma, sans-serif; border:0; margin:0;">
+  <header>
+   <div class="logo" style="flex:0.3;">
+    <a href="index.html">
+     <img alt="Logo" height="80" src="../ess-logo.svg"/>
+    </a>
+   </div>
+   <div style="flex:0.7; text-align: center; color: white; background-color: #0094ca;">
+    <h1>
+     <b>
+      DMSC Integration Testing
+     </b>
+    </h1>
+   </div>
+   <div style="flex:0.3; text-align:right; color: white; background-color: #0094ca;">
+    <h3>
+     Last updated: November 28, 2026 09:27:29
+    </h3>
+   </div>
+  </header>
+  <main style="width: 100%;">
+   <h2>
+    Test: codeshelf|loki|run_notebooks_commissioning|loki-direct-beam-larmor
+   </h2>
+   <div class="contentarea">
+   </div>
+   <div class="tab">
+    <input checked="" id="tab-1" name="tab-group-1" type="radio"/>
+    <label for="tab-1" style="color: var(--failed-bg);">
+     2026-11-28 00:43:30 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22643/builds">
+      22643
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/142265" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Initialize workflow
+workflow = loki.LokiAtLarmorWorkflow()
+
+# Set-up masks
+workflow = sans.with_pixel_mask_filenames(
+    workflow, masks=loki.data.loki_tutorial_mask_filenames()
+)
+
+# Binning parameters
+wavelength_min = sc.scalar(1.0, unit='angstrom')
+wavelength_max = sc.scalar(13.0, unit='angstrom')
+n_wavelength_bins = 50
+n_wavelength_bands = 50
+
+workflow[WavelengthBins] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+)
+workflow[WavelengthBands] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+)
+workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+
+# Other parameters
+workflow[CorrectForGravity] = True
+workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+workflow[ReturnEvents] = False
+workflow[NeXusDetectorName] = 'larmor_detector'
+
+# Compute per layer?
+workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+#x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+#x1B[32m      3#x1B[39m 
+#x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+#x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+#x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+#x1B[32m      7#x1B[39m )
+#x1B[32m      8#x1B[39m 
+
+#x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/codeshelf/src/loki/notebooks/commissioning/loki-direct-beam-larmor.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fc061882ca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1601/test_run_notebooks__commission3')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fc0611c0ef0&gt;
+cell = {'cell_type': 'code', 'execution_count': 2, 'id': '3', 'metadata': {'execution': {'iopub.status.busy': '2026-11-27T23:...s for a single direct beam for all layers\n# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer"}
+cell_index = 3
+exec_reply = {'header': {'msg_id': 'b150153e-bc74b47c29c3fa087734e744_2454295_15', 'msg_type': 'execute_reply', 'username': 'userna...6_3', 'msg_type': 'execute_request', 'username': 'username', 'session': 'f781f69c-482e70f0286a869d6c09a38a', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           # Initialize workflow
+E           workflow = loki.LokiAtLarmorWorkflow()
+E           
+E           # Set-up masks
+E           workflow = sans.with_pixel_mask_filenames(
+E               workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           )
+E           
+E           # Binning parameters
+E           wavelength_min = sc.scalar(1.0, unit='angstrom')
+E           wavelength_max = sc.scalar(13.0, unit='angstrom')
+E           n_wavelength_bins = 50
+E           n_wavelength_bands = 50
+E           
+E           workflow[WavelengthBins] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+E           )
+E           workflow[WavelengthBands] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+E           )
+E           workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+E           
+E           # Other parameters
+E           workflow[CorrectForGravity] = True
+E           workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+E           workflow[ReturnEvents] = False
+E           workflow[NeXusDetectorName] = 'larmor_detector'
+E           
+E           # Compute per layer?
+E           workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+E           # workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+E           #x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+E           #x1B[32m      3#x1B[39m 
+E           #x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+E           #x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           #x1B[32m      7#x1B[39m )
+E           #x1B[32m      8#x1B[39m 
+E           
+E           #x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-2" name="tab-group-1" type="radio"/>
+    <label for="tab-2" style="color: var(--failed-bg);">
+     2026-11-27 00:50:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22622/builds">
+      22622
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/142046" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Initialize workflow
+workflow = loki.LokiAtLarmorWorkflow()
+
+# Set-up masks
+workflow = sans.with_pixel_mask_filenames(
+    workflow, masks=loki.data.loki_tutorial_mask_filenames()
+)
+
+# Binning parameters
+wavelength_min = sc.scalar(1.0, unit='angstrom')
+wavelength_max = sc.scalar(13.0, unit='angstrom')
+n_wavelength_bins = 50
+n_wavelength_bands = 50
+
+workflow[WavelengthBins] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+)
+workflow[WavelengthBands] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+)
+workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+
+# Other parameters
+workflow[CorrectForGravity] = True
+workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+workflow[ReturnEvents] = False
+workflow[NeXusDetectorName] = 'larmor_detector'
+
+# Compute per layer?
+workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+#x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+#x1B[32m      3#x1B[39m 
+#x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+#x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+#x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+#x1B[32m      7#x1B[39m )
+#x1B[32m      8#x1B[39m 
+
+#x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1590/codeshelf/src/loki/notebooks/commissioning/loki-direct-beam-larmor.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f64c0f32ca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1590/test_run_notebooks__commission3')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f64c08748f0&gt;
+cell = {'cell_type': 'code', 'execution_count': 2, 'id': '3', 'metadata': {'execution': {'iopub.status.busy': '2026-11-26T23:...s for a single direct beam for all layers\n# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer"}
+cell_index = 3
+exec_reply = {'header': {'msg_id': 'd1137c01-280ca7584ad682f8ddb73660_2323300_15', 'msg_type': 'execute_reply', 'username': 'userna...3_3', 'msg_type': 'execute_request', 'username': 'username', 'session': '7ac19cb9-33817ca8bbc1e8723b484476', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           # Initialize workflow
+E           workflow = loki.LokiAtLarmorWorkflow()
+E           
+E           # Set-up masks
+E           workflow = sans.with_pixel_mask_filenames(
+E               workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           )
+E           
+E           # Binning parameters
+E           wavelength_min = sc.scalar(1.0, unit='angstrom')
+E           wavelength_max = sc.scalar(13.0, unit='angstrom')
+E           n_wavelength_bins = 50
+E           n_wavelength_bands = 50
+E           
+E           workflow[WavelengthBins] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+E           )
+E           workflow[WavelengthBands] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+E           )
+E           workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+E           
+E           # Other parameters
+E           workflow[CorrectForGravity] = True
+E           workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+E           workflow[ReturnEvents] = False
+E           workflow[NeXusDetectorName] = 'larmor_detector'
+E           
+E           # Compute per layer?
+E           workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+E           # workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+E           #x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+E           #x1B[32m      3#x1B[39m 
+E           #x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+E           #x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           #x1B[32m      7#x1B[39m )
+E           #x1B[32m      8#x1B[39m 
+E           
+E           #x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-3" name="tab-group-1" type="radio"/>
+    <label for="tab-3" style="color: var(--failed-bg);">
+     2026-11-26 00:49:25 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22603/builds">
+      22603
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141925" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Initialize workflow
+workflow = loki.LokiAtLarmorWorkflow()
+
+# Set-up masks
+workflow = sans.with_pixel_mask_filenames(
+    workflow, masks=loki.data.loki_tutorial_mask_filenames()
+)
+
+# Binning parameters
+wavelength_min = sc.scalar(1.0, unit='angstrom')
+wavelength_max = sc.scalar(13.0, unit='angstrom')
+n_wavelength_bins = 50
+n_wavelength_bands = 50
+
+workflow[WavelengthBins] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+)
+workflow[WavelengthBands] = sc.linspace(
+    'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+)
+workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+
+# Other parameters
+workflow[CorrectForGravity] = True
+workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+workflow[ReturnEvents] = False
+workflow[NeXusDetectorName] = 'larmor_detector'
+
+# Compute per layer?
+workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+#x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+#x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+#x1B[32m      3#x1B[39m 
+#x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+#x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+#x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+#x1B[32m      7#x1B[39m )
+#x1B[32m      8#x1B[39m 
+
+#x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1572/codeshelf/src/loki/notebooks/commissioning/loki-direct-beam-larmor.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7f68e0c8eca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1572/test_run_notebooks__commission3')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7f68e06354c0&gt;
+cell = {'cell_type': 'code', 'execution_count': 2, 'id': '3', 'metadata': {'execution': {'iopub.status.busy': '2026-11-25T23:...s for a single direct beam for all layers\n# workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer"}
+cell_index = 3
+exec_reply = {'header': {'msg_id': '08e3afea-6a7d4e197119424c3a9b62da_2211511_15', 'msg_type': 'execute_reply', 'username': 'userna...5_3', 'msg_type': 'execute_request', 'username': 'username', 'session': '05cbfa5f-56c5500fa3662953af3d7726', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           # Initialize workflow
+E           workflow = loki.LokiAtLarmorWorkflow()
+E           
+E           # Set-up masks
+E           workflow = sans.with_pixel_mask_filenames(
+E               workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           )
+E           
+E           # Binning parameters
+E           wavelength_min = sc.scalar(1.0, unit='angstrom')
+E           wavelength_max = sc.scalar(13.0, unit='angstrom')
+E           n_wavelength_bins = 50
+E           n_wavelength_bands = 50
+E           
+E           workflow[WavelengthBins] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bins + 1
+E           )
+E           workflow[WavelengthBands] = sc.linspace(
+E               'wavelength', wavelength_min, wavelength_max, n_wavelength_bands + 1
+E           )
+E           workflow[QBins] = sc.linspace(dim='Q', start=0.01, stop=0.3, num=101, unit='1/angstrom')
+E           
+E           # Other parameters
+E           workflow[CorrectForGravity] = True
+E           workflow[UncertaintyBroadcastMode] = UncertaintyBroadcastMode.upper_bound
+E           workflow[ReturnEvents] = False
+E           workflow[NeXusDetectorName] = 'larmor_detector'
+E           
+E           # Compute per layer?
+E           workflow[DimsToKeep] = []  # Use this for a single direct beam for all layers
+E           # workflow[DimsToKeep] = ['layer']  # Use this for a direct beam per layer
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mAttributeError#x1B[39m                            Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[2]#x1B[39m#x1B[32m, line 5#x1B[39m
+E           #x1B[32m      1#x1B[39m #x1B[38;5;66;03m# Initialize workflow#x1B[39;00m
+E           #x1B[32m      2#x1B[39m workflow = loki.LokiAtLarmorWorkflow()
+E           #x1B[32m      3#x1B[39m 
+E           #x1B[32m      4#x1B[39m #x1B[38;5;66;03m# Set-up masks#x1B[39;00m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m5#x1B[39m workflow = sans.with_pixel_mask_filenames(
+E           #x1B[32m      6#x1B[39m     workflow, masks=loki.data.loki_tutorial_mask_filenames()
+E           #x1B[32m      7#x1B[39m )
+E           #x1B[32m      8#x1B[39m 
+E           
+E           #x1B[31mAttributeError#x1B[39m: module 'ess.sans' has no attribute 'with_pixel_mask_filenames'
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-4" name="tab-group-1" type="radio"/>
+    <label for="tab-4" style="color: var(--failed-bg);">
+     2026-11-25 00:43:13 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22579/builds">
+      22579
+     </a>
+     ]: failed
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141719" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary failed">nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+center = sans.beam_center_from_center_of_mass(workflow)
+center
+------------------
+
+
+#x1B[31m---------------------------------------------------------------------------#x1B[39m
+#x1B[31mRuntimeError#x1B[39m                              Traceback (most recent call last)
+#x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[4]#x1B[39m#x1B[32m, line 1#x1B[39m
+#x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m center = sans.beam_center_from_center_of_mass(workflow)
+#x1B[32m      2#x1B[39m center
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/sans/beam_center_finder.py:261#x1B[39m, in #x1B[36mbeam_center_from_center_of_mass#x1B[39m#x1B[34m(workflow)#x1B[39m
+#x1B[32m    212#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    213#x1B[39m #x1B[33;03mEstimate the beam center via the center-of-mass of the data counts.#x1B[39;00m
+#x1B[32m    214#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    258#x1B[39m #x1B[33;03m    The beam center position as a vector.#x1B[39;00m
+#x1B[32m    259#x1B[39m #x1B[33;03m"""#x1B[39;00m
+#x1B[32m    260#x1B[39m workflow = _with_default_beam_center(workflow)
+#x1B[32m--&gt; #x1B[39m#x1B[32m261#x1B[39m data = #x1B[30;43mworkflow#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mcompute#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mCorrectedDetector#x1B[39;49m#x1B[30;43m[#x1B[39;49m#x1B[30;43mSampleRun#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mNumerator#x1B[39;49m#x1B[30;43m]#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    262#x1B[39m graph = workflow.compute(ElasticCoordTransformGraph[SampleRun])
+#x1B[32m    264#x1B[39m dims_to_sum = #x1B[38;5;28mset#x1B[39m(data.dims) - #x1B[38;5;28mset#x1B[39m(data.coords[#x1B[33m'#x1B[39m#x1B[33mposition#x1B[39m#x1B[33m'#x1B[39m].dims)
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+#x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+#x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+#x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+#x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+#x1B[32m    174#x1B[39m     **kwargs: Any,
+#x1B[32m    175#x1B[39m ) -&gt; Any:
+#x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+#x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+#x1B[32m    178#x1B[39m 
+#x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+#x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mcompute#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/task_graph.py:150#x1B[39m, in #x1B[36mTaskGraph.compute#x1B[39m#x1B[34m(self, targets, reporter)#x1B[39m
+#x1B[32m    148#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[38;5;28mdict#x1B[39m(#x1B[38;5;28mzip#x1B[39m(targets, results, strict=#x1B[38;5;28;01mTrue#x1B[39;00m))
+#x1B[32m    149#x1B[39m #x1B[38;5;28;01melse#x1B[39;00m:
+#x1B[32m--&gt; #x1B[39m#x1B[32m150#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_scheduler#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_graph#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m[#x1B[39;49m#x1B[30;43mtargets#x1B[39;49m#x1B[30;43m]#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m)#x1B[39;49m[#x1B[32m0#x1B[39m]
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/scheduler.py:149#x1B[39m, in #x1B[36mDaskScheduler.get#x1B[39m#x1B[34m(self, graph, keys, reporter)#x1B[39m
+#x1B[32m    147#x1B[39m #x1B[38;5;28;01mwith#x1B[39;00m reporter.run_computation(graph.values()):
+#x1B[32m    148#x1B[39m     #x1B[38;5;28;01mtry#x1B[39;00m:
+#x1B[32m--&gt; #x1B[39m#x1B[32m149#x1B[39m         #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_dask_get#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdsk#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mlist#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mmap#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m_to_dask_key#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mkeys#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    150#x1B[39m     #x1B[38;5;28;01mexcept#x1B[39;00m #x1B[38;5;167;01mRuntimeError#x1B[39;00m #x1B[38;5;28;01mas#x1B[39;00m e:
+#x1B[32m    151#x1B[39m         #x1B[38;5;28;01mif#x1B[39;00m #x1B[38;5;28mstr#x1B[39m(e).startswith(#x1B[33m"#x1B[39m#x1B[33mCycle detected#x1B[39m#x1B[33m"#x1B[39m):
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/threaded.py:115#x1B[39m, in #x1B[36mget#x1B[39m#x1B[34m(dsk, keys, cache, num_workers, pool, **kwargs)#x1B[39m
+#x1B[32m    112#x1B[39m     #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;28misinstance#x1B[39m(pool, multiprocessing.pool.Pool):
+#x1B[32m    113#x1B[39m         pool = MultiprocessingPoolExecutor(pool)
+#x1B[32m--&gt; #x1B[39m#x1B[32m115#x1B[39m results = #x1B[30;43mget_async#x1B[39;49m#x1B[30;43m(#x1B[39;49m
+#x1B[32m    116#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpool#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43msubmit#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    117#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpool#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_max_workers#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    118#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mdsk#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    119#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mkeys#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    120#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mcache#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mcache#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    121#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mget_id#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43m_thread_get_id#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    122#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpack_exception#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpack_exception#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    123#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+#x1B[32m    124#x1B[39m #x1B[30;43m#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    126#x1B[39m #x1B[38;5;66;03m# Cleanup pools associated to dead threads#x1B[39;00m
+#x1B[32m    127#x1B[39m #x1B[38;5;28;01mwith#x1B[39;00m pools_lock:
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:547#x1B[39m, in #x1B[36mget_async#x1B[39m#x1B[34m(submit, num_workers, dsk, result, cache, get_id, rerun_exceptions_locally, pack_exception, raise_exception, callbacks, dumps, loads, chunksize, **kwargs)#x1B[39m
+#x1B[32m    545#x1B[39m         task(data)  #x1B[38;5;66;03m# Re-execute locally#x1B[39;00m
+#x1B[32m    546#x1B[39m     #x1B[38;5;28;01melse#x1B[39;00m:
+#x1B[32m--&gt; #x1B[39m#x1B[32m547#x1B[39m         #x1B[30;43mraise_exception#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mexc#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mtb#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    548#x1B[39m res, worker_id = loads(res_info)
+#x1B[32m    549#x1B[39m state[#x1B[33m"#x1B[39m#x1B[33mcache#x1B[39m#x1B[33m"#x1B[39m][key] = res
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:351#x1B[39m, in #x1B[36mreraise#x1B[39m#x1B[34m(exc, tb)#x1B[39m
+#x1B[32m    349#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m exc.__traceback__ #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m tb:
+#x1B[32m    350#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m exc.with_traceback(tb)
+#x1B[32m--&gt; #x1B[39m#x1B[32m351#x1B[39m #x1B[38;5;28;01mraise#x1B[39;00m exc
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:256#x1B[39m, in #x1B[36mexecute_task#x1B[39m#x1B[34m(key, task_info, dumps, loads, get_id, pack_exception)#x1B[39m
+#x1B[32m    254#x1B[39m #x1B[38;5;28;01mtry#x1B[39;00m:
+#x1B[32m    255#x1B[39m     task, data = loads(task_info)
+#x1B[32m--&gt; #x1B[39m#x1B[32m256#x1B[39m     result = #x1B[30;43mtask#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    257#x1B[39m     #x1B[38;5;28mid#x1B[39m = get_id()
+#x1B[32m    258#x1B[39m     result = dumps((result, #x1B[38;5;28mid#x1B[39m))
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/_task_spec.py:768#x1B[39m, in #x1B[36mTask.__call__#x1B[39m#x1B[34m(self, values)#x1B[39m
+#x1B[32m    766#x1B[39m     kwargs = {k: _eval(kw) #x1B[38;5;28;01mfor#x1B[39;00m k, kw #x1B[38;5;129;01min#x1B[39;00m #x1B[38;5;28mself#x1B[39m.kwargs.items()}
+#x1B[32m    767#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[38;5;28mself#x1B[39m.func(*new_argspec, **kwargs)
+#x1B[32m--&gt; #x1B[39m#x1B[32m768#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mfunc#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mnew_argspec#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/utils.py:81#x1B[39m, in #x1B[36mapply#x1B[39m#x1B[34m(func, args, kwargs)#x1B[39m
+#x1B[32m     79#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m func(*args, **kwargs)
+#x1B[32m     80#x1B[39m #x1B[38;5;28;01melse#x1B[39;00m:
+#x1B[32m---&gt; #x1B[39m#x1B[32m81#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mfunc#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43margs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/_provider.py:145#x1B[39m, in #x1B[36mProvider.__call__#x1B[39m#x1B[34m(self, *args, **kwargs)#x1B[39m
+#x1B[32m    143#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Call the provider."""#x1B[39;00m
+#x1B[32m    144#x1B[39m #x1B[38;5;28;01mtry#x1B[39;00m:
+#x1B[32m--&gt; #x1B[39m#x1B[32m145#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_func#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43margs#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+#x1B[32m    146#x1B[39m #x1B[38;5;28;01mexcept#x1B[39;00m #x1B[38;5;167;01mException#x1B[39;00m #x1B[38;5;28;01mas#x1B[39;00m e:
+#x1B[32m    147#x1B[39m     name = #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[38;5;132;01m{#x1B[39;00m#x1B[38;5;28mself#x1B[39m.location.module#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m.#x1B[39m#x1B[38;5;132;01m{#x1B[39;00m#x1B[38;5;28mself#x1B[39m.location.name#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m"#x1B[39m
+
+#x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:551#x1B[39m, in #x1B[36mdeny_source_position#x1B[39m#x1B[34m()#x1B[39m
+#x1B[32m    545#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mdeny_source_position#x1B[39m() -&gt; Position[snx.NXsource, RunType]:
+#x1B[32m    546#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""Refuse to provide a source position.#x1B[39;00m
+#x1B[32m    547#x1B[39m 
+#x1B[32m    548#x1B[39m #x1B[33;03m    This is a safety mechanism because it is easy to accidentally request#x1B[39;00m
+#x1B[32m    549#x1B[39m #x1B[33;03m    Position[NXsource] and get correct looking, but possibly slightly incorrect data.#x1B[39;00m
+#x1B[32m    550#x1B[39m #x1B[33;03m    """#x1B[39;00m
+#x1B[32m--&gt; #x1B[39m#x1B[32m551#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mRuntimeError#x1B[39;00m(
+#x1B[32m    552#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mDenied access to Position[NXsource]#x1B[39m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m"#x1B[39m
+#x1B[32m    553#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mThe workflow requested Position[scippnexus.NXsource, ...] which is almost #x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    554#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mcertainly an error. The source position in ESS NeXus files does not reliably #x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    555#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mrepresent the place that neutron originate from. Instead, NXsource describes #x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    556#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mneutron production (accelerator, target, etc.).#x1B[39m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m"#x1B[39m
+#x1B[32m    557#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mUse NeutronSourcePosition[RunType] or equivalently #x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    558#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mPosition[scippnexus.NXmoderator, RunType]. If this does not work for you, #x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    559#x1B[39m         #x1B[33m"#x1B[39m#x1B[33minsert your providd er to override the one that produced this error.#x1B[39m#x1B[33m"#x1B[39m
+#x1B[32m    560#x1B[39m     )
+
+#x1B[31mRuntimeError#x1B[39m: Denied access to Position[NXsource]
+The workflow requested Position[scippnexus.NXsource, ...] which is almost certainly an error. The source position in ESS NeXus files does not reliably represent the place that neutron originate from. Instead, NXsource describes neutron production (accelerator, target, etc.).
+
+Use NeutronSourcePosition[RunType] or equivalently Position[scippnexus.NXmoderator, RunType]. If this does not work for you, insert your providd er to override the one that produced this error.
+In provider ess.reduce.nexus.workflow.deny_source_position() -&gt; ess.reduce.nexus.types.Position[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     <details class="output-details">
+      <summary>
+       Full output
+      </summary>
+      <pre>notebook = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1556/codeshelf/src/loki/notebooks/commissioning/loki-direct-beam-larmor.ipynb')
+run_codeshelf_notebook = &lt;function _run_codeshelf_notebook at 0x7fadbf16aca0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-gitlab-runner/pytest-1556/test_run_notebooks__commission3')
+
+    def test_run_notebooks(
+        notebook: Path, run_codeshelf_notebook: Callable, tmp_path: Path
+    ):
+&gt;       run_codeshelf_notebook(notebook_path=notebook, run_path=tmp_path)
+
+tests/codeshelf/codeshelf_test.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/codeshelf/conftest.py:130: in _run_codeshelf_notebook
+    ep.preprocess(nb, {"metadata": {"path": run_path}})
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:103: in preprocess
+    self.preprocess_cell(cell, resources, index)
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py:124: in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/jupyter_core/utils/__init__.py:165: in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/miniforge/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:1062: in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;nbconvert.preprocessors.execute.ExecutePreprocessor object at 0x7fadbee4da90&gt;
+cell = {'cell_type': 'code', 'execution_count': 4, 'id': '7', 'metadata': {'execution': {'iopub.status.busy': '2026-11-24T23:...ce, ess.reduce.nexus.types.SampleRun]']}], 'source': 'center = sans.beam_center_from_center_of_mass(workflow)\ncenter'}
+cell_index = 7
+exec_reply = {'header': {'msg_id': '0c44b688-0a91c5cdf753e5631dff2ee7_2050570_23', 'msg_type': 'execute_reply', 'username': 'userna...7_5', 'msg_type': 'execute_request', 'username': 'username', 'session': 'e3a587b4-070c87cd3fe6331b7ec0d2fe', ...}, ...}
+
+    async def _check_raise_for_error(
+        self, cell: NotebookNode, cell_index: int, exec_reply: dict[str, t.Any] | None
+    ) -&gt; None:
+        if exec_reply is None:
+            return None
+    
+        exec_reply_content = exec_reply["content"]
+        if exec_reply_content["status"] != "error":
+            return None
+    
+        cell_allows_errors = (not self.force_raise_errors) and (
+            self.allow_errors
+            or exec_reply_content.get("ename") in self.allow_error_names
+            or "raises-exception" in cell.metadata.get("tags", [])
+        )
+        await run_hook(
+            self.on_cell_error, cell=cell, cell_index=cell_index, execute_reply=exec_reply
+        )
+        if not cell_allows_errors:
+&gt;           raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+E           nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+E           ------------------
+E           center = sans.beam_center_from_center_of_mass(workflow)
+E           center
+E           ------------------
+E           
+E           
+E           #x1B[31m---------------------------------------------------------------------------#x1B[39m
+E           #x1B[31mRuntimeError#x1B[39m                              Traceback (most recent call last)
+E           #x1B[36mCell#x1B[39m#x1B[36m #x1B[39m#x1B[32mIn[4]#x1B[39m#x1B[32m, line 1#x1B[39m
+E           #x1B[32m----&gt; #x1B[39m#x1B[32m1#x1B[39m center = sans.beam_center_from_center_of_mass(workflow)
+E           #x1B[32m      2#x1B[39m center
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/sans/beam_center_finder.py:261#x1B[39m, in #x1B[36mbeam_center_from_center_of_mass#x1B[39m#x1B[34m(workflow)#x1B[39m
+E           #x1B[32m    212#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    213#x1B[39m #x1B[33;03mEstimate the beam center via the center-of-mass of the data counts.#x1B[39;00m
+E           #x1B[32m    214#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    258#x1B[39m #x1B[33;03m    The beam center position as a vector.#x1B[39;00m
+E           #x1B[32m    259#x1B[39m #x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    260#x1B[39m workflow = _with_default_beam_center(workflow)
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m261#x1B[39m data = #x1B[30;43mworkflow#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mcompute#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mCorrectedDetector#x1B[39;49m#x1B[30;43m[#x1B[39;49m#x1B[30;43mSampleRun#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mNumerator#x1B[39;49m#x1B[30;43m]#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    262#x1B[39m graph = workflow.compute(ElasticCoordTransformGraph[SampleRun])
+E           #x1B[32m    264#x1B[39m dims_to_sum = #x1B[38;5;28mset#x1B[39m(data.dims) - #x1B[38;5;28mset#x1B[39m(data.coords[#x1B[33m'#x1B[39m#x1B[33mposition#x1B[39m#x1B[33m'#x1B[39m].dims)
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/pipeline.py:191#x1B[39m, in #x1B[36mPipeline.compute#x1B[39m#x1B[34m(self, tp, reporter, **kwargs)#x1B[39m
+E           #x1B[32m    170#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mcompute#x1B[39m(
+E           #x1B[32m    171#x1B[39m     #x1B[38;5;28mself#x1B[39m,
+E           #x1B[32m    172#x1B[39m     tp: #x1B[38;5;28mtype#x1B[39m | Iterable[#x1B[38;5;28mtype#x1B[39m] | #x1B[33m"#x1B[39m#x1B[33mUnionType#x1B[39m#x1B[33m"#x1B[39m,  #x1B[38;5;66;03m# noqa: UP037 (needed by Sphinx)#x1B[39;00m
+E           #x1B[32m    173#x1B[39m     reporter: Reporter | #x1B[38;5;28;01mNone#x1B[39;00m = #x1B[38;5;28;01mNone#x1B[39;00m,
+E           #x1B[32m    174#x1B[39m     **kwargs: Any,
+E           #x1B[32m    175#x1B[39m ) -&gt; Any:
+E           #x1B[32m    176#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""#x1B[39;00m
+E           #x1B[32m    177#x1B[39m #x1B[33;03m    Compute result for the given keys.#x1B[39;00m
+E           #x1B[32m    178#x1B[39m 
+E           #x1B[32m   (...)#x1B[39m#x1B[32m    189#x1B[39m #x1B[33;03m        Keyword arguments passed to the ``.get()`` method.#x1B[39;00m
+E           #x1B[32m    190#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m191#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mtp#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mcompute#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/task_graph.py:150#x1B[39m, in #x1B[36mTaskGraph.compute#x1B[39m#x1B[34m(self, targets, reporter)#x1B[39m
+E           #x1B[32m    148#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[38;5;28mdict#x1B[39m(#x1B[38;5;28mzip#x1B[39m(targets, results, strict=#x1B[38;5;28;01mTrue#x1B[39;00m))
+E           #x1B[32m    149#x1B[39m #x1B[38;5;28;01melse#x1B[39;00m:
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m150#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_scheduler#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mget#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_graph#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m[#x1B[39;49m#x1B[30;43mtargets#x1B[39;49m#x1B[30;43m]#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mreporter#x1B[39;49m#x1B[30;43m)#x1B[39;49m[#x1B[32m0#x1B[39m]
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/scheduler.py:149#x1B[39m, in #x1B[36mDaskScheduler.get#x1B[39m#x1B[34m(self, graph, keys, reporter)#x1B[39m
+E           #x1B[32m    147#x1B[39m #x1B[38;5;28;01mwith#x1B[39;00m reporter.run_computation(graph.values()):
+E           #x1B[32m    148#x1B[39m     #x1B[38;5;28;01mtry#x1B[39;00m:
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m149#x1B[39m         #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_dask_get#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdsk#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mlist#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mmap#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m_to_dask_key#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mkeys#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m)#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    150#x1B[39m     #x1B[38;5;28;01mexcept#x1B[39;00m #x1B[38;5;167;01mRuntimeError#x1B[39;00m #x1B[38;5;28;01mas#x1B[39;00m e:
+E           #x1B[32m    151#x1B[39m         #x1B[38;5;28;01mif#x1B[39;00m #x1B[38;5;28mstr#x1B[39m(e).startswith(#x1B[33m"#x1B[39m#x1B[33mCycle detected#x1B[39m#x1B[33m"#x1B[39m):
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/threaded.py:115#x1B[39m, in #x1B[36mget#x1B[39m#x1B[34m(dsk, keys, cache, num_workers, pool, **kwargs)#x1B[39m
+E           #x1B[32m    112#x1B[39m     #x1B[38;5;28;01melif#x1B[39;00m #x1B[38;5;28misinstance#x1B[39m(pool, multiprocessing.pool.Pool):
+E           #x1B[32m    113#x1B[39m         pool = MultiprocessingPoolExecutor(pool)
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m115#x1B[39m results = #x1B[30;43mget_async#x1B[39;49m#x1B[30;43m(#x1B[39;49m
+E           #x1B[32m    116#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpool#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43msubmit#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    117#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpool#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_max_workers#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    118#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mdsk#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    119#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mkeys#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    120#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mcache#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mcache#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    121#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mget_id#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43m_thread_get_id#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    122#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43mpack_exception#x1B[39;49m#x1B[30;43m=#x1B[39;49m#x1B[30;43mpack_exception#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    123#x1B[39m #x1B[30;43m    #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m,#x1B[39;49m
+E           #x1B[32m    124#x1B[39m #x1B[30;43m#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    126#x1B[39m #x1B[38;5;66;03m# Cleanup pools associated to dead threads#x1B[39;00m
+E           #x1B[32m    127#x1B[39m #x1B[38;5;28;01mwith#x1B[39;00m pools_lock:
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:547#x1B[39m, in #x1B[36mget_async#x1B[39m#x1B[34m(submit, num_workers, dsk, result, cache, get_id, rerun_exceptions_locally, pack_exception, raise_exception, callbacks, dumps, loads, chunksize, **kwargs)#x1B[39m
+E           #x1B[32m    545#x1B[39m         task(data)  #x1B[38;5;66;03m# Re-execute locally#x1B[39;00m
+E           #x1B[32m    546#x1B[39m     #x1B[38;5;28;01melse#x1B[39;00m:
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m547#x1B[39m         #x1B[30;43mraise_exception#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mexc#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43mtb#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    548#x1B[39m res, worker_id = loads(res_info)
+E           #x1B[32m    549#x1B[39m state[#x1B[33m"#x1B[39m#x1B[33mcache#x1B[39m#x1B[33m"#x1B[39m][key] = res
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:351#x1B[39m, in #x1B[36mreraise#x1B[39m#x1B[34m(exc, tb)#x1B[39m
+E           #x1B[32m    349#x1B[39m #x1B[38;5;28;01mif#x1B[39;00m exc.__traceback__ #x1B[38;5;129;01mis#x1B[39;00m #x1B[38;5;129;01mnot#x1B[39;00m tb:
+E           #x1B[32m    350#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m exc.with_traceback(tb)
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m351#x1B[39m #x1B[38;5;28;01mraise#x1B[39;00m exc
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/local.py:256#x1B[39m, in #x1B[36mexecute_task#x1B[39m#x1B[34m(key, task_info, dumps, loads, get_id, pack_exception)#x1B[39m
+E           #x1B[32m    254#x1B[39m #x1B[38;5;28;01mtry#x1B[39;00m:
+E           #x1B[32m    255#x1B[39m     task, data = loads(task_info)
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m256#x1B[39m     result = #x1B[30;43mtask#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43mdata#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    257#x1B[39m     #x1B[38;5;28mid#x1B[39m = get_id()
+E           #x1B[32m    258#x1B[39m     result = dumps((result, #x1B[38;5;28mid#x1B[39m))
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/_task_spec.py:768#x1B[39m, in #x1B[36mTask.__call__#x1B[39m#x1B[34m(self, values)#x1B[39m
+E           #x1B[32m    766#x1B[39m     kwargs = {k: _eval(kw) #x1B[38;5;28;01mfor#x1B[39;00m k, kw #x1B[38;5;129;01min#x1B[39;00m #x1B[38;5;28mself#x1B[39m.kwargs.items()}
+E           #x1B[32m    767#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[38;5;28mself#x1B[39m.func(*new_argspec, **kwargs)
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m768#x1B[39m #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43mfunc#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mnew_argspec#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/dask/utils.py:81#x1B[39m, in #x1B[36mapply#x1B[39m#x1B[34m(func, args, kwargs)#x1B[39m
+E           #x1B[32m     79#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m func(*args, **kwargs)
+E           #x1B[32m     80#x1B[39m #x1B[38;5;28;01melse#x1B[39;00m:
+E           #x1B[32m---&gt; #x1B[39m#x1B[32m81#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mfunc#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43margs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/sciline/_provider.py:145#x1B[39m, in #x1B[36mProvider.__call__#x1B[39m#x1B[34m(self, *args, **kwargs)#x1B[39m
+E           #x1B[32m    143#x1B[39m #x1B[38;5;250m#x1B[39m#x1B[33;03m"""Call the provider."""#x1B[39;00m
+E           #x1B[32m    144#x1B[39m #x1B[38;5;28;01mtry#x1B[39;00m:
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m145#x1B[39m     #x1B[38;5;28;01mreturn#x1B[39;00m #x1B[30;43mself#x1B[39;49m#x1B[30;43m.#x1B[39;49m#x1B[30;43m_func#x1B[39;49m#x1B[30;43m(#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43margs#x1B[39;49m#x1B[30;43m,#x1B[39;49m#x1B[30;43m #x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43m*#x1B[39;49m#x1B[30;43mkwargs#x1B[39;49m#x1B[30;43m)#x1B[39;49m
+E           #x1B[32m    146#x1B[39m #x1B[38;5;28;01mexcept#x1B[39;00m #x1B[38;5;167;01mException#x1B[39;00m #x1B[38;5;28;01mas#x1B[39;00m e:
+E           #x1B[32m    147#x1B[39m     name = #x1B[33mf#x1B[39m#x1B[33m"#x1B[39m#x1B[38;5;132;01m{#x1B[39;00m#x1B[38;5;28mself#x1B[39m.location.module#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m.#x1B[39m#x1B[38;5;132;01m{#x1B[39;00m#x1B[38;5;28mself#x1B[39m.location.name#x1B[38;5;132;01m}#x1B[39;00m#x1B[33m"#x1B[39m
+E           
+E           #x1B[36mFile #x1B[39m#x1B[32m~/builds/sr_srNBdt/0/dmsc-nightly/dmsc-nightly/.tox/codeshelf-loki/lib/python3.12/site-packages/ess/reduce/nexus/workflow.py:551#x1B[39m, in #x1B[36mdeny_source_position#x1B[39m#x1B[34m()#x1B[39m
+E           #x1B[32m    545#x1B[39m #x1B[38;5;28;01mdef#x1B[39;00m#x1B[38;5;250m #x1B[39m#x1B[34mdeny_source_position#x1B[39m() -&gt; Position[snx.NXsource, RunType]:
+E           #x1B[32m    546#x1B[39m #x1B[38;5;250m    #x1B[39m#x1B[33;03m"""Refuse to provide a source position.#x1B[39;00m
+E           #x1B[32m    547#x1B[39m 
+E           #x1B[32m    548#x1B[39m #x1B[33;03m    This is a safety mechanism because it is easy to accidentally request#x1B[39;00m
+E           #x1B[32m    549#x1B[39m #x1B[33;03m    Position[NXsource] and get correct looking, but possibly slightly incorrect data.#x1B[39;00m
+E           #x1B[32m    550#x1B[39m #x1B[33;03m    """#x1B[39;00m
+E           #x1B[32m--&gt; #x1B[39m#x1B[32m551#x1B[39m     #x1B[38;5;28;01mraise#x1B[39;00m #x1B[38;5;167;01mRuntimeError#x1B[39;00m(
+E           #x1B[32m    552#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mDenied access to Position[NXsource]#x1B[39m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m"#x1B[39m
+E           #x1B[32m    553#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mThe workflow requested Position[scippnexus.NXsource, ...] which is almost #x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    554#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mcertainly an error. The source position in ESS NeXus files does not reliably #x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    555#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mrepresent the place that neutron originate from. Instead, NXsource describes #x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    556#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mneutron production (accelerator, target, etc.).#x1B[39m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[38;5;130;01m\n#x1B[39;00m#x1B[33m"#x1B[39m
+E           #x1B[32m    557#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mUse NeutronSourcePosition[RunType] or equivalently #x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    558#x1B[39m         #x1B[33m"#x1B[39m#x1B[33mPosition[scippnexus.NXmoderator, RunType]. If this does not work for you, #x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    559#x1B[39m         #x1B[33m"#x1B[39m#x1B[33minsert your providd er to override the one that produced this error.#x1B[39m#x1B[33m"#x1B[39m
+E           #x1B[32m    560#x1B[39m     )
+E           
+E           #x1B[31mRuntimeError#x1B[39m: Denied access to Position[NXsource]
+E           The workflow requested Position[scippnexus.NXsource, ...] which is almost certainly an error. The source position in ESS NeXus files does not reliably represent the place that neutron originate from. Instead, NXsource describes neutron production (accelerator, target, etc.).
+E           
+E           Use NeutronSourcePosition[RunType] or equivalently Position[scippnexus.NXmoderator, RunType]. If this does not work for you, insert your providd er to override the one that produced this error.
+E           In provider ess.reduce.nexus.workflow.deny_source_position() -&gt; ess.reduce.nexus.types.Position[scippnexus.nexus_classes.NXsource, ess.reduce.nexus.types.SampleRun]
+
+.tox/codeshelf-loki/lib/python3.12/site-packages/nbclient/client.py:918: CellExecutionError</pre>
+     </details>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-5" name="tab-group-1" type="radio"/>
+    <label for="tab-5" style="color: var(--success-bg);">
+     2026-11-24 00:52:04 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22552/builds">
+      22552
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141427" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-6" name="tab-group-1" type="radio"/>
+    <label for="tab-6" style="color: var(--success-bg);">
+     2026-11-23 00:50:47 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22528/builds">
+      22528
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141298" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-7" name="tab-group-1" type="radio"/>
+    <label for="tab-7" style="color: var(--success-bg);">
+     2026-11-22 00:51:00 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22527/builds">
+      22527
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141246" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-8" name="tab-group-1" type="radio"/>
+    <label for="tab-8" style="color: var(--success-bg);">
+     2026-11-21 00:51:20 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22526/builds">
+      22526
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141194" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-9" name="tab-group-1" type="radio"/>
+    <label for="tab-9" style="color: var(--success-bg);">
+     2026-11-20 00:51:05 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22508/builds">
+      22508
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/141050" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-10" name="tab-group-1" type="radio"/>
+    <label for="tab-10" style="color: var(--success-bg);">
+     2026-11-19 00:46:44 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22484/builds">
+      22484
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140928" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-11" name="tab-group-1" type="radio"/>
+    <label for="tab-11" style="color: var(--success-bg);">
+     2026-11-18 00:49:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22461/builds">
+      22461
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140748" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-12" name="tab-group-1" type="radio"/>
+    <label for="tab-12" style="color: var(--success-bg);">
+     2026-11-17 00:49:32 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22443/builds">
+      22443
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140608" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-13" name="tab-group-1" type="radio"/>
+    <label for="tab-13" style="color: var(--success-bg);">
+     2026-11-16 15:34:34 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22421/builds">
+      22421
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140351" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-14" name="tab-group-1" type="radio"/>
+    <label for="tab-14" style="color: var(--success-bg);">
+     2026-11-15 00:49:40 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22418/builds">
+      22418
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140297" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-15" name="tab-group-1" type="radio"/>
+    <label for="tab-15" style="color: var(--success-bg);">
+     2026-11-14 00:48:18 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22408/builds">
+      22408
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140236" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-16" name="tab-group-1" type="radio"/>
+    <label for="tab-16" style="color: var(--success-bg);">
+     2026-11-13 00:49:33 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22376/builds">
+      22376
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/140041" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-17" name="tab-group-1" type="radio"/>
+    <label for="tab-17" style="color: var(--success-bg);">
+     2026-11-12 00:48:39 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22340/builds">
+      22340
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139880" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-18" name="tab-group-1" type="radio"/>
+    <label for="tab-18" style="color: var(--success-bg);">
+     2026-11-11 00:49:07 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22297/builds">
+      22297
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139460" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-19" name="tab-group-1" type="radio"/>
+    <label for="tab-19" style="color: var(--success-bg);">
+     2026-11-10 00:43:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22265/builds">
+      22265
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139245" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-20" name="tab-group-1" type="radio"/>
+    <label for="tab-20" style="color: var(--success-bg);">
+     2026-11-09 00:48:28 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22234/builds">
+      22234
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139061" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-21" name="tab-group-1" type="radio"/>
+    <label for="tab-21" style="color: var(--success-bg);">
+     2026-11-08 00:49:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22229/builds">
+      22229
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/139004" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-22" name="tab-group-1" type="radio"/>
+    <label for="tab-22" style="color: var(--success-bg);">
+     2026-11-07 00:49:13 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22226/builds">
+      22226
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138950" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-23" name="tab-group-1" type="radio"/>
+    <label for="tab-23" style="color: var(--success-bg);">
+     2026-11-06 11:36:29 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22177/builds">
+      22177
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138684" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-24" name="tab-group-1" type="radio"/>
+    <label for="tab-24" style="color: var(--success-bg);">
+     2026-11-05 00:43:59 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22136/builds">
+      22136
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138505" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+   <div class="tab">
+    <input id="tab-25" name="tab-group-1" type="radio"/>
+    <label for="tab-25" style="color: var(--success-bg);">
+     2026-11-04 00:46:17 [
+     <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/pipelines/22123/builds">
+      22123
+     </a>
+     ]: success
+    </label>
+    <div class="content">
+     <p style="color: #8ADEFF;">
+      <b>
+       <u>
+        <a href="https://git.esss.dk/dmsc-nightly/dmsc-nightly/-/jobs/138409" style="color: #8ADEFF;">
+         View job log here
+        </a>
+       </u>
+      </b>
+     </p>
+     <hr/>
+     <pre class="output-summary success">Test passed, nothing to report</pre>
+    </div>
+   </div>
+  </main>
+ </body>
+</html>
